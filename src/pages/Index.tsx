@@ -122,11 +122,13 @@ const Hero = ({ id, scrollY }: { id: string; scrollY: number }) => {
           </div>
         </Reveal>
 
-        <Reveal from="scale" delay={100}>
-          <h1 className="font-display text-[18vw] md:text-[14vw] leading-[0.85] tracking-tighter">
-            STIER<span className="text-primary">.</span>
-          </h1>
-        </Reveal>
+      <Reveal from="scale" delay={100}>
+  <img
+    src="/images/stier-racing-logo.png"
+    alt="Stier Racing"
+    className="w-[80vw] md:w-[60vw] max-w-[1100px] h-auto object-contain"
+  />
+</Reveal>
 
         <div className="mt-4 flex items-center justify-center gap-4 flex-wrap font-display text-2xl md:text-4xl">
           <Reveal from="left" delay={300}><span className="px-4 py-1 bg-foreground text-background">EV</span></Reveal>
