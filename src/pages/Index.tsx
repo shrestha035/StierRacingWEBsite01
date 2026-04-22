@@ -1,88 +1,90 @@
 import { useEffect, useRef, useState } from "react";
-import { Gear } from "@/components/Gear";
 
-/* ---------- shared mechanical bits ---------- */
+/* =====================================================
+   CIRCUIT PROGRESS RAIL — fills as you scroll
+   ===================================================== */
 
-const ChainLink = () => (
-  <svg width="40" height="24" viewBox="0 0 40 24" fill="none" className="inline-block">
-    <ellipse cx="12" cy="12" rx="10" ry="8" stroke="hsl(0 0% 35%)" strokeWidth="3" fill="none" />
-    <ellipse cx="28" cy="12" rx="10" ry="8" stroke="hsl(0 0% 40%)" strokeWidth="3" fill="none" />
-    <ellipse cx="12" cy="12" rx="10" ry="8" stroke="hsl(var(--primary))" strokeWidth="1" fill="none" opacity="0.4" />
-    <ellipse cx="28" cy="12" rx="10" ry="8" stroke="hsl(var(--primary))" strokeWidth="1" fill="none" opacity="0.4" />
-  </svg>
-);
-
-const ChainStrip = ({ reverse = false }: { reverse?: boolean }) => (
-  <div className="overflow-hidden w-full py-1">
-    <div className={reverse ? "marquee-animation flex whitespace-nowrap [animation-direction:reverse]" : "marquee-animation flex whitespace-nowrap"}>
-      {Array.from({ length: 60 }).map((_, i) => <ChainLink key={i} />)}
-    </div>
-  </div>
-);
-
-const TireWheel = ({ rotation, size = 120 }: { rotation: number; size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 120 120" style={{ transform: `rotate(${rotation}deg)` }}>
-    <circle cx="60" cy="60" r="55" stroke="hsl(0 0% 25%)" strokeWidth="8" fill="hsl(0 0% 10%)" />
-    <circle cx="60" cy="60" r="45" stroke="hsl(0 0% 20%)" strokeWidth="2" fill="none" />
-    <circle cx="60" cy="60" r="15" fill="hsl(var(--primary))" opacity="0.8" />
-    <circle cx="60" cy="60" r="10" fill="hsl(0 0% 15%)" />
-    {[0, 60, 120, 180, 240, 300].map((angle) => (
-      <line
-        key={angle}
-        x1="60" y1="60"
-        x2={60 + 40 * Math.cos((angle * Math.PI) / 180)}
-        y2={60 + 40 * Math.sin((angle * Math.PI) / 180)}
-        stroke="hsl(0 0% 30%)" strokeWidth="3"
-      />
-    ))}
-  </svg>
-);
-
-/* ---------- scroll-driven floating gear (always visible) ---------- */
-
-const ScrollGear = () => {
-  const [scrollY, setScrollY] = useState(0);
-  useEffect(() => {
-    const onScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+const CircuitRail = ({ progress, sections }: { progress: number; sections: { id: string; label: string }[] }) => {
+  // SVG path representing a stylized racetrack
+  const pathD = "M 30 40 L 30 180 Q 30 220 70 220 L 110 220 Q 150 220 150 260 L 150 400 Q 150 440 110 440 L 70 440 Q 30 440 30 480 L 30 640 Q 30 680 70 680 L 110 680 Q 150 680 150 720 L 150 860 Q 150 900 110 900 L 70 900 Q 30 900 30 940 L 30 1080";
+  const totalLen = 1400;
+  const dashOffset = totalLen - progress * totalLen;
 
   return (
-    <div className="fixed bottom-6 right-6 z-40 pointer-events-none hidden md:block">
-      <div style={{ transform: `rotate(${scrollY * 0.5}deg)` }}>
-        <Gear size={110} teeth={14} />
-      </div>
-      <div className="absolute -top-10 -left-10" style={{ transform: `rotate(${-scrollY * 0.7}deg)` }}>
-        <Gear size={70} teeth={10} color="hsl(0 0% 50%)" />
-      </div>
+    <div className="fixed left-4 top-0 h-screen z-40 pointer-events-none hidden lg:block">
+      <svg width="180" height="100%" viewBox="0 0 180 1100" preserveAspectRatio="xMidYMid meet" className="h-full">
+        {/* track base */}
+        <path d={pathD} fill="none" stroke="hsl(var(--border))" strokeWidth="6" strokeLinecap="round" />
+        {/* lane markings */}
+        <path d={pathD} fill="none" stroke="hsl(var(--foreground) / 0.3)" strokeWidth="1" strokeDasharray="6 10" />
+        {/* progress fill */}
+        <path
+          d={pathD}
+          fill="none"
+          stroke="hsl(var(--primary))"
+          strokeWidth="6"
+          strokeLinecap="round"
+          strokeDasharray={totalLen}
+          strokeDashoffset={dashOffset}
+          style={{ filter: "drop-shadow(0 0 6px hsl(var(--primary) / 0.6))" }}
+        />
+        {/* car indicator — moves along path */}
+        <circle r="8" fill="hsl(var(--primary))" stroke="hsl(var(--background))" strokeWidth="3">
+          <animateMotion dur="0s" fill="freeze" path={pathD} keyPoints={`${progress};${progress}`} keyTimes="0;1" />
+        </circle>
+
+        {/* checkpoint dots */}
+        {sections.map((s, i) => {
+          const t = i / Math.max(sections.length - 1, 1);
+          const active = progress >= t - 0.05;
+          return (
+            <g key={s.id}>
+              <circle r="6" fill={active ? "hsl(var(--primary))" : "hsl(var(--background))"} stroke="hsl(var(--foreground))" strokeWidth="2">
+                <animateMotion dur="0s" fill="freeze" path={pathD} keyPoints={`${t};${t}`} keyTimes="0;1" />
+              </circle>
+            </g>
+          );
+        })}
+      </svg>
     </div>
   );
 };
 
-/* ---------- navbar ---------- */
+/* =====================================================
+   TOP NAV
+   ===================================================== */
 
-const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+const sections = [
+  { id: "hero", label: "START" },
+  { id: "about", label: "TEAM" },
+  { id: "achievements", label: "WINS" },
+  { id: "car", label: "E23" },
+  { id: "gallery", label: "GALLERY" },
+  { id: "sponsors", label: "SPONSORS" },
+  { id: "contact", label: "FINISH" },
+];
 
-  const links = ["about", "achievements", "car", "gallery", "sponsors", "contact"];
-
+const TopNav = ({ activeIndex }: { activeIndex: number }) => {
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/95 backdrop-blur-md border-b border-primary/30" : "bg-transparent"}`}>
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="#hero" className="flex items-center gap-3">
-          <img src="/images/stier-logo.jpg" alt="Stier Racing" className="h-10 w-auto" />
-          <span className="font-display text-xl tracking-widest text-primary hidden sm:block">STIER</span>
-        </a>
-        <div className="hidden md:flex items-center gap-8">
-          {links.map((link) => (
-            <a key={link} href={`#${link}`} className="font-heading text-xs tracking-[0.2em] uppercase text-foreground/70 hover:text-primary transition-colors duration-300">
-              {link}
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b-2 border-foreground bg-background/90 backdrop-blur">
+      <div className="max-w-[1600px] mx-auto px-6 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <img src="/images/stier-logo.jpg" alt="Stier Racing" className="h-9 w-auto" />
+          <div className="flex flex-col leading-none">
+            <span className="font-display text-2xl tracking-tight">STIER RACING</span>
+            <span className="font-body text-[10px] tracking-[0.3em] text-muted-foreground uppercase">Ramaiah Institute · EV Formula</span>
+          </div>
+        </div>
+        <div className="hidden md:flex items-center gap-1">
+          {sections.map((s, i) => (
+            <a
+              key={s.id}
+              href={`#${s.id}`}
+              className={`font-heading text-[10px] tracking-[0.25em] uppercase px-3 py-2 transition-colors ${
+                i === activeIndex ? "bg-primary text-primary-foreground" : "text-foreground/70 hover:text-foreground"
+              }`}
+            >
+              {String(i + 1).padStart(2, "0")} · {s.label}
             </a>
           ))}
         </div>
@@ -91,215 +93,223 @@ const Navbar = () => {
   );
 };
 
-/* ---------- hero (Formula Bharat inspired) ---------- */
+/* =====================================================
+   HERO — snap section
+   ===================================================== */
 
-const HeroSection = () => {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [tireRotation, setTireRotation] = useState(0);
-  const heroRef = useRef<HTMLDivElement>(null);
-
+const Hero = ({ id }: { id: string }) => {
+  const [tick, setTick] = useState(0);
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!heroRef.current) return;
-      const rect = heroRef.current.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      setMousePos({ x, y });
-      setTireRotation((prev) => prev + Math.abs(x) * 3 + Math.abs(y) * 3);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    const i = setInterval(() => setTick((t) => t + 1), 1000);
+    return () => clearInterval(i);
   }, []);
+  const time = new Date();
+  const timeStr = time.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
 
   return (
-    <section id="hero" ref={heroRef} className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-      {/* dark image overlay backdrop */}
-      <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: "url('https://i.imgur.com/KkCs3pP.jpeg')" }} />
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background" />
-      <div className="absolute inset-0 diagonal-stripes opacity-30" />
+    <section id={id} className="snap-section grid-bg flex items-center justify-center overflow-hidden">
+      {/* checker corners */}
+      <div className="absolute top-20 right-6 w-32 h-12 checker opacity-80" />
+      <div className="absolute bottom-6 left-32 w-12 h-32 checker opacity-80" />
 
-      {/* speed lines */}
-      <div className="absolute inset-0 overflow-hidden">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i} className="absolute h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent"
-            style={{ top: `${10 + i * 12}%`, left: 0, right: 0, animation: `speed-lines ${3 + i * 0.5}s linear infinite`, animationDelay: `${i * 0.4}s` }}
-          />
-        ))}
+      {/* HUD readouts */}
+      <div className="absolute top-24 left-10 hidden md:block font-heading text-[10px] tracking-[0.25em] text-foreground/60 space-y-1">
+        <div>SYS · ONLINE <span className="blink text-primary">●</span></div>
+        <div>{timeStr} IST</div>
+        <div>BLR · 12.99°N 77.57°E</div>
+        <div>SEASON · {new Date().getFullYear()}</div>
+      </div>
+      <div className="absolute top-24 right-10 hidden md:block font-heading text-[10px] tracking-[0.25em] text-foreground/60 text-right space-y-1">
+        <div>EV CLASS</div>
+        <div>FORMULA STUDENT</div>
+        <div>TEAM ID · 023</div>
       </div>
 
-      {/* corner gears */}
-      <div className="absolute top-24 left-6 opacity-30 hidden md:block">
-        <div className="gear-spin-slow"><Gear size={140} teeth={16} /></div>
-      </div>
-      <div className="absolute bottom-24 right-6 opacity-30 hidden md:block">
-        <div className="gear-spin-reverse-slow"><Gear size={180} teeth={18} /></div>
-      </div>
-
-      {/* tires */}
-      <div className="absolute left-8 bottom-32 opacity-25 hidden lg:block">
-        <TireWheel rotation={tireRotation} />
-      </div>
-      <div className="absolute right-8 bottom-32 opacity-25 hidden lg:block">
-        <TireWheel rotation={-tireRotation} />
-      </div>
-
-      {/* main content with parallax */}
-      <div className="relative z-10 flex flex-col items-center text-center px-6"
-        style={{ transform: `translate(${mousePos.x * 20}px, ${mousePos.y * 20}px)`, transition: "transform 0.1s ease-out" }}>
-        <p className="font-heading text-xs md:text-sm tracking-[0.4em] text-primary/80 mb-4 uppercase">
-          Ramaiah Institute of Technology presents
-        </p>
-        <img src="/images/stier-logo.jpg" alt="Stier Racing Logo"
-          className="w-32 h-32 md:w-44 md:h-44 object-contain mb-4 drop-shadow-[0_0_30px_hsl(var(--primary)/0.6)]"
-          style={{ transform: `translate(${mousePos.x * -10}px, ${mousePos.y * -10}px)` }}
-        />
-        <h1 className="font-display text-7xl md:text-[10rem] leading-[0.9] tracking-tight text-foreground glitch-hover">
-          STIER<span className="text-primary racing-glow-intense">.</span>
-        </h1>
-
-        {/* Design. Build. Compete. — Formula Bharat style */}
-        <div className="mt-8 flex flex-col md:flex-row items-center gap-4 md:gap-10 font-display text-4xl md:text-6xl">
-          <span className="reveal-up text-foreground" style={{ animationDelay: "0.1s" }}>Design<span className="text-primary">.</span></span>
-          <span className="reveal-up text-foreground" style={{ animationDelay: "0.4s" }}>Build<span className="text-primary">.</span></span>
-          <span className="reveal-up text-foreground" style={{ animationDelay: "0.7s" }}>Race<span className="text-primary">.</span></span>
+      <div className="relative z-10 px-6 text-center max-w-6xl">
+        <div className="flex items-center justify-center gap-3 mb-6">
+          <div className="h-px w-12 bg-foreground" />
+          <span className="font-heading text-[10px] tracking-[0.4em] uppercase">Engineered to win</span>
+          <div className="h-px w-12 bg-foreground" />
         </div>
 
-        <p className="mt-8 font-heading text-xs md:text-sm tracking-[0.3em] text-foreground/50 uppercase">
-          EV Formula Student Team · Est. 2018
+        <h1 className="font-display text-[18vw] md:text-[14vw] leading-[0.85] tracking-tighter slide-up">
+          STIER
+          <span className="text-primary">.</span>
+        </h1>
+
+        <div className="mt-4 flex items-center justify-center gap-4 flex-wrap font-display text-2xl md:text-4xl">
+          <span className="px-4 py-1 bg-foreground text-background">EV</span>
+          <span>FORMULA STUDENT</span>
+          <span className="px-4 py-1 border-2 border-foreground">EST · 2018</span>
+        </div>
+
+        <p className="mt-10 font-body text-base md:text-lg max-w-xl mx-auto text-muted-foreground">
+          Designed, built and raced by students of Ramaiah Institute of Technology, Bangalore.
         </p>
+
+        <div className="mt-10 flex items-center justify-center gap-4">
+          <a href="#about" className="px-8 py-4 bg-primary text-primary-foreground font-heading text-xs tracking-[0.3em] uppercase hover:bg-foreground transition-colors">
+            Start Lap →
+          </a>
+          <a href="#car" className="px-8 py-4 border-2 border-foreground font-heading text-xs tracking-[0.3em] uppercase hover:bg-foreground hover:text-background transition-colors">
+            See E23
+          </a>
+        </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0">
-        <ChainStrip />
-        <div className="h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent" />
+      {/* bottom marquee */}
+      <div className="absolute bottom-0 left-0 right-0 bg-foreground text-background py-3 overflow-hidden border-t-2 border-foreground">
+        <div className="flex whitespace-nowrap marquee">
+          {Array.from({ length: 20 }).map((_, i) => (
+            <span key={i} className="font-display text-2xl mx-6 flex items-center gap-6">
+              SCROLL TO START <span className="text-primary">●</span> STIER RACING <span className="text-primary">●</span>
+            </span>
+          ))}
+        </div>
       </div>
     </section>
   );
 };
 
-/* ---------- big marquee strip ---------- */
+/* =====================================================
+   GENERIC SECTION SHELL
+   ===================================================== */
 
-const MarqueeStrip = ({ text, reverse = false }: { text: string; reverse?: boolean }) => (
-  <div className="relative py-6 bg-primary/10 border-y border-primary/30 overflow-hidden">
-    <div className={`flex whitespace-nowrap ${reverse ? "marquee-animation [animation-direction:reverse]" : "marquee-animation"}`}>
-      {Array.from({ length: 12 }).map((_, i) => (
-        <span key={i} className="font-display text-5xl md:text-7xl tracking-tight text-foreground mx-8 flex items-center gap-8">
-          {text}
-          <span className="text-primary">★</span>
-        </span>
-      ))}
+const SectionShell = ({
+  id, number, title, kicker, children, dark = false,
+}: { id: string; number: string; title: React.ReactNode; kicker: string; children: React.ReactNode; dark?: boolean }) => (
+  <section
+    id={id}
+    className={`snap-section flex items-center justify-center overflow-hidden ${dark ? "bg-foreground text-background" : "grid-bg"}`}
+  >
+    <div className="absolute top-1/2 -translate-y-1/2 right-0 section-number pr-8" style={dark ? { color: "hsl(var(--background) / 0.08)" } : undefined}>
+      {number}
     </div>
-  </div>
-);
-
-/* ---------- about ---------- */
-
-const AboutSection = () => (
-  <section id="about" className="relative py-24 racing-gradient-bg overflow-hidden">
-    <div className="racing-stripe absolute inset-0 pointer-events-none" />
-    <div className="absolute -left-20 top-1/2 -translate-y-1/2 opacity-20">
-      <div className="gear-spin-slow"><Gear size={300} teeth={20} /></div>
-    </div>
-    <div className="max-w-4xl mx-auto px-6 relative z-10">
-      <div className="flex flex-col items-center text-center">
-        <p className="font-heading text-xs tracking-[0.4em] text-primary/70 mb-3 uppercase">// 01 — Who we are</p>
-        <h2 className="font-display text-5xl md:text-7xl text-foreground mb-8 tracking-tight">
-          ABOUT <span className="text-primary racing-glow">US</span>
-        </h2>
-        <p className="font-body text-lg md:text-xl text-foreground/80 leading-relaxed max-w-2xl">
-          Based out of Ramaiah Institute of Technology, <span className="text-primary font-semibold">Stier Racing</span> is a Formula Student Electric Racing team.
-          We are engaged in building the best and most efficient Formula Student cars, competing at the highest level of the Formula Championship.
-        </p>
-        <a href="#contact" className="mt-10 px-10 py-4 font-heading text-sm tracking-[0.3em] border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 racing-box-glow uppercase">
-          Get in touch
-        </a>
+    <div className="relative z-10 max-w-6xl w-full px-8 md:px-16 pt-24 pb-16">
+      <div className="flex items-center gap-3 mb-4">
+        <span className={`h-px w-10 ${dark ? "bg-background" : "bg-foreground"}`} />
+        <span className="font-heading text-[10px] tracking-[0.4em] uppercase">{kicker}</span>
       </div>
+      <h2 className="font-display text-6xl md:text-8xl leading-[0.9] tracking-tighter mb-10">{title}</h2>
+      {children}
     </div>
   </section>
 );
 
-/* ---------- achievements ---------- */
+/* =====================================================
+   ABOUT
+   ===================================================== */
 
-const achievements = [
-  { year: "Formula Bharat 2025", items: ["Cleared Accumulator TI", "Cleared Mechanical TI"] },
-  { year: "Formula Bharat 2024", items: ["AIR 2 - Business Plan", "AIR 2 - Engineering Design"] },
-  { year: "Formula Imperial 2023", items: ["Overall AIR 3 in EV Category", "Winners of Best Acceleration Award", "Winners of ISIE Future Award", "AIR 3 in Business Plan", "AIR 2 in Rulebook Quiz"] },
-  { year: "Champions - Formula Green 2022", items: ["1st in Engineering Design", "1st in Business Plan"] },
-];
-
-const AchievementsSection = () => (
-  <section id="achievements" className="relative py-24 overflow-hidden">
-    <div className="absolute top-0 left-0 right-0"><ChainStrip reverse /></div>
-    <div className="absolute -right-20 top-20 opacity-15">
-      <div className="gear-spin-fast"><Gear size={250} teeth={18} /></div>
-    </div>
-    <div className="max-w-6xl mx-auto px-6 relative z-10">
-      <p className="font-heading text-xs tracking-[0.4em] text-primary/70 mb-3 text-center uppercase">// 02 — Track Record</p>
-      <h2 className="font-display text-5xl md:text-7xl text-center text-foreground mb-16 tracking-tight">
-        ACHIEVE<span className="text-primary racing-glow">MENTS</span>
-      </h2>
-      <div className="grid md:grid-cols-2 gap-6">
-        {achievements.map((a, idx) => (
-          <div key={a.year} className="relative racing-border p-8 bg-card/60 backdrop-blur-sm hover:racing-border-glow transition-all duration-500 group">
-            <span className="absolute top-4 right-4 font-display text-5xl text-primary/20 group-hover:text-primary/40 transition-colors">
-              0{idx + 1}
-            </span>
-            <h3 className="font-heading text-lg text-primary mb-4 tracking-wider group-hover:racing-glow transition-all">
-              {a.year}
-            </h3>
-            <ul className="space-y-2">
-              {a.items.map((item) => (
-                <li key={item} className="font-body text-foreground/70 flex items-center gap-3">
-                  <span className="w-2 h-2 bg-primary rotate-45 flex-shrink-0" />
-                  {item}
-                </li>
-              ))}
-            </ul>
+const About = ({ id }: { id: string }) => (
+  <SectionShell id={id} number="01" kicker="Chapter 01 — The Team" title={<>WE BUILD<br />RACE CARS<span className="text-primary">.</span></>}>
+    <div className="grid md:grid-cols-2 gap-10">
+      <div>
+        <p className="font-body text-lg leading-relaxed text-foreground/80">
+          Stier Racing is the Formula Student Electric team of <strong>Ramaiah Institute of Technology, Bangalore</strong>.
+          We are a group of student engineers, designers and managers obsessed with one thing —
+          <span className="text-primary font-semibold"> building the fastest, smartest EV race car on the grid.</span>
+        </p>
+        <p className="font-body text-lg leading-relaxed text-foreground/80 mt-4">
+          Each year we design, manufacture and race a new prototype against the best engineering colleges in India.
+        </p>
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        {[
+          { k: "EST", v: "2018" },
+          { k: "MEMBERS", v: "60+" },
+          { k: "CARS BUILT", v: "5" },
+          { k: "PODIUMS", v: "8+" },
+        ].map((s) => (
+          <div key={s.k} className="border-2 border-foreground p-5">
+            <p className="font-heading text-[10px] tracking-[0.3em] text-muted-foreground">{s.k}</p>
+            <p className="font-display text-5xl md:text-6xl leading-none mt-1">{s.v}</p>
           </div>
         ))}
       </div>
     </div>
-    <div className="absolute bottom-0 left-0 right-0"><ChainStrip /></div>
+  </SectionShell>
+);
+
+/* =====================================================
+   ACHIEVEMENTS
+   ===================================================== */
+
+const achievements = [
+  { year: "2025", event: "Formula Bharat", items: ["Cleared Accumulator TI", "Cleared Mechanical TI"] },
+  { year: "2024", event: "Formula Bharat", items: ["AIR 2 — Business Plan", "AIR 2 — Engineering Design"] },
+  { year: "2023", event: "Formula Imperial", items: ["Overall AIR 3 — EV Category", "Best Acceleration Award", "ISIE Future Award", "AIR 3 — Business Plan", "AIR 2 — Rulebook Quiz"] },
+  { year: "2022", event: "Formula Green — CHAMPIONS", items: ["1st — Engineering Design", "1st — Business Plan"] },
+];
+
+const Achievements = ({ id }: { id: string }) => (
+  <SectionShell id={id} number="02" kicker="Chapter 02 — Track Record" title={<>WINS &<br />AWARDS<span className="text-primary">.</span></>} dark>
+    <div className="space-y-3 max-h-[55vh] overflow-y-auto pr-2">
+      {achievements.map((a, i) => (
+        <div key={i} className="grid grid-cols-12 gap-4 border-b border-background/20 pb-3 group hover:bg-background/5 px-2 transition-colors">
+          <div className="col-span-2 font-display text-4xl md:text-5xl text-primary">{a.year}</div>
+          <div className="col-span-4 font-heading text-xs tracking-[0.2em] uppercase pt-3">{a.event}</div>
+          <div className="col-span-6 font-body text-sm md:text-base pt-3">
+            {a.items.map((it, j) => (
+              <span key={j} className="inline-block mr-3">
+                {it}{j < a.items.length - 1 && <span className="text-primary mx-2">/</span>}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </SectionShell>
+);
+
+/* =====================================================
+   CAR — split screen with spec sheet
+   ===================================================== */
+
+const Car = ({ id }: { id: string }) => (
+  <section id={id} className="snap-section grid grid-cols-1 md:grid-cols-2 overflow-hidden">
+    <div className="relative bg-foreground flex items-center justify-center overflow-hidden p-12">
+      <div className="absolute top-6 left-6 font-heading text-[10px] tracking-[0.3em] text-background/60">PROTOTYPE · 023</div>
+      <div className="absolute bottom-6 right-6 w-20 h-20 spin-slow">
+        <svg viewBox="0 0 100 100" className="w-full h-full">
+          <circle cx="50" cy="50" r="45" fill="none" stroke="hsl(var(--background))" strokeWidth="2" />
+          <text x="50" y="20" textAnchor="middle" fill="hsl(var(--background))" fontSize="8" fontFamily="Orbitron">STIER · RACING · 2025 · </text>
+          <path id="circ" d="M 50 50 m -35 0 a 35 35 0 1 1 70 0 a 35 35 0 1 1 -70 0" fill="none" />
+        </svg>
+      </div>
+      <img src="https://i.imgur.com/KkCs3pP.jpeg" alt="E23" className="w-full max-w-lg object-contain" />
+    </div>
+    <div className="relative bg-background flex flex-col justify-center px-10 md:px-16 py-24">
+      <div className="flex items-center gap-3 mb-3">
+        <span className="h-px w-10 bg-foreground" />
+        <span className="font-heading text-[10px] tracking-[0.4em] uppercase">Chapter 03 — The Machine</span>
+      </div>
+      <p className="font-display text-2xl text-muted-foreground">Meet</p>
+      <h2 className="font-display text-[18vw] md:text-[10vw] leading-[0.85] tracking-tighter italic">
+        E23<span className="text-primary">.</span>
+      </h2>
+      <p className="font-body text-base text-muted-foreground mt-4 max-w-md">
+        Our latest electric formula prototype — designed, fabricated and tested entirely by students.
+      </p>
+      <div className="grid grid-cols-2 gap-px bg-foreground mt-8 border-2 border-foreground">
+        {[
+          { k: "POWERTRAIN", v: "Electric" },
+          { k: "TOP SPEED", v: "120 km/h" },
+          { k: "0–100", v: "< 4s" },
+          { k: "WEIGHT", v: "230 kg" },
+        ].map((s) => (
+          <div key={s.k} className="bg-background p-4">
+            <p className="font-heading text-[9px] tracking-[0.3em] text-muted-foreground">{s.k}</p>
+            <p className="font-display text-3xl mt-1">{s.v}</p>
+          </div>
+        ))}
+      </div>
+    </div>
   </section>
 );
 
-/* ---------- car ---------- */
-
-const CarSection = () => {
-  const [scrollRotation, setScrollRotation] = useState(0);
-  useEffect(() => {
-    const onScroll = () => setScrollRotation(window.scrollY * 0.5);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return (
-    <section id="car" className="relative py-24 racing-gradient-bg overflow-hidden">
-      <div className="racing-stripe absolute inset-0 pointer-events-none" />
-      <div className="absolute left-[-30px] top-1/2 -translate-y-1/2 opacity-15">
-        <TireWheel rotation={scrollRotation} size={180} />
-      </div>
-      <div className="absolute right-[-30px] top-1/2 -translate-y-1/2 opacity-15">
-        <TireWheel rotation={-scrollRotation} size={180} />
-      </div>
-      <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
-        <p className="font-heading text-xs tracking-[0.4em] text-primary/70 mb-3 uppercase">// 03 — Our Machine</p>
-        <h2 className="font-display text-7xl md:text-9xl text-primary racing-glow-intense mb-2 italic tracking-tighter">E23</h2>
-        <p className="font-heading text-xs tracking-[0.3em] text-foreground/50 mb-12 uppercase">Built. Tested. Proven.</p>
-        <div className="relative group">
-          <div className="absolute inset-0 bg-primary/10 blur-3xl group-hover:bg-primary/30 transition-all duration-700" />
-          <img src="https://i.imgur.com/KkCs3pP.jpeg" alt="Stier EV Car E23"
-            className="relative w-full rounded-sm racing-border group-hover:racing-border-glow transition-all duration-700"
-          />
-        </div>
-      </div>
-    </section>
-  );
-};
-
-/* ---------- marquee divider ---------- */
-
-/* ---------- gallery ---------- */
+/* =====================================================
+   GALLERY — full-bleed scrolling row
+   ===================================================== */
 
 const galleryImages = [
   "https://i.imgur.com/KkCs3pP.jpeg",
@@ -312,17 +322,32 @@ const galleryImages = [
   "https://i.imgur.com/n7x4uns.jpeg",
 ];
 
-const GallerySection = () => (
-  <section id="gallery" className="relative py-24">
-    <p className="font-heading text-xs tracking-[0.4em] text-primary/70 mb-3 text-center uppercase">// 04 — In Motion</p>
-    <h2 className="font-display text-5xl md:text-7xl text-foreground mb-12 text-center tracking-tight">
-      GAL<span className="text-primary racing-glow">LERY</span>
-    </h2>
-    <div className="overflow-hidden">
-      <div className="gallery-scroll-animation flex gap-6 whitespace-nowrap">
+const Gallery = ({ id }: { id: string }) => (
+  <section id={id} className="snap-section flex flex-col justify-center bg-background overflow-hidden">
+    <div className="px-8 md:px-16 pt-24">
+      <div className="flex items-center gap-3 mb-3">
+        <span className="h-px w-10 bg-foreground" />
+        <span className="font-heading text-[10px] tracking-[0.4em] uppercase">Chapter 04 — In Frame</span>
+      </div>
+      <h2 className="font-display text-6xl md:text-8xl leading-[0.9] tracking-tighter">GALLERY<span className="text-primary">.</span></h2>
+    </div>
+    <div className="mt-12 overflow-hidden">
+      <div className="flex gap-4 marquee">
         {[...galleryImages, ...galleryImages].map((img, i) => (
-          <div key={i} className="flex-shrink-0 w-80 h-52 overflow-hidden racing-border hover:racing-border-glow transition-all duration-500">
-            <img src={img} alt={`Gallery ${i + 1}`} className="w-full h-full object-cover hover:scale-110 transition-transform duration-700" />
+          <div key={i} className="flex-shrink-0 w-[420px] h-[280px] overflow-hidden border-2 border-foreground bg-foreground group relative">
+            <img src={img} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+            <div className="absolute top-2 left-2 font-heading text-[9px] tracking-[0.3em] text-background bg-foreground px-2 py-1">
+              0{(i % 8) + 1} / 08
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div className="mt-6 overflow-hidden">
+      <div className="flex gap-4 marquee-reverse">
+        {[...galleryImages, ...galleryImages].reverse().map((img, i) => (
+          <div key={i} className="flex-shrink-0 w-[320px] h-[200px] overflow-hidden border-2 border-foreground bg-foreground">
+            <img src={img} alt="" className="w-full h-full object-cover" />
           </div>
         ))}
       </div>
@@ -330,7 +355,9 @@ const GallerySection = () => (
   </section>
 );
 
-/* ---------- sponsors ---------- */
+/* =====================================================
+   SPONSORS
+   ===================================================== */
 
 const sponsorLogos = [
   "https://nimbleelectric.com/wp-content/uploads/2021/07/Nimble-Electric-Medium-1.png",
@@ -343,89 +370,101 @@ const sponsorLogos = [
   "https://www.wilwood.com/images/wilwood_media_br_36.png",
 ];
 
-const SponsorsSection = () => (
-  <section id="sponsors" className="relative py-24 racing-gradient-bg overflow-hidden">
-    <div className="racing-stripe absolute inset-0 pointer-events-none" />
-    <div className="absolute top-0 left-0 right-0"><ChainStrip reverse /></div>
-    <div className="max-w-6xl mx-auto px-6 relative z-10">
-      <p className="font-heading text-xs tracking-[0.4em] text-primary/70 mb-3 text-center uppercase">// 05 — Powered By</p>
-      <h2 className="font-display text-5xl md:text-7xl text-foreground mb-16 text-center tracking-tight">
-        SPON<span className="text-primary racing-glow">SORS</span>
-      </h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 items-center justify-items-center">
-        {sponsorLogos.map((logo, i) => (
-          <div key={i} className="bg-secondary/50 p-4 w-full h-24 flex items-center justify-center racing-border hover:racing-border-glow transition-all duration-500">
-            <img src={logo} alt={`Sponsor ${i + 1}`} className="max-h-14 max-w-full object-contain brightness-0 invert opacity-60 hover:opacity-100 transition-opacity" />
+const Sponsors = ({ id }: { id: string }) => (
+  <SectionShell id={id} number="05" kicker="Chapter 05 — Powered By" title={<>OUR<br />PARTNERS<span className="text-primary">.</span></>}>
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-foreground border-2 border-foreground">
+      {sponsorLogos.map((logo, i) => (
+        <div key={i} className="bg-background h-32 flex items-center justify-center p-6 hover:bg-primary group transition-colors">
+          <img src={logo} alt="" className="max-h-12 max-w-full object-contain grayscale group-hover:grayscale-0 group-hover:brightness-0 group-hover:invert transition-all" />
+        </div>
+      ))}
+    </div>
+  </SectionShell>
+);
+
+/* =====================================================
+   CONTACT
+   ===================================================== */
+
+const Contact = ({ id }: { id: string }) => (
+  <section id={id} className="snap-section bg-foreground text-background flex flex-col justify-between overflow-hidden">
+    <div className="flex-1 flex items-center px-8 md:px-16 pt-24">
+      <div className="max-w-5xl w-full">
+        <div className="flex items-center gap-3 mb-4">
+          <span className="h-px w-10 bg-background" />
+          <span className="font-heading text-[10px] tracking-[0.4em] uppercase">Chapter 06 — Finish Line</span>
+        </div>
+        <h2 className="font-display text-6xl md:text-9xl leading-[0.85] tracking-tighter mb-10">
+          LET'S<br />TALK<span className="text-primary">.</span>
+        </h2>
+        <div className="grid md:grid-cols-3 gap-10">
+          <div>
+            <p className="font-heading text-[10px] tracking-[0.3em] text-background/50 mb-2">EMAIL</p>
+            <a href="mailto:stierracing@gmail.com" className="font-display text-2xl md:text-3xl hover:text-primary transition-colors break-all">
+              stierracing@gmail.com
+            </a>
           </div>
-        ))}
+          <div>
+            <p className="font-heading text-[10px] tracking-[0.3em] text-background/50 mb-2">ADDRESS</p>
+            <p className="font-body text-lg">ESB 119, Ramaiah Institute of Technology, MSR Nagar, Bangalore — 560054</p>
+          </div>
+          <div>
+            <p className="font-heading text-[10px] tracking-[0.3em] text-background/50 mb-2">FOLLOW</p>
+            <div className="space-y-1 font-display text-2xl">
+              <p className="hover:text-primary cursor-pointer transition-colors">→ INSTAGRAM</p>
+              <p className="hover:text-primary cursor-pointer transition-colors">→ LINKEDIN</p>
+              <p className="hover:text-primary cursor-pointer transition-colors">→ YOUTUBE</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div className="absolute bottom-0 left-0 right-0"><ChainStrip /></div>
-  </section>
-);
-
-/* ---------- contact ---------- */
-
-const ContactSection = () => (
-  <section id="contact" className="relative py-24 overflow-hidden">
-    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-10">
-      <div className="gear-spin-slow"><Gear size={500} teeth={24} /></div>
-    </div>
-    <div className="max-w-2xl mx-auto px-6 text-center relative z-10">
-      <p className="font-heading text-xs tracking-[0.4em] text-primary/70 mb-3 uppercase">// 06 — Reach Out</p>
-      <h2 className="font-display text-5xl md:text-7xl text-foreground mb-12 tracking-tight">
-        CON<span className="text-primary racing-glow">TACT</span>
-      </h2>
-      <div className="racing-border p-8 bg-card/60 backdrop-blur-md">
-        <p className="font-heading text-sm tracking-wider text-foreground/50 mb-2">EMAIL</p>
-        <a href="mailto:stierracing@gmail.com" className="font-body text-xl text-primary hover:racing-glow transition-all">
-          stierracing@gmail.com
-        </a>
-        <div className="my-6 h-[1px] bg-border" />
-        <p className="font-heading text-sm tracking-wider text-foreground/50 mb-2">ADDRESS</p>
-        <p className="font-body text-lg text-foreground/70">
-          ESB 119, Ramaiah Institute of Technology,<br />
-          MSR Nagar, Bangalore - 560054
-        </p>
-      </div>
+    {/* checkered finish line strip */}
+    <div className="h-12 checker" style={{ filter: "invert(1)" }} />
+    <div className="bg-background text-foreground py-4 px-8 flex items-center justify-between border-t-2 border-foreground">
+      <span className="font-display text-xl tracking-wide">STIER RACING</span>
+      <span className="font-body text-xs text-muted-foreground">© {new Date().getFullYear()} · Ramaiah Institute of Technology</span>
     </div>
   </section>
 );
 
-/* ---------- footer ---------- */
-
-const Footer = () => (
-  <footer className="py-8 border-t border-primary/20 relative">
-    <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-      <div className="flex items-center gap-3">
-        <img src="/images/stier-logo.jpg" alt="Stier Racing" className="h-8 w-auto" />
-        <span className="font-display text-xl tracking-wider text-foreground/50">STIER RACING</span>
-      </div>
-      <p className="font-body text-sm text-foreground/30">
-        © {new Date().getFullYear()} Stier Racing — Ramaiah Institute of Technology
-      </p>
-    </div>
-  </footer>
-);
-
-/* ---------- page ---------- */
+/* =====================================================
+   PAGE
+   ===================================================== */
 
 const Index = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [progress, setProgress] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      const max = el.scrollHeight - el.clientHeight;
+      const p = max > 0 ? el.scrollTop / max : 0;
+      setProgress(p);
+      const idx = Math.round(el.scrollTop / el.clientHeight);
+      setActiveIndex(Math.min(Math.max(idx, 0), sections.length - 1));
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
-      <ScrollGear />
-      <HeroSection />
-      <MarqueeStrip text="STIER RACING" />
-      <AboutSection />
-      <AchievementsSection />
-      <MarqueeStrip text="DESIGN · BUILD · RACE" reverse />
-      <CarSection />
-      <GallerySection />
-      <SponsorsSection />
-      <ContactSection />
-      <Footer />
-    </div>
+    <>
+      <TopNav activeIndex={activeIndex} />
+      <CircuitRail progress={progress} sections={sections} />
+      <div ref={containerRef} className="snap-container">
+        <Hero id="hero" />
+        <About id="about" />
+        <Achievements id="achievements" />
+        <Car id="car" />
+        <Gallery id="gallery" />
+        <Sponsors id="sponsors" />
+        <Contact id="contact" />
+      </div>
+    </>
   );
 };
 
