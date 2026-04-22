@@ -6,204 +6,139 @@
 
 @layer base {
   :root {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 95%;
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 95%;
-    --popover: 0 0% 7%;
-    --popover-foreground: 0 0% 95%;
-    --primary: 0 85% 50%;
+    --background: 0 0% 97%;
+    --foreground: 0 0% 8%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 8%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 8%;
+    --primary: 0 90% 50%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 95%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 0 90% 55%;
+    --secondary: 0 0% 92%;
+    --secondary-foreground: 0 0% 8%;
+    --muted: 0 0% 90%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 0 0% 8%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-    --ring: 0 85% 50%;
-    --radius: 0.5rem;
-    --sidebar-background: 0 0% 5%;
-    --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 0 85% 50%;
+    --border: 0 0% 85%;
+    --input: 0 0% 85%;
+    --ring: 0 90% 50%;
+    --radius: 0.25rem;
+    --sidebar-background: 0 0% 97%;
+    --sidebar-foreground: 0 0% 8%;
+    --sidebar-primary: 0 90% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 12%;
-    --sidebar-accent-foreground: 0 0% 90%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 0 85% 50%;
+    --sidebar-accent: 0 0% 92%;
+    --sidebar-accent-foreground: 0 0% 8%;
+    --sidebar-border: 0 0% 85%;
+    --sidebar-ring: 0 90% 50%;
 
     --font-heading: 'Orbitron', sans-serif;
     --font-body: 'Rajdhani', sans-serif;
     --font-display: 'Bebas Neue', sans-serif;
 
-    --glow-primary: 0 0 20px hsl(0 85% 50% / 0.5), 0 0 60px hsl(0 85% 50% / 0.2);
-    --glow-intense: 0 0 30px hsl(0 85% 50% / 0.7), 0 0 80px hsl(0 85% 50% / 0.3), 0 0 120px hsl(0 85% 50% / 0.1);
+    --grid-color: 0 0% 88%;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+  * { @apply border-border; }
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
     overflow-x: hidden;
   }
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
-  }
+  h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); }
+  html { scroll-behavior: smooth; }
 }
 
 @layer components {
-  .racing-glow {
-    text-shadow: var(--glow-primary);
+  /* full-screen snap container */
+  .snap-container {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100vh;
+    scroll-behavior: smooth;
   }
-  .racing-glow-intense {
-    text-shadow: var(--glow-intense);
+  .snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
   }
-  .racing-box-glow {
-    box-shadow: var(--glow-primary);
+
+  /* grid background */
+  .grid-bg {
+    background-image:
+      linear-gradient(hsl(var(--grid-color)) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--grid-color)) 1px, transparent 1px);
+    background-size: 60px 60px;
   }
-  .racing-border {
-    border: 1px solid hsl(var(--primary) / 0.3);
+
+  /* big section number */
+  .section-number {
+    font-family: var(--font-display);
+    font-size: clamp(8rem, 20vw, 18rem);
+    line-height: 1;
+    color: hsl(var(--foreground) / 0.06);
+    user-select: none;
   }
-  .racing-border-glow {
-    border: 1px solid hsl(var(--primary) / 0.5);
-    box-shadow: inset 0 0 20px hsl(var(--primary) / 0.1), var(--glow-primary);
-  }
-  .racing-gradient-bg {
-    background: linear-gradient(180deg, hsl(0 0% 4%) 0%, hsl(0 0% 8%) 50%, hsl(0 0% 4%) 100%);
-  }
-  .racing-stripe {
+
+  .race-stripe {
     background: repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 10px,
-      hsl(var(--primary) / 0.05) 10px,
-      hsl(var(--primary) / 0.05) 20px
+      90deg,
+      hsl(var(--foreground)) 0px,
+      hsl(var(--foreground)) 30px,
+      hsl(var(--background)) 30px,
+      hsl(var(--background)) 60px
     );
   }
+  .checker {
+    background-image:
+      linear-gradient(45deg, hsl(var(--foreground)) 25%, transparent 25%),
+      linear-gradient(-45deg, hsl(var(--foreground)) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, hsl(var(--foreground)) 75%),
+      linear-gradient(-45deg, transparent 75%, hsl(var(--foreground)) 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, 10px 0px;
+  }
 }
 
-/* Chain animation */
-@keyframes chain-scroll {
+@keyframes marquee-x {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-@keyframes chain-scroll-reverse {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
-}
+.marquee { animation: marquee-x 25s linear infinite; }
+.marquee-fast { animation: marquee-x 12s linear infinite; }
+.marquee-reverse { animation: marquee-x 25s linear infinite reverse; }
 
-.chain-animation {
-  animation: chain-scroll 8s linear infinite;
-}
-.chain-animation-reverse {
-  animation: chain-scroll-reverse 8s linear infinite;
-}
-
-/* Tire rotation on scroll */
-@keyframes tire-spin {
+@keyframes spin-slow {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+.spin-slow { animation: spin-slow 18s linear infinite; }
 
-/* Pulse racing line */
-@keyframes racing-pulse {
-  0%, 100% { opacity: 0.3; transform: scaleX(0.8); }
-  50% { opacity: 1; transform: scaleX(1); }
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
+.blink { animation: blink 1s steps(2, end) infinite; }
 
-@keyframes float-up {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes speed-lines {
-  0% { transform: translateX(-100%); opacity: 0; }
-  50% { opacity: 1; }
-  100% { transform: translateX(100vw); opacity: 0; }
-}
-
-/* Gallery infinite scroll */
-@keyframes gallery-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.gallery-scroll-animation {
-  animation: gallery-scroll 30s linear infinite;
-}
-
-/* Chevron animation */
-@keyframes chevron-pulse {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 0.8; }
-}
-
-/* Gear continuous spin */
-@keyframes gear-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-@keyframes gear-spin-reverse {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(-360deg); }
-}
-.gear-spin-slow { animation: gear-spin 20s linear infinite; }
-.gear-spin-fast { animation: gear-spin 6s linear infinite; }
-.gear-spin-reverse-slow { animation: gear-spin-reverse 14s linear infinite; }
-
-/* Marquee for big text strips */
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.marquee-animation { animation: marquee 25s linear infinite; }
-.marquee-animation-fast { animation: marquee 12s linear infinite; }
-
-/* Stagger reveal */
-@keyframes reveal-up {
+@keyframes slide-up {
   from { opacity: 0; transform: translateY(40px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.reveal-up { animation: reveal-up 0.8s ease-out both; }
+.slide-up { animation: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
-/* Glitch */
-@keyframes glitch {
-  0%, 100% { text-shadow: var(--glow-intense); transform: translate(0); }
-  20% { text-shadow: 2px 0 hsl(0 85% 50%), -2px 0 hsl(180 85% 50%); transform: translate(-1px, 1px); }
-  40% { text-shadow: -2px 0 hsl(0 85% 50%), 2px 0 hsl(180 85% 50%); transform: translate(1px, -1px); }
-  60% { text-shadow: var(--glow-intense); transform: translate(0); }
-}
-.glitch-hover:hover { animation: glitch 0.4s linear; }
-
-/* Diagonal stripe overlay */
-.diagonal-stripes {
-  background-image: repeating-linear-gradient(
-    -45deg,
-    hsl(var(--primary) / 0.15) 0px,
-    hsl(var(--primary) / 0.15) 20px,
-    transparent 20px,
-    transparent 40px
-  );
+@keyframes draw-line {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: hsl(var(--background));
-}
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--primary) / 0.5);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary));
-}
+/* scrollbar */
+::-webkit-scrollbar { width: 0; display: none; }
+.snap-container::-webkit-scrollbar { display: none; }
+.snap-container { -ms-overflow-style: none; scrollbar-width: none; }
