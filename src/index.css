@@ -145,6 +145,54 @@
   50% { opacity: 0.8; }
 }
 
+/* Gear continuous spin */
+@keyframes gear-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes gear-spin-reverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+.gear-spin-slow { animation: gear-spin 20s linear infinite; }
+.gear-spin-fast { animation: gear-spin 6s linear infinite; }
+.gear-spin-reverse-slow { animation: gear-spin-reverse 14s linear infinite; }
+
+/* Marquee for big text strips */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-animation { animation: marquee 25s linear infinite; }
+.marquee-animation-fast { animation: marquee 12s linear infinite; }
+
+/* Stagger reveal */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal-up { animation: reveal-up 0.8s ease-out both; }
+
+/* Glitch */
+@keyframes glitch {
+  0%, 100% { text-shadow: var(--glow-intense); transform: translate(0); }
+  20% { text-shadow: 2px 0 hsl(0 85% 50%), -2px 0 hsl(180 85% 50%); transform: translate(-1px, 1px); }
+  40% { text-shadow: -2px 0 hsl(0 85% 50%), 2px 0 hsl(180 85% 50%); transform: translate(1px, -1px); }
+  60% { text-shadow: var(--glow-intense); transform: translate(0); }
+}
+.glitch-hover:hover { animation: glitch 0.4s linear; }
+
+/* Diagonal stripe overlay */
+.diagonal-stripes {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    hsl(var(--primary) / 0.15) 0px,
+    hsl(var(--primary) / 0.15) 20px,
+    transparent 20px,
+    transparent 40px
+  );
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 6px;
