@@ -479,20 +479,17 @@ const Contact = ({ id }: { id: string }) => (
 
 const FloatingCar = ({ progress }: { progress: number }) => (
   <div
-    className="fixed bottom-6 z-40 pointer-events-none transition-[left] duration-200 ease-out hidden md:block"
-    style={{ left: `${4 + progress * 88}%` }}
+    className="fixed bottom-4 z-40 pointer-events-none transition-[left] duration-200 ease-out hidden md:block"
+    style={{ left: `${Math.max(0, Math.min(82, 2 + progress * 86))}%` }}
   >
-    <svg width="80" height="40" viewBox="0 0 80 40" className="drop-shadow-lg">
-      <path d="M 5 28 L 12 16 L 28 12 L 50 12 L 62 18 L 75 22 L 75 30 L 5 30 Z" fill="hsl(var(--primary))" stroke="hsl(var(--foreground))" strokeWidth="2" />
-      <path d="M 30 14 L 48 14 L 56 22 L 30 22 Z" fill="hsl(var(--background))" stroke="hsl(var(--foreground))" strokeWidth="1.5" />
-      <circle cx="20" cy="32" r="6" fill="hsl(var(--foreground))" />
-      <circle cx="60" cy="32" r="6" fill="hsl(var(--foreground))" />
-      <circle cx="20" cy="32" r="2" fill="hsl(var(--background))" />
-      <circle cx="60" cy="32" r="2" fill="hsl(var(--background))" />
-    </svg>
+    <img
+      src="/images/stier-car.png"
+      alt="Stier Racing car"
+      className="w-[220px] h-auto object-contain drop-shadow-lg"
+      draggable={false}
+    />
   </div>
 );
-
 /* =====================================================
    PAGE
    ===================================================== */
