@@ -289,13 +289,13 @@ const Car = ({ id }: { id: string }) => {
             <circle cx="50" cy="50" r="45" fill="none" stroke="hsl(var(--background))" strokeWidth="2" />
           </svg>
         </div>
-        <img
-          src="https://i.imgur.com/KkCs3pP.jpeg"
-          alt="E23"
-          className={`w-full max-w-lg object-contain transition-all duration-1000 ease-out ${
-            inView ? "opacity-100 translate-x-0 scale-100" : "opacity-0 -translate-x-40 scale-90"
-          }`}
-        />
+       <img
+  src="/images/e23-new.png"
+  alt="E23"
+  className={`w-full max-w-lg object-contain transition-all duration-1000 ease-out ${
+    inView ? "opacity-100 translate-x-0 scale-100" : "opacity-0 -translate-x-40 scale-90"
+  }`}
+/>
       </div>
       <div className="relative bg-background flex flex-col justify-center px-10 md:px-16 py-24">
         <Reveal from="right">
