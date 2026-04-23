@@ -289,7 +289,7 @@ const Car = ({ id }: { id: string }) => {
             <circle cx="50" cy="50" r="45" fill="none" stroke="hsl(var(--background))" strokeWidth="2" />
           </svg>
         </div>
-       <img
+     <img
   src="/images/e23-new.png"
   alt="E23"
   className={`w-full max-w-lg object-contain transition-all duration-1000 ease-out ${
