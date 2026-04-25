@@ -65,10 +65,16 @@ const TopNav = ({ activeIndex }: { activeIndex: number }) => (
     <div className="max-w-[1600px] mx-auto px-6 py-3 flex items-center justify-between">
       <div className="flex items-center gap-3">
         <img src="/images/stier-logo.jpg" alt="Stier Racing" className="h-9 w-auto" />
-        <div className="flex flex-col leading-none">
-          <span className="font-display text-2xl tracking-tight">STIER RACING</span>
-          <span className="font-body text-[10px] tracking-[0.3em] text-muted-foreground uppercase">Ramaiah Institute · EV Formula</span>
-        </div>
+       <div className="flex flex-col leading-none">
+  <img
+    src="/images/stier_racing_no_bg.png"
+    alt="Stier Racing"
+    className="h-8 md:h-10 w-auto object-contain"
+  />
+  <span className="font-body text-[10px] tracking-[0.3em] text-muted-foreground uppercase">
+    Ramaiah Institute · EV Formula
+  </span>
+</div>
       </div>
       <div className="hidden md:flex items-center gap-1">
         {sections.map((s, i) => (
