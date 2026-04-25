@@ -295,8 +295,8 @@ const Car = ({ id }: { id: string }) => {
             <circle cx="50" cy="50" r="45" fill="none" stroke="hsl(var(--background))" strokeWidth="2" />
           </svg>
         </div>
-     <img
-  src="/images/e23-new.png"
+    <img
+  src="/images/e14car.png"
   alt="E23"
   className={`w-full max-w-lg object-contain transition-all duration-1000 ease-out ${
     inView ? "opacity-100 translate-x-0 scale-100" : "opacity-0 -translate-x-40 scale-90"
