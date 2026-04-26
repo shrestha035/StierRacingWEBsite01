@@ -430,7 +430,7 @@ const Sponsors = ({ id }: { id: string }) => (
       href="https://mail.google.com/mail/?view=cm&fs=1&to=stierracing@gmail.com&su=Sponsor%20Inquiry"
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center justify-center px-10 md:px-14 h-14 md:h-16 bg-primary text-primary-foreground border-2 border-primary font-heading text-sm md:text-base tracking-[0.35em] uppercase hover:opacity-90 transition-all mb-4"
+      className="inline-flex items-center justify-center px-10 md:px-14 h-14 md:h-16 bg-primary text-primary-foreground border-2 border-primary font-heading text-sm md:text-base tracking-[0.35em] uppercase transition-all mb-4 hover:bg-black hover:text-white hover:border-black"
     >
       Be a Sponsor →
     </a>
@@ -450,7 +450,6 @@ const Sponsors = ({ id }: { id: string }) => (
     </div>
   </SectionShell>
 );
-
 /* =====================================================
    CONTACT
    ===================================================== */
