@@ -420,12 +420,30 @@ const sponsorLogos = [
 ];
 
 const Sponsors = ({ id }: { id: string }) => (
-  <SectionShell id={id} number="05" kicker="Chapter 05 — Powered By" title={<>OUR<br />PARTNERS<span className="text-primary">.</span></>}>
+  <SectionShell
+    id={id}
+    number="05"
+    kicker="Chapter 05 — Powered By"
+    title={<>OUR<br />PARTNERS<span className="text-primary">.</span></>}
+  >
+    <a
+      href="https://mail.google.com/mail/?view=cm&fs=1&to=stierracing@gmail.com&su=Sponsor%20Inquiry"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-block font-display text-base md:text-xl tracking-wide mb-6 hover:text-primary transition-colors"
+    >
+      BE A SPONSOR
+    </a>
+
     <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-foreground border-2 border-foreground">
       {sponsorLogos.map((logo, i) => (
         <Reveal key={i} from="scale" delay={150 + i * 80}>
           <div className="bg-background h-32 flex items-center justify-center p-6 hover:bg-primary group transition-colors">
-            <img src={logo} alt="" className="max-h-12 max-w-full object-contain grayscale group-hover:grayscale-0 group-hover:brightness-0 group-hover:invert transition-all" />
+            <img
+              src={logo}
+              alt=""
+              className="max-h-12 max-w-full object-contain grayscale group-hover:grayscale-0 group-hover:brightness-0 group-hover:invert transition-all"
+            />
           </div>
         </Reveal>
       ))}
@@ -464,15 +482,6 @@ const Contact = ({ id }: { id: string }) => (
     className="font-display text-2xl md:text-3xl hover:text-primary transition-colors break-all"
   >
     stierracing@gmail.com
-  </a>
-
-  <a
-    href="https://mail.google.com/mail/?view=cm&fs=1&to=stierracing@gmail.com&su=Sponsor%20Inquiry"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="block font-display text-base md:text-xl ml-20 mt-4 hover:text-primary transition-colors"
-  >
-    BE A SPONSOR
   </a>
 </div>
           </Reveal>
