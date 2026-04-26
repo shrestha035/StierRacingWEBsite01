@@ -108,7 +108,7 @@ const Hero = ({ id, scrollY }: { id: string; scrollY: number }) => {
 
   return (
     <section id={id} className="snap-section grid-bg flex items-center justify-center overflow-hidden">
-      <div className="absolute top-20 right-6 w-32 h-12 checker opacity-80" style={{ transform: `translateY(${py * 0.5}px)` }} />
+     
       <div className="absolute bottom-6 left-32 w-12 h-32 checker opacity-80" style={{ transform: `translateY(${-py * 0.4}px)` }} />
 
       <div className="absolute top-24 left-10 hidden md:block font-heading text-[10px] tracking-[0.25em] text-foreground/60 space-y-1">
