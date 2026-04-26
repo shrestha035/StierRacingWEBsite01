@@ -54,7 +54,7 @@ const sections = [
   { id: "hero", label: "START" },
   { id: "about", label: "TEAM" },
   { id: "achievements", label: "WINS" },
-  { id: "car", label: "E23" },
+  { id: "car", label: "E14" },
   { id: "gallery", label: "GALLERY" },    
   { id: "sponsors", label: "SPONSORS" },
   { id: "contact", label: "FINISH" },
@@ -160,7 +160,7 @@ const Hero = ({ id, scrollY }: { id: string; scrollY: number }) => {
               Start Lap →
             </a>
             <a href="#car" className="px-8 py-4 border-2 border-foreground font-heading text-xs tracking-[0.3em] uppercase hover:bg-foreground hover:text-background transition-colors">
-              See E23
+              See E14
             </a>
           </div>
         </Reveal>
@@ -303,7 +303,7 @@ const Car = ({ id }: { id: string }) => {
         </div>
     <img
   src="/images/e14car.png"
-  alt="E23"
+  alt="E14"
   className={`w-full max-w-lg object-contain transition-all duration-1000 ease-out ${
     inView ? "opacity-100 translate-x-0 scale-100" : "opacity-0 -translate-x-40 scale-90"
   }`}
@@ -319,7 +319,7 @@ const Car = ({ id }: { id: string }) => {
         <Reveal from="right" delay={150}><p className="font-display text-2xl text-muted-foreground">Meet</p></Reveal>
         <Reveal from="right" delay={250}>
           <h2 className="font-display text-[18vw] md:text-[10vw] leading-[0.85] tracking-tighter italic">
-            E23<span className="text-primary">.</span>
+            E14<span className="text-primary">.</span>
           </h2>
         </Reveal>
         <Reveal from="up" delay={400}>
