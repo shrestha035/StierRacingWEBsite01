@@ -454,8 +454,9 @@ const Contact = ({ id }: { id: string }) => (
         </Reveal>
         <div className="grid md:grid-cols-3 gap-10">
           <Reveal from="up" delay={300}>
-       <div>
+      <div>
   <p className="font-heading text-[10px] tracking-[0.3em] text-background/50 mb-2">EMAIL</p>
+
   <a
     href="https://mail.google.com/mail/?view=cm&fs=1&to=stierracing@gmail.com&su=Stier%20Racing%20Inquiry"
     target="_blank"
@@ -464,9 +465,15 @@ const Contact = ({ id }: { id: string }) => (
   >
     stierracing@gmail.com
   </a>
-  <p className="font-display text-xl md:text-2xl text-white/80 mt-3 hover:text-primary transition-colors">
-    Be a Sponsor
-  </p>
+
+  <a
+    href="https://mail.google.com/mail/?view=cm&fs=1&to=stierracing@gmail.com&su=Sponsor%20Inquiry"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="block font-display text-base md:text-xl ml-20 mt-4 hover:text-primary transition-colors"
+  >
+    BE A SPONSOR
+  </a>
 </div>
           </Reveal>
           <Reveal from="up" delay={450}>
