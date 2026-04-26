@@ -120,7 +120,7 @@ const Hero = ({ id, scrollY }: { id: string; scrollY: number }) => {
       <div className="absolute top-24 right-10 hidden md:block font-heading text-[10px] tracking-[0.25em] text-foreground/60 text-right space-y-1">
         <div>EV CLASS</div>
         <div>FORMULA STUDENT</div>
-        <div>TEAM ID · 023</div>
+        <div>TEAM ID · 014</div>
       </div>
 
       <div className="relative z-10 px-6 text-center max-w-6xl" style={{ transform: `translateY(${-py}px)`, opacity: 1 - scrollY / 800 }}>
@@ -258,6 +258,7 @@ const About = ({ id }: { id: string }) => (
    ===================================================== */
 
 const achievements = [
+  { year: "2026", event: "Formula Bharat", items: ["Cleared Electrical TI","Cleared Accumulator TI", "Cleared Mechanical TI", "AIR3-Acceleration"] },
   { year: "2025", event: "Formula Bharat", items: ["Cleared Accumulator TI", "Cleared Mechanical TI"] },
   { year: "2024", event: "Formula Bharat", items: ["AIR 2 — Business Plan", "AIR 2 — Engineering Design"] },
   { year: "2023", event: "Formula Imperial", items: ["Overall AIR 3 — EV Category", "Best Acceleration Award", "ISIE Future Award", "AIR 3 — Business Plan", "AIR 2 — Rulebook Quiz"] },
