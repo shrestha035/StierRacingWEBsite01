@@ -470,11 +470,25 @@ const Contact = ({ id }: { id: string }) => (
           <Reveal from="up" delay={600}>
             <div>
               <p className="font-heading text-[10px] tracking-[0.3em] text-background/50 mb-2">FOLLOW</p>
-              <div className="space-y-1 font-display text-2xl">
-                <p className="hover:text-primary cursor-pointer transition-colors">→ INSTAGRAM</p>
-                <p className="hover:text-primary cursor-pointer transition-colors">→ LINKEDIN</p>
-                <p className="hover:text-primary cursor-pointer transition-colors">→ YOUTUBE</p>
-              </div>
+             <div className="space-y-1 font-display text-2xl">
+  <a
+    href="https://www.instagram.com/stierracingmsrit/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="block hover:text-primary transition-colors"
+  >
+    → INSTAGRAM
+  </a>
+  <a
+    href="https://www.linkedin.com/company/stier-racing/posts/?feedView=all"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="block hover:text-primary transition-colors"
+  >
+    → LINKEDIN
+  </a>
+  <p className="text-white/50 cursor-not-allowed">→ YOUTUBE</p>
+</div>
             </div>
           </Reveal>
         </div>
