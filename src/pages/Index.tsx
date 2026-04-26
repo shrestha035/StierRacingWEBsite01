@@ -430,8 +430,7 @@ const Sponsors = ({ id }: { id: string }) => (
       href="https://mail.google.com/mail/?view=cm&fs=1&to=stierracing@gmail.com&su=Sponsor%20Inquiry"
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-block font-display text-base md:text-xl tracking-wide mb-6 hover:text-primary transition-colors"
-    >
+      className="inline-block font-display text-lg md:text-2xl tracking-wide mb-3 hover:text-primary transition-colors"    >
       BE A SPONSOR
     </a>
 
