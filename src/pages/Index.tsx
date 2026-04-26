@@ -296,7 +296,7 @@ const Car = ({ id }: { id: string }) => {
   return (
     <section id={id} ref={ref} className="snap-section grid grid-cols-1 md:grid-cols-2 overflow-hidden">
       <div className="relative bg-foreground flex items-center justify-center overflow-hidden p-12">
-        <div className="absolute top-6 left-6 font-heading text-[10px] tracking-[0.3em] text-background/60">PROTOTYPE · 023</div>
+        <div className="absolute top-6 left-6 font-heading text-[10px] tracking-[0.3em] text-background/60">PROTOTYPE · 014</div>
         <div className="absolute bottom-6 right-6 w-20 h-20 spin-slow">
           <svg viewBox="0 0 100 100" className="w-full h-full">
             <circle cx="50" cy="50" r="45" fill="none" stroke="hsl(var(--background))" strokeWidth="2" />
