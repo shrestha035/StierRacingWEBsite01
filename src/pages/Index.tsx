@@ -13,9 +13,9 @@ const CircuitRail = ({ progress, sections }: { progress: number; sections: { id:
   return (
     <div className="fixed left-4 top-0 h-screen z-40 pointer-events-none hidden lg:block">
       <svg width="180" height="100%" viewBox="0 0 180 1100" preserveAspectRatio="xMidYMid meet" className="h-full">
-        <path d={pathD} fill="none" stroke="hsl(var(--border))" strokeWidth="6" strokeLinecap="round" />
-        <path d={pathD} fill="none" stroke="hsl(var(--foreground) / 0.3)" strokeWidth="1" strokeDasharray="6 10" />
-        <path d={pathD} fill="none" stroke="hsl(var(--primary))" strokeWidth="6" strokeLinecap="round"
+       <path d={pathD} fill="none" stroke="hsl(var(--border))" strokeWidth="10" strokeLinecap="round" />
+       <path d={pathD} fill="none" stroke="hsl(var(--foreground) / 0.3)" strokeWidth="2" strokeDasharray="6 10" />
+       <path d={pathD} fill="none" stroke="hsl(var(--primary))" strokeWidth="10" strokeLinecap="round"
           strokeDasharray={totalLen} strokeDashoffset={dashOffset}
           style={{ filter: "drop-shadow(0 0 6px hsl(var(--primary) / 0.6))", transition: "stroke-dashoffset 0.2s linear" }}
         />
