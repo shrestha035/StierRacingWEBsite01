@@ -137,7 +137,7 @@ const Hero = ({ id, scrollY }: { id: string; scrollY: number }) => {
   <img
     src="/images/stierracing_red.png"
     alt="Stier Racing"
-    className="w-[70vw] md:w-[50vw] max-w-[900px] h-auto object-contain"
+    className="w-[80vw] md:w-[60vw] max-w-[1100px] h-auto object-contain"
   />
 </div>
 </Reveal>
