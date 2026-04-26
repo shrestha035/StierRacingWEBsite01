@@ -470,7 +470,7 @@ const Contact = ({ id }: { id: string }) => (
           <Reveal from="up" delay={600}>
             <div>
               <p className="font-heading text-[10px] tracking-[0.3em] text-background/50 mb-2">FOLLOW</p>
-             <div className="space-y-1 font-display text-2xl">
+            <div className="space-y-1 font-display text-2xl">
   <a
     href="https://www.instagram.com/stierracingmsrit/"
     target="_blank"
@@ -487,7 +487,6 @@ const Contact = ({ id }: { id: string }) => (
   >
     → LINKEDIN
   </a>
-  <p className="text-white/50 cursor-not-allowed">→ YOUTUBE</p>
 </div>
             </div>
           </Reveal>
