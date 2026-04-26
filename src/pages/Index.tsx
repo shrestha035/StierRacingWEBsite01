@@ -454,12 +454,15 @@ const Contact = ({ id }: { id: string }) => (
         </Reveal>
         <div className="grid md:grid-cols-3 gap-10">
           <Reveal from="up" delay={300}>
-            <div>
-              <p className="font-heading text-[10px] tracking-[0.3em] text-background/50 mb-2">EMAIL</p>
-              <a href="mailto:stierracing@gmail.com" className="font-display text-2xl md:text-3xl hover:text-primary transition-colors break-all">
-                stierracing@gmail.com
-              </a>
-            </div>
+          <div>
+  <p className="font-heading text-[10px] tracking-[0.3em] text-background/50 mb-2">EMAIL</p>
+  <a
+    href="mailto:stierracing@gmail.com?subject=Stier%20Racing%20Inquiry"
+    className="font-display text-2xl md:text-3xl hover:text-primary transition-colors break-all"
+  >
+    stierracing@gmail.com
+  </a>
+</div>
           </Reveal>
           <Reveal from="up" delay={450}>
             <div>
