@@ -331,9 +331,9 @@ const Car = ({ id }: { id: string }) => {
         <div className="grid grid-cols-2 gap-px bg-foreground mt-8 border-2 border-foreground">
           {[
             { k: "POWERTRAIN", v: "Electric" },
-            { k: "TOP SPEED", v: "120 km/h" },
+            { k: "TOP SPEED", v: "70km/h" },
             { k: "0–100", v: "< 4s" },
-            { k: "WEIGHT", v: "230 kg" },
+            { k: "WEIGHT", v: "280 kg" },
           ].map((s, i) => (
             <Reveal key={s.k} from="scale" delay={500 + i * 100}>
               <div className="bg-background p-4 hover:bg-primary hover:text-primary-foreground transition-colors">
