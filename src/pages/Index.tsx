@@ -67,14 +67,14 @@ const ScrollBar = ({ progress }: { progress: number }) => (
    NAV
    ===================================================== */
 
-const sections = [
-  { id: "hero", label: "START" },
-  { id: "about", label: "TEAM" },
-  { id: "achievements", label: "WINS" },
-  { id: "car", label: "E14" },
-  { id: "gallery", label: "GALLERY" },
-  { id: "sponsors", label: "SPONSORS" },
-  { id: "contact", label: "FINISH" },
+const navItems = [
+  { number: "00", label: "START", href: "#home" },
+  { number: "01", label: "TEAM", href: "#team" },
+  { number: "02", label: "WINS", href: "#wins" },
+  { number: "03", label: "E14", href: "#e14" },
+  { number: "04", label: "GALLERY", href: "#gallery" },
+  { number: "05", label: "SPONSORS", href: "#sponsors" },
+  { number: "06", label: "FINISH", href: "#finish" },
 ];
 
 const TopNav = ({ activeIndex }: { activeIndex: number }) => (
