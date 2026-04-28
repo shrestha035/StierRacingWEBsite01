@@ -513,51 +513,100 @@ const Gallery = ({ id }: { id: string }) => (
    ===================================================== */
 
 const sponsorLogos = [
-  "https://nimbleelectric.com/wp-content/uploads/2021/07/Nimble-Electric-Medium-1.png",
-  "https://am-ace.com/wp-content/uploads/2024/11/amace-logo.svg",
-  "https://www.acemultiaxes.com/img/images/logo.png",
-  "https://www.hastinenergy.com/images/hastin-energy.png",
-  "https://www.3ds.com/assets/3ds-navigation/3DS_corporate-logo_solidworks.svg",
-  "https://optimumg.com/wp-content/uploads/2024/04/OptimumG_VDS_logo_color500.png",
-  "https://etherealmachines.com/wp-content/uploads/2022/02/Logo-Vertical.svg",
-  "https://www.wilwood.com/images/wilwood_media_br_36.png",
+  `${import.meta.env.BASE_URL}acemicro.png`,
+  `${import.meta.env.BASE_URL}acetechno.jpeg`,
+  `${import.meta.env.BASE_URL}altium.png`,
+  `${import.meta.env.BASE_URL}Amasl.png`,
+  `${import.meta.env.BASE_URL}ansys.png`,
+  `${import.meta.env.BASE_URL}Aryan Circuits.png`,
+  `${import.meta.env.BASE_URL}Banna (1).png`,
+  `${import.meta.env.BASE_URL}Bender.png`,
+  `${import.meta.env.BASE_URL}enventure.png`,
+  `${import.meta.env.BASE_URL}Hastin Energy.png`,
+  `${import.meta.env.BASE_URL}hiraa.png`,
+  `${import.meta.env.BASE_URL}ICP India (1).png`,
+  `${import.meta.env.BASE_URL}ipg.png`,
+  `${import.meta.env.BASE_URL}ivp.png`,
+  `${import.meta.env.BASE_URL}Mathworks.png`,
+  `${import.meta.env.BASE_URL}nimble.png`,
+  `${import.meta.env.BASE_URL}Pitstop (1).jpg`,
+  `${import.meta.env.BASE_URL}racespeq.png`,
+  `${import.meta.env.BASE_URL}river.png`,
+  `${import.meta.env.BASE_URL}solidworks.png`,
+  `${import.meta.env.BASE_URL}sowparnika.png`,
+  `${import.meta.env.BASE_URL}triumph.png`,
+  `${import.meta.env.BASE_URL}ultrabio.png`,
 ];
 
 const Sponsors = ({ id }: { id: string }) => (
-  <SectionShell
-    id={id}
-    number="05"
-    kicker="Chapter 05 — Powered By"
-    title={
-      <>
-        OUR
-        <br />
-        PARTNERS<span className="text-primary">.</span>
-      </>
-    }
-  >
-   <Link
-  to="/sponsor"
-  className="inline-flex items-center justify-center px-10 md:px-14 h-14 md:h-16 bg-primary text-primary-foreground border-2 border-primary font-heading text-sm md:text-base tracking-[0.35em] uppercase transition-all mb-4 hover:bg-black hover:text-white hover:border-black"
->
-  Be a Sponsor →
-</Link>
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-foreground border-2 border-foreground">
-      {sponsorLogos.map((logo, i) => (
-        <Reveal key={i} from="scale" delay={150 + i * 80}>
-          <div className="bg-background h-32 flex items-center justify-center p-6 hover:bg-primary group transition-colors">
-            <img
-              src={logo}
-              alt=""
-              className="max-h-12 max-w-full object-contain grayscale group-hover:grayscale-0 group-hover:brightness-0 group-hover:invert transition-all"
-            />
-          </div>
-        </Reveal>
-      ))}
-    </div>
-  </SectionShell>
-);
+  <section id={id} className="snap-section flex flex-col justify-center bg-background overflow-hidden">
+    <div className="px-8 md:px-16 pt-24">
+      <Reveal from="left">
+        <div className="flex items-center gap-3 mb-3">
+          <span className="h-px w-10 bg-foreground" />
+          <span className="font-heading text-[10px] tracking-[0.4em] uppercase">
+            Chapter 05 — Powered By
+          </span>
+        </div>
+      </Reveal>
 
+      <Reveal from="up" delay={150}>
+        <h2 className="font-display text-6xl md:text-8xl leading-[0.9] tracking-tighter">
+          OUR
+          <br />
+          PARTNERS<span className="text-primary">.</span>
+        </h2>
+      </Reveal>
+
+      <Reveal from="up" delay={250}>
+        <Link
+          to="/sponsor"
+          className="inline-flex items-center justify-center px-10 md:px-14 h-14 md:h-16 bg-primary text-primary-foreground border-2 border-primary font-heading text-sm md:text-base tracking-[0.35em] uppercase transition-all mt-6 hover:bg-black hover:text-white hover:border-black"
+        >
+          Be a Sponsor →
+        </Link>
+      </Reveal>
+    </div>
+
+    <Reveal from="up" delay={350}>
+      <div className="mt-12 overflow-hidden">
+        <div className="flex gap-4 marquee items-center">
+          {[...sponsorLogos, ...sponsorLogos].map((logo, i) => (
+            <div
+              key={i}
+              className="flex-shrink-0 w-[260px] h-[160px] border-2 border-foreground bg-background flex items-center justify-center p-6 group hover:bg-primary transition-colors"
+            >
+              <img
+                src={logo}
+                alt={`Sponsor ${i + 1}`}
+                className="max-h-16 max-w-full object-contain grayscale group-hover:grayscale-0 group-hover:brightness-0 group-hover:invert transition-all"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </Reveal>
+
+    <Reveal from="up" delay={500}>
+      <div className="mt-6 overflow-hidden">
+        <div className="flex gap-4 marquee-reverse items-center">
+          {[...sponsorLogos, ...sponsorLogos].reverse().map((logo, i) => (
+            <div
+              key={i}
+              className="flex-shrink-0 w-[220px] h-[140px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
+            >
+              <img
+                src={logo}
+                alt={`Sponsor ${i + 1}`}
+                className="max-h-14 max-w-full object-contain grayscale group-hover:grayscale-0 group-hover:brightness-0 group-hover:invert transition-all"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </Reveal>
+  </section>
+);
 /* =====================================================
    CONTACT
    ===================================================== */
