@@ -305,6 +305,9 @@ const About = ({ id }: { id: string }) => (
           <p className="font-body text-lg leading-relaxed text-foreground/80 mt-4">
             Each year we design, manufacture and race a new prototype against the best engineering colleges in India.
           </p>
+          <p className="font-body text-lg leading-relaxed text-foreground/80 mt-4">
+            As the official Formula Student EV team of Ramaiah Institute of Technology, Stier Racing represents innovation, engineering excellence, and competitive student motorsport in Bangalore and across India.
+          </p>
         </div>
       </Reveal>
 
