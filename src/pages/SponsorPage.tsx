@@ -193,8 +193,7 @@ const SponsorPage = () => {
           </h2>
 
           <p className="font-body text-base md:text-lg text-muted-foreground mb-8 max-w-2xl">
-            If you would like to partner with us, continue below and we will take you
-            directly to the sponsor inquiry mail page.
+            Together, we can engineer the future of racing.
           </p>
 
           <a
