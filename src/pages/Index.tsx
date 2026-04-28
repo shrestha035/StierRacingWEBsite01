@@ -593,12 +593,12 @@ const Sponsors = ({ id }: { id: string }) => (
           {[...sponsorLogos, ...sponsorLogos].reverse().map((logo, i) => (
             <div
               key={i}
-              className="flex-shrink-0 w-[220px] h-[140px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
+              className="flex-shrink-0 w-[260px] h-[160px] border-2 border-foreground bg-background flex items-center justify-center p-6 group hover:bg-primary transition-colors"
             >
               <img
                 src={logo}
                 alt={`Sponsor ${i + 1}`}
-                className="max-h-14 max-w-full object-contain grayscale group-hover:grayscale-0 group-hover:brightness-0 group-hover:invert transition-all"
+                className="max-h-16 max-w-full object-contain grayscale group-hover:grayscale-0 group-hover:brightness-0 group-hover:invert transition-all"
               />
             </div>
           ))}
