@@ -53,7 +53,6 @@ const sponsorTiers = [
 const SponsorPage = () => {
   return (
     <div className="min-h-screen grid-bg bg-background text-foreground relative overflow-hidden">
-      {/* small check accent */}
       <div className="absolute top-24 right-10 w-20 h-20 checker opacity-20 hidden md:block" />
       <div className="absolute bottom-20 left-10 w-16 h-16 checker opacity-20 hidden md:block" />
 
@@ -109,53 +108,62 @@ const SponsorPage = () => {
         </p>
       </section>
 
-      {/* Sponsor cards */}
+      {/* Horizontal sponsor tiers */}
       <section className="max-w-[1600px] mx-auto px-6 md:px-10 pb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-          {sponsorTiers.map((tier) => (
+        <div className="space-y-6">
+          {sponsorTiers.map((tier, i) => (
             <div
               key={tier.name}
-              className={`border-2 rounded-2xl overflow-hidden ${
+              className={`relative overflow-hidden rounded-2xl border-2 ${
                 tier.highlight
-                  ? "border-primary shadow-[0_0_20px_hsl(var(--primary)/0.15)]"
+                  ? "border-primary shadow-[0_0_30px_hsl(var(--primary)/0.18)]"
                   : "border-foreground"
               }`}
             >
+              <div className="absolute top-4 right-4 w-12 h-12 checker opacity-10 hidden md:block" />
+
               {tier.highlight && (
                 <div className="bg-primary text-primary-foreground text-center font-heading text-sm tracking-[0.2em] uppercase py-3">
                   Most Popular
                 </div>
               )}
 
-              <div className="bg-foreground text-background p-8 h-full flex flex-col">
-                <h2 className="font-display text-4xl md:text-5xl leading-none mb-4">
-                  {tier.name}
-                </h2>
+              <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr]">
+                {/* Left side */}
+                <div className="bg-foreground text-background p-8 border-b-2 lg:border-b-0 lg:border-r-2 border-background/10 flex flex-col justify-center">
+                  <p className="font-heading text-[10px] tracking-[0.35em] uppercase text-background/60 mb-3">
+                    Tier 0{ i + 1 }
+                  </p>
 
-                <p className="font-display text-primary text-3xl md:text-4xl mb-8">
-                  {tier.price}
-                </p>
+                  <h2 className="font-display text-4xl md:text-5xl leading-none mb-4">
+                    {tier.name}
+                  </h2>
 
-                <ul className="space-y-5 flex-1">
-                  {tier.points.map((point) => (
-                    <li key={point} className="flex items-start gap-3">
-                      <span className="text-primary font-display text-2xl leading-none mt-0.5">
-                        ✓
-                      </span>
-                      <span className="font-body text-lg leading-relaxed text-background/80">
-                        {point}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                  <p className="font-display text-primary text-3xl md:text-4xl">
+                    {tier.price}
+                  </p>
+                </div>
 
-                <div className="mt-8">
-                  <a
-                    href="#continue-sponsor"
-                    className="block w-full text-center px-6 py-4 bg-background/15 border border-background/20 font-display text-xl hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors rounded-xl"
-                  >
-                    Become a Sponsor
-                  </a>
+                {/* Right side */}
+                <div className="bg-background p-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
+                    {tier.points.map((point, idx) => (
+                      <div key={point} className="flex items-start gap-3">
+                        <span className="text-primary font-display text-2xl leading-none mt-0.5">
+                          {tier.name === "Title"
+                            ? "◆"
+                            : tier.name === "Diamond"
+                            ? "●"
+                            : tier.name === "Platinum"
+                            ? "■"
+                            : "▲"}
+                        </span>
+                        <span className="font-body text-base md:text-lg leading-relaxed text-foreground/85">
+                          {point}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -163,7 +171,7 @@ const SponsorPage = () => {
         </div>
       </section>
 
-      {/* CTA section */}
+      {/* Bottom CTA */}
       <section
         id="continue-sponsor"
         className="max-w-[1600px] mx-auto px-6 md:px-10 pb-20 pt-6"
