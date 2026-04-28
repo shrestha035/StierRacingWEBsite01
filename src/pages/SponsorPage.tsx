@@ -4,7 +4,6 @@ const sponsorTiers = [
   {
     name: "Title",
     price: "INR 15L+",
-    highlight: true,
     points: [
       "Naming rights for our car and labs",
       "Access to the technology we develop",
@@ -114,25 +113,15 @@ const SponsorPage = () => {
           {sponsorTiers.map((tier, i) => (
             <div
               key={tier.name}
-              className={`relative overflow-hidden rounded-2xl border-2 ${
-                tier.highlight
-                  ? "border-primary shadow-[0_0_30px_hsl(var(--primary)/0.18)]"
-                  : "border-foreground"
-              }`}
+              className="relative overflow-hidden rounded-2xl border-2 border-foreground"
             >
               <div className="absolute top-4 right-4 w-12 h-12 checker opacity-10 hidden md:block" />
-
-              {tier.highlight && (
-                <div className="bg-primary text-primary-foreground text-center font-heading text-sm tracking-[0.2em] uppercase py-3">
-                  Most Popular
-                </div>
-              )}
 
               <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr]">
                 {/* Left side */}
                 <div className="bg-foreground text-background p-8 border-b-2 lg:border-b-0 lg:border-r-2 border-background/10 flex flex-col justify-center">
                   <p className="font-heading text-[10px] tracking-[0.35em] uppercase text-background/60 mb-3">
-                    Tier 0{ i + 1 }
+                    Tier 0{i + 1}
                   </p>
 
                   <h2 className="font-display text-4xl md:text-5xl leading-none mb-4">
@@ -147,7 +136,7 @@ const SponsorPage = () => {
                 {/* Right side */}
                 <div className="bg-background p-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
-                    {tier.points.map((point, idx) => (
+                    {tier.points.map((point) => (
                       <div key={point} className="flex items-start gap-3">
                         <span className="text-primary font-display text-2xl leading-none mt-0.5">
                           {tier.name === "Title"
@@ -187,7 +176,7 @@ const SponsorPage = () => {
           </div>
 
           <h2 className="font-display text-4xl md:text-6xl leading-[0.95] tracking-tighter mb-4">
-            LET'S BUILD
+            LET&apos;S BUILD
             <br />
             TOGETHER<span className="text-primary">.</span>
           </h2>
