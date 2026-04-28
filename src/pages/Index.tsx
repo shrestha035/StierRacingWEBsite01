@@ -159,7 +159,7 @@ const Hero = ({ id, scrollY }: { id: string; scrollY: number }) => {
         <Reveal from="down">
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="h-px w-12 bg-foreground" />
-            <span className="font-heading text-[10px] tracking-[0.4em] uppercase">Engineered to win</span>
+            <span className="font-heading text-[10px] tracking-[0.4em] uppercase">Engineered to Perform</span>
             <div className="h-px w-12 bg-foreground" />
           </div>
         </Reveal>
@@ -182,7 +182,7 @@ const Hero = ({ id, scrollY }: { id: string; scrollY: number }) => {
             <span>FORMULA STUDENT</span>
           </Reveal>
           <Reveal from="right" delay={500}>
-            <span className="px-4 py-1 border-2 border-foreground">EST · 2018</span>
+            <span className="px-4 py-1 border-2 border-foreground">EST · 2016</span>
           </Reveal>
         </div>
 
@@ -288,9 +288,9 @@ const About = ({ id }: { id: string }) => (
     kicker="Chapter 01 — The Team"
     title={
       <>
-        WE BUILD
+        NO NOISE 
         <br />
-        RACE CARS<span className="text-primary">.</span>
+        ONLY PERFORMANCE<span className="text-primary">.</span>
       </>
     }
   >
@@ -310,7 +310,7 @@ const About = ({ id }: { id: string }) => (
 
       <div className="grid grid-cols-2 gap-4">
         {[
-          { k: "EST", v: "2018" },
+          { k: "EST", v: "2016" },
           { k: "MEMBERS", v: "60+" },
           { k: "CARS BUILT", v: "5" },
           { k: "PODIUMS", v: "8+" },
