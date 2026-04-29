@@ -520,30 +520,43 @@ const Gallery = ({ id }: { id: string }) => (
    SPONSORS
    ===================================================== */
 
-const sponsorLogos = [
-  `${import.meta.env.BASE_URL}acemicro.png`,
-  `${import.meta.env.BASE_URL}acetechno.jpeg`,
-  `${import.meta.env.BASE_URL}altium.png`,
-  `${import.meta.env.BASE_URL}Amasl.png`,
-  `${import.meta.env.BASE_URL}ansys.png`,
-  `${import.meta.env.BASE_URL}Aryan Circuits.png`,
-  `${import.meta.env.BASE_URL}Banna (1).png`,
-  `${import.meta.env.BASE_URL}Bender.png`,
-  `${import.meta.env.BASE_URL}enventure.png`,
-  `${import.meta.env.BASE_URL}Hastin Energy.png`,
-  `${import.meta.env.BASE_URL}hiraa.png`,
-  `${import.meta.env.BASE_URL}ICP India (1).png`,
-  `${import.meta.env.BASE_URL}ipg.png`,
-  `${import.meta.env.BASE_URL}ivp.png`,
-  `${import.meta.env.BASE_URL}Mathworks.png`,
-  `${import.meta.env.BASE_URL}nimble.png`,
-  `${import.meta.env.BASE_URL}Pitstop (1).jpg`,
-  `${import.meta.env.BASE_URL}racespeq.png`,
-  `${import.meta.env.BASE_URL}river.png`,
-  `${import.meta.env.BASE_URL}solidworks.png`,
-  `${import.meta.env.BASE_URL}sowparnika.png`,
-  `${import.meta.env.BASE_URL}triumph.png`,
-  `${import.meta.env.BASE_URL}ultrabio.png`,
+const sponsorLogoRows = [
+  [
+    `${import.meta.env.BASE_URL}Amasl.png`,
+    `${import.meta.env.BASE_URL}Aryan Circuits.png`,
+    `${import.meta.env.BASE_URL}Banna (1).png`,
+    `${import.meta.env.BASE_URL}Bender .png`,
+    `${import.meta.env.BASE_URL}Hastin Energy.png`,
+    `${import.meta.env.BASE_URL}ICP India (1).png`,
+    `${import.meta.env.BASE_URL}Mathworks.png`,
+  ],
+  [
+    `${import.meta.env.BASE_URL}Pitstop (1).jpg`,
+    `${import.meta.env.BASE_URL}SimScale_Logo_PNG.png`,
+    `${import.meta.env.BASE_URL}TE Connectivity.jpeg`,
+    `${import.meta.env.BASE_URL}Transway Cargo Lifters (2).png`,
+    `${import.meta.env.BASE_URL}Universal Circuits (1).png`,
+    `${import.meta.env.BASE_URL}Voila (1).png`,
+    `${import.meta.env.BASE_URL}acemicro.png`,
+  ],
+  [
+    `${import.meta.env.BASE_URL}acetechno.jpeg`,
+    `${import.meta.env.BASE_URL}altium.png`,
+    `${import.meta.env.BASE_URL}ansys.png`,
+    `${import.meta.env.BASE_URL}enventure.png`,
+    `${import.meta.env.BASE_URL}hiraa.png`,
+    `${import.meta.env.BASE_URL}ipg.png`,
+    `${import.meta.env.BASE_URL}ivp.png`,
+  ],
+  [
+    `${import.meta.env.BASE_URL}nimble.png`,
+    `${import.meta.env.BASE_URL}racespeq.png`,
+    `${import.meta.env.BASE_URL}river.png`,
+    `${import.meta.env.BASE_URL}solidworks.png`,
+    `${import.meta.env.BASE_URL}sowparnika.png`,
+    `${import.meta.env.BASE_URL}triumph.png`,
+    `${import.meta.env.BASE_URL}ultrabio.png`,
+  ],
 ];
 
 const Sponsors = ({ id }: { id: string }) => (
@@ -551,8 +564,8 @@ const Sponsors = ({ id }: { id: string }) => (
     <div className="px-8 md:px-16 pt-24">
       <Reveal from="left">
         <div className="flex items-center gap-3 mb-3">
-          <span className="h-px w-10 bg-foreground" />
-          <span className="font-heading text-[10px] tracking-[0.4em] uppercase">
+          <span className="h-px w-10 bg-[#D4AF37]" />
+          <span className="font-heading text-[10px] tracking-[0.4em] uppercase text-[#D4AF37]">
             Chapter 05 — Powered By
           </span>
         </div>
@@ -576,43 +589,83 @@ const Sponsors = ({ id }: { id: string }) => (
       </Reveal>
     </div>
 
-    <Reveal from="up" delay={350}>
-      <div className="mt-12 overflow-hidden">
-        <div className="flex gap-4 marquee items-center">
-          {[...sponsorLogos, ...sponsorLogos].map((logo, i) => (
-            <div
-              key={i}
-              className="flex-shrink-0 w-[260px] h-[160px] border-2 border-foreground bg-background flex items-center justify-center p-6 group hover:bg-primary transition-colors"
-            >
-              <img
-                src={logo}
-                alt={`Sponsor ${i + 1}`}
-                className="max-h-16 max-w-full object-contain grayscale group-hover:grayscale-0 group-hover:brightness-0 group-hover:invert transition-all"
-              />
-            </div>
-          ))}
+    <div className="mt-12 space-y-5">
+      <Reveal from="up" delay={350}>
+        <div className="overflow-hidden">
+          <div className="flex gap-4 marquee items-center">
+            {[...sponsorLogoRows[0], ...sponsorLogoRows[0]].map((logo, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
+              >
+                <img
+                  src={logo}
+                  alt={`Sponsor ${i + 1}`}
+                  className="max-h-14 max-w-full object-contain grayscale group-hover:grayscale-0 group-hover:brightness-0 group-hover:invert transition-all"
+                />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </Reveal>
+      </Reveal>
 
-    <Reveal from="up" delay={500}>
-      <div className="mt-6 overflow-hidden">
-        <div className="flex gap-4 marquee-reverse items-center">
-          {[...sponsorLogos, ...sponsorLogos].reverse().map((logo, i) => (
-            <div
-              key={i}
-              className="flex-shrink-0 w-[260px] h-[160px] border-2 border-foreground bg-background flex items-center justify-center p-6 group hover:bg-primary transition-colors"
-            >
-              <img
-                src={logo}
-                alt={`Sponsor ${i + 1}`}
-                className="max-h-16 max-w-full object-contain grayscale group-hover:grayscale-0 group-hover:brightness-0 group-hover:invert transition-all"
-              />
-            </div>
-          ))}
+      <Reveal from="up" delay={450}>
+        <div className="overflow-hidden">
+          <div className="flex gap-4 marquee-reverse items-center">
+            {[...sponsorLogoRows[1], ...sponsorLogoRows[1]].map((logo, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
+              >
+                <img
+                  src={logo}
+                  alt={`Sponsor ${i + 8}`}
+                  className="max-h-14 max-w-full object-contain grayscale group-hover:grayscale-0 group-hover:brightness-0 group-hover:invert transition-all"
+                />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </Reveal>
+      </Reveal>
+
+      <Reveal from="up" delay={550}>
+        <div className="overflow-hidden">
+          <div className="flex gap-4 marquee items-center">
+            {[...sponsorLogoRows[2], ...sponsorLogoRows[2]].map((logo, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
+              >
+                <img
+                  src={logo}
+                  alt={`Sponsor ${i + 15}`}
+                  className="max-h-14 max-w-full object-contain grayscale group-hover:grayscale-0 group-hover:brightness-0 group-hover:invert transition-all"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+
+      <Reveal from="up" delay={650}>
+        <div className="overflow-hidden">
+          <div className="flex gap-4 marquee-reverse items-center">
+            {[...sponsorLogoRows[3], ...sponsorLogoRows[3]].map((logo, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
+              >
+                <img
+                  src={logo}
+                  alt={`Sponsor ${i + 22}`}
+                  className="max-h-14 max-w-full object-contain grayscale group-hover:grayscale-0 group-hover:brightness-0 group-hover:invert transition-all"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+    </div>
   </section>
 );
 /* =====================================================
