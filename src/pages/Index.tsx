@@ -266,8 +266,10 @@ const SectionShell = ({
       <div className="relative z-10 max-w-6xl w-full px-8 md:px-16 pt-24 pb-16">
         <Reveal from="left">
           <div className="flex items-center gap-3 mb-4">
-            <span className={`h-px w-10 ${dark ? "bg-background" : "bg-foreground"}`} />
-            <span className="font-heading text-[10px] tracking-[0.4em] uppercase">{kicker}</span>
+            <span className="h-px w-10 bg-[#D4AF37]" />
+            <span className="font-heading font-bold text-[10px] tracking-[0.4em] uppercase text-[#D4AF37]">
+              {kicker}
+            </span>
           </div>
         </Reveal>
 
@@ -280,7 +282,6 @@ const SectionShell = ({
     </section>
   );
 };
-
 /* =====================================================
    ABOUT
    ===================================================== */
