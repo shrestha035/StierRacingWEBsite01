@@ -620,7 +620,7 @@ const Sponsors = ({ id }: { id: string }) => (
               <img
   src={logo}
   alt={`Sponsor ${i + 8}`}
-  className="max-h-14 max-w-full object-contain transition-all group-hover:scale-105"
+  className="max-h-16 max-w-full object-contain transition-all group-hover:scale-105"
 />
               </div>
             ))}
@@ -639,7 +639,7 @@ const Sponsors = ({ id }: { id: string }) => (
                <img
   src={logo}
   alt={`Sponsor ${i + 15}`}
-  className="max-h-14 max-w-full object-contain transition-all group-hover:scale-105"
+  className="max-h-16 max-w-full object-contain transition-all group-hover:scale-105"
 />
               </div>
             ))}
@@ -658,7 +658,7 @@ const Sponsors = ({ id }: { id: string }) => (
                <img
   src={logo}
   alt={`Sponsor ${i + 22}`}
-  className="max-h-14 max-w-full object-contain transition-all group-hover:scale-105"
+  className="max-h-18 max-w-full object-contain transition-all group-hover:scale-105"
 />
               </div>
             ))}
