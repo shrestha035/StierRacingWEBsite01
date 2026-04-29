@@ -407,14 +407,14 @@ const Car = ({ id }: { id: string }) => {
           }`}
         />
       </div>
-
-      <div className="relative bg-background flex flex-col justify-center px-10 md:px-16 py-24">
-        <Reveal from="right">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="h-px w-10 bg-foreground" />
-            <span className="font-heading text-[10px] tracking-[0.4em] uppercase">Chapter 03 — The Machine</span>
-          </div>
-        </Reveal>
+<Reveal from="right">
+  <div className="flex items-center gap-3 mb-4">
+    <span className="h-px w-10 bg-[#D4AF37]" />
+    <span className="font-heading font-bold text-[10px] tracking-[0.4em] uppercase text-[#D4AF37]">
+      Chapter 03 — The Machine
+    </span>
+  </div>
+</Reveal>
 
         <Reveal from="right" delay={150}>
           <p className="font-display text-2xl text-muted-foreground">Meet</p>
@@ -470,12 +470,14 @@ const galleryImages = [
 const Gallery = ({ id }: { id: string }) => (
   <section id={id} className="snap-section flex flex-col justify-center bg-background overflow-hidden">
     <div className="px-8 md:px-16 pt-24">
-      <Reveal from="left">
-        <div className="flex items-center gap-3 mb-3">
-          <span className="h-px w-10 bg-foreground" />
-          <span className="font-heading text-[10px] tracking-[0.4em] uppercase">Chapter 04 — In Frame</span>
-        </div>
-      </Reveal>
+    <Reveal from="left">
+  <div className="flex items-center gap-3 mb-4">
+    <span className="h-px w-10 bg-[#D4AF37]" />
+    <span className="font-heading font-bold text-[10px] tracking-[0.4em] uppercase text-[#D4AF37]">
+      Chapter 04 — In Frame
+    </span>
+  </div>
+</Reveal>
 
       <Reveal from="up" delay={150}>
         <h2 className="font-display text-6xl md:text-8xl leading-[0.9] tracking-tighter">
@@ -562,14 +564,14 @@ const sponsorLogoRows = [
 const Sponsors = ({ id }: { id: string }) => (
   <section id={id} className="snap-section flex flex-col justify-center bg-background overflow-hidden">
     <div className="px-8 md:px-16 pt-24">
-      <Reveal from="left">
-        <div className="flex items-center gap-3 mb-3">
-          <span className="h-px w-10 bg-[#D4AF37]" />
-          <span className="font-heading text-[10px] tracking-[0.4em] uppercase text-[#D4AF37]">
-            Chapter 05 — Powered By
-          </span>
-        </div>
-      </Reveal>
+    <Reveal from="left">
+  <div className="flex items-center gap-3 mb-4">
+    <span className="h-px w-10 bg-[#D4AF37]" />
+    <span className="font-heading font-bold text-[10px] tracking-[0.4em] uppercase text-[#D4AF37]">
+      Chapter 05 — Powered By
+    </span>
+  </div>
+</Reveal>
 
       <Reveal from="up" delay={150}>
         <h2 className="font-display text-6xl md:text-8xl leading-[0.9] tracking-tighter">
@@ -676,12 +678,14 @@ const Contact = ({ id }: { id: string }) => (
   <section id={id} className="snap-section bg-foreground text-background flex flex-col justify-between overflow-hidden">
     <div className="flex-1 flex items-center px-8 md:px-16 pt-24">
       <div className="max-w-5xl w-full">
-        <Reveal from="left">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="h-px w-10 bg-background" />
-            <span className="font-heading text-[10px] tracking-[0.4em] uppercase">Chapter 06 — Finish Line</span>
-          </div>
-        </Reveal>
+      <Reveal from="left">
+  <div className="flex items-center gap-3 mb-4">
+    <span className="h-px w-10 bg-[#D4AF37]" />
+    <span className="font-heading font-bold text-[10px] tracking-[0.4em] uppercase text-[#D4AF37]">
+      Chapter 06 — Finish Line
+    </span>
+  </div>
+</Reveal>
 
         <Reveal from="up" delay={150}>
           <h2 className="font-display text-6xl md:text-9xl leading-[0.85] tracking-tighter mb-10">
