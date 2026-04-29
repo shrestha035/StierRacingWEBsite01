@@ -5,15 +5,14 @@ import { Reveal, useInView } from "@/hooks/useReveal";
 /* =====================================================
    CIRCUIT PROGRESS RAIL — fills as you scroll
    ===================================================== */
-
 const CircuitRail = ({ progress, sections }: { progress: number; sections: { id: string; label: string }[] }) => {
   const pathD =
-    "M 30 40 L 30 180 Q 30 220 70 220 L 110 220 Q 150 220 150 260 L 150 400 Q 150 440 110 440 L 70 440 Q 30 440 30 480 L 30 640 Q 30 680 70 680 L 110 680 Q 150 680 150 720 L 150 860 Q 150 900 110 900 L 70 900 Q 30 900 30 940 L 30 1080";
+    "M 150 40 L 150 180 Q 150 220 110 220 L 70 220 Q 30 220 30 260 L 30 400 Q 30 440 70 440 L 110 440 Q 150 440 150 480 L 150 640 Q 150 680 110 680 L 70 680 Q 30 680 30 720 L 30 860 Q 30 900 70 900 L 110 900 Q 150 900 150 940 L 150 1080";
   const totalLen = 1400;
   const dashOffset = totalLen - progress * totalLen;
 
   return (
-    <div className="fixed left-4 top-0 h-screen z-40 pointer-events-none hidden lg:block">
+    <div className="fixed right-4 top-0 h-screen z-40 pointer-events-none hidden lg:block">
       <svg width="180" height="100%" viewBox="0 0 180 1100" preserveAspectRatio="xMidYMid meet" className="h-full">
         <path d={pathD} fill="none" stroke="hsl(var(--border))" strokeWidth="10" strokeLinecap="round" />
         <path d={pathD} fill="none" stroke="hsl(var(--foreground) / 0.3)" strokeWidth="2" strokeDasharray="6 10" />
