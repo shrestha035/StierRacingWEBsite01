@@ -186,11 +186,16 @@ const Hero = ({ id, scrollY }: { id: string; scrollY: number }) => {
           </Reveal>
         </div>
 
-        <Reveal from="up" delay={700}>
-          <p className="mt-10 font-body text-base md:text-lg max-w-xl mx-auto text-muted-foreground">
-            Designed, built and raced by students of Ramaiah Institute of Technology, Bangalore.
-          </p>
-        </Reveal>
+      <Reveal from="up" delay={700}>
+  <div className="mt-10 max-w-3xl mx-auto text-center">
+    <p className="font-display text-xl md:text-2xl tracking-wide">
+      Stier Racing<span className="text-primary"> | </span>MSRIT EV Formula Team
+    </p>
+    <p className="mt-4 font-body text-base md:text-lg text-muted-foreground leading-relaxed">
+      Based out of Ramaiah Institute of Technology, Stier Racing is a Formula Student Electric team built by a multidisciplinary student group focused on designing, developing, and racing high-performance electric formula cars.
+    </p>
+  </div>
+</Reveal>
 
         <Reveal from="up" delay={900}>
           <div className="mt-10 flex items-center justify-center gap-4">
