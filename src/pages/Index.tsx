@@ -12,9 +12,9 @@ const ChapterKicker = ({
   children: React.ReactNode;
   center?: boolean;
 }) => (
-  <div className={`flex items-center gap-6 mb-6 ${center ? "justify-center" : ""}`}>
-    <span className="h-[2px] w-20 bg-[#D4AF37]" />
-    <span className="font-heading text-[11px] md:text-sm font-black tracking-[0.55em] uppercase text-[#D4AF37] whitespace-nowrap">
+  <div className={`flex items-center gap-5 mb-6 ${center ? "justify-center" : ""}`}>
+    <span className="h-[2px] w-16 bg-[#D4AF37]" />
+    <span className="font-heading text-[9px] md:text-[11px] font-black tracking-[0.42em] uppercase text-[#D4AF37] whitespace-nowrap">
       {children}
     </span>
   </div>
