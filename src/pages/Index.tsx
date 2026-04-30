@@ -3,6 +3,24 @@ import { Link } from "react-router-dom";
 import { Reveal, useInView } from "@/hooks/useReveal";
 
 /* =====================================================
+   COMMON CHAPTER HEADING
+   ===================================================== */
+const ChapterKicker = ({
+  children,
+  center = false,
+}: {
+  children: React.ReactNode;
+  center?: boolean;
+}) => (
+  <div className={`flex items-center gap-6 mb-6 ${center ? "justify-center" : ""}`}>
+    <span className="h-[2px] w-20 bg-[#D4AF37]" />
+    <span className="font-heading text-[11px] md:text-sm font-black tracking-[0.55em] uppercase text-[#D4AF37] whitespace-nowrap">
+      {children}
+    </span>
+  </div>
+);
+
+/* =====================================================
    CIRCUIT PROGRESS RAIL — fills as you scroll
    ===================================================== */
 const CircuitRail = ({ progress, sections }: { progress: number; sections: { id: string; label: string }[] }) => {
@@ -55,7 +73,6 @@ const CircuitRail = ({ progress, sections }: { progress: number; sections: { id:
 /* =====================================================
    SCROLL PROGRESS BAR (top)
    ===================================================== */
-
 const ScrollBar = ({ progress }: { progress: number }) => (
   <div className="fixed top-0 left-0 right-0 h-1 z-[60] bg-transparent">
     <div className="h-full bg-primary transition-[width] duration-150" style={{ width: `${progress * 100}%` }} />
@@ -65,7 +82,6 @@ const ScrollBar = ({ progress }: { progress: number }) => (
 /* =====================================================
    NAV
    ===================================================== */
-
 const sections = [
   { id: "hero", label: "START" },
   { id: "about", label: "TEAM" },
@@ -117,7 +133,6 @@ const TopNav = ({ activeIndex }: { activeIndex: number }) => (
 /* =====================================================
    HERO
    ===================================================== */
-
 const Hero = ({ id, scrollY }: { id: string; scrollY: number }) => {
   useEffect(() => {
     const i = setInterval(() => {}, 1000);
@@ -156,11 +171,7 @@ const Hero = ({ id, scrollY }: { id: string; scrollY: number }) => {
         style={{ transform: `translateY(${-py}px)`, opacity: 1 - scrollY / 800 }}
       >
         <Reveal from="down">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="h-px w-12 bg-foreground" />
-            <span className="font-heading text-[10px] tracking-[0.4em] uppercase">Engineered to Perform</span>
-            <div className="h-px w-12 bg-foreground" />
-          </div>
+          <ChapterKicker center>Chapter 01 — Engineered to Perform</ChapterKicker>
         </Reveal>
 
         <Reveal from="scale" delay={100}>
@@ -185,16 +196,16 @@ const Hero = ({ id, scrollY }: { id: string; scrollY: number }) => {
           </Reveal>
         </div>
 
-      <Reveal from="up" delay={700}>
-  <div className="mt-10 max-w-3xl mx-auto text-center">
-    <p className="font-display text-xl md:text-2xl tracking-wide">
-      Stier Racing<span className="text-primary"> | </span>MSRIT EV Formula Team
-    </p>
-    <p className="mt-4 font-body text-base md:text-lg text-muted-foreground leading-relaxed">
-      Based out of Ramaiah Institute of Technology, Stier Racing is a Formula Student Electric team built by a multidisciplinary student group focused on designing, developing, and racing high-performance electric formula cars.
-    </p>
-  </div>
-</Reveal>
+        <Reveal from="up" delay={700}>
+          <div className="mt-10 max-w-3xl mx-auto text-center">
+            <p className="font-display text-xl md:text-2xl tracking-wide">
+              Stier Racing<span className="text-primary"> | </span>MSRIT EV Formula Team
+            </p>
+            <p className="mt-4 font-body text-base md:text-lg text-muted-foreground leading-relaxed">
+              Based out of Ramaiah Institute of Technology, Stier Racing is a Formula Student Electric team built by a multidisciplinary student group focused on designing, developing, and racing high-performance electric formula cars.
+            </p>
+          </div>
+        </Reveal>
 
         <Reveal from="up" delay={900}>
           <div className="mt-10 flex items-center justify-center gap-4">
@@ -228,9 +239,8 @@ const Hero = ({ id, scrollY }: { id: string; scrollY: number }) => {
 };
 
 /* =====================================================
-   ANIMATED SECTION NUMBER (slides in)
+   ANIMATED SECTION NUMBER
    ===================================================== */
-
 const SectionShell = ({
   id,
   number,
@@ -265,12 +275,7 @@ const SectionShell = ({
 
       <div className="relative z-10 max-w-6xl w-full px-8 md:px-16 pt-24 pb-16">
         <Reveal from="left">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="h-px w-10 bg-[#D4AF37]" />
-            <span className="font-heading font-bold text-[10px] tracking-[0.4em] uppercase text-[#D4AF37]">
-              {kicker}
-            </span>
-          </div>
+          <ChapterKicker>{kicker}</ChapterKicker>
         </Reveal>
 
         <Reveal from="up" delay={150}>
@@ -282,18 +287,18 @@ const SectionShell = ({
     </section>
   );
 };
+
 /* =====================================================
    ABOUT
    ===================================================== */
-
 const About = ({ id }: { id: string }) => (
   <SectionShell
     id={id}
-    number="01"
-    kicker="Chapter 01 — The Team"
+    number="02"
+    kicker="Chapter 02 — The Team"
     title={
       <>
-        NO NOISE 
+        NO NOISE
         <br />
         ONLY PERFORMANCE<span className="text-primary">.</span>
       </>
@@ -338,7 +343,6 @@ const About = ({ id }: { id: string }) => (
 /* =====================================================
    ACHIEVEMENTS
    ===================================================== */
-
 const achievements = [
   { year: "2026", event: "Formula Bharat", items: ["Cleared Electrical TI", "Cleared Accumulator TI", "Cleared Mechanical TI", "AIR3-Acceleration"] },
   { year: "2025", event: "Formula Bharat", items: ["Cleared Accumulator TI", "Cleared Mechanical TI"] },
@@ -350,8 +354,8 @@ const achievements = [
 const Achievements = ({ id }: { id: string }) => (
   <SectionShell
     id={id}
-    number="02"
-    kicker="Chapter 02 — Track Record"
+    number="03"
+    kicker="Chapter 03 — Track Record"
     title={
       <>
         WINS &
@@ -385,7 +389,6 @@ const Achievements = ({ id }: { id: string }) => (
 /* =====================================================
    CAR
    ===================================================== */
-
 const Car = ({ id }: { id: string }) => {
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.3 });
 
@@ -407,14 +410,11 @@ const Car = ({ id }: { id: string }) => {
           }`}
         />
       </div>
-<Reveal from="right">
-  <div className="flex items-center gap-3 mb-4">
-    <span className="h-px w-10 bg-[#D4AF37]" />
-    <span className="font-heading font-bold text-[10px] tracking-[0.4em] uppercase text-[#D4AF37]">
-      Chapter 03 — The Machine
-    </span>
-  </div>
-</Reveal>
+
+      <div className="relative grid-bg flex flex-col justify-center px-8 md:px-16 pt-24 pb-16">
+        <Reveal from="right">
+          <ChapterKicker>Chapter 04 — The Machine</ChapterKicker>
+        </Reveal>
 
         <Reveal from="right" delay={150}>
           <p className="font-display text-2xl text-muted-foreground">Meet</p>
@@ -455,7 +455,6 @@ const Car = ({ id }: { id: string }) => {
 /* =====================================================
    GALLERY
    ===================================================== */
-
 const galleryImages = [
   "https://i.imgur.com/KkCs3pP.jpeg",
   "https://i.imgur.com/ZgYJ7vx.jpeg",
@@ -470,14 +469,9 @@ const galleryImages = [
 const Gallery = ({ id }: { id: string }) => (
   <section id={id} className="snap-section flex flex-col justify-center bg-background overflow-hidden">
     <div className="px-8 md:px-16 pt-24">
-    <Reveal from="left">
-  <div className="flex items-center gap-3 mb-4">
-    <span className="h-px w-10 bg-[#D4AF37]" />
-    <span className="font-heading font-bold text-[10px] tracking-[0.4em] uppercase text-[#D4AF37]">
-      Chapter 04 — In Frame
-    </span>
-  </div>
-</Reveal>
+      <Reveal from="left">
+        <ChapterKicker>Chapter 05 — In Frame</ChapterKicker>
+      </Reveal>
 
       <Reveal from="up" delay={150}>
         <h2 className="font-display text-6xl md:text-8xl leading-[0.9] tracking-tighter">
@@ -521,7 +515,6 @@ const Gallery = ({ id }: { id: string }) => (
 /* =====================================================
    SPONSORS
    ===================================================== */
-
 const sponsorLogoRows = [
   [
     `${import.meta.env.BASE_URL}Amasl.png`,
@@ -564,14 +557,9 @@ const sponsorLogoRows = [
 const Sponsors = ({ id }: { id: string }) => (
   <section id={id} className="snap-section flex flex-col justify-center bg-background overflow-hidden">
     <div className="px-8 md:px-16 pt-24">
-    <Reveal from="left">
-  <div className="flex items-center gap-3 mb-4">
-    <span className="h-px w-10 bg-[#D4AF37]" />
-    <span className="font-heading font-bold text-[10px] tracking-[0.4em] uppercase text-[#D4AF37]">
-      Chapter 05 — Powered By
-    </span>
-  </div>
-</Reveal>
+      <Reveal from="left">
+        <ChapterKicker>Chapter 06 — Powered By</ChapterKicker>
+      </Reveal>
 
       <Reveal from="up" delay={150}>
         <h2 className="font-display text-6xl md:text-8xl leading-[0.9] tracking-tighter">
@@ -600,11 +588,7 @@ const Sponsors = ({ id }: { id: string }) => (
                 key={i}
                 className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
               >
-               <img
-  src={logo}
-  alt={`Sponsor ${i + 1}`}
-  className="max-h-14 max-w-full object-contain transition-all group-hover:scale-105"
-/>
+                <img src={logo} alt={`Sponsor ${i + 1}`} className="max-h-14 max-w-full object-contain transition-all group-hover:scale-105" />
               </div>
             ))}
           </div>
@@ -619,11 +603,7 @@ const Sponsors = ({ id }: { id: string }) => (
                 key={i}
                 className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
               >
-              <img
-  src={logo}
-  alt={`Sponsor ${i + 8}`}
-  className="max-h-16 max-w-full object-contain transition-all group-hover:scale-105"
-/>
+                <img src={logo} alt={`Sponsor ${i + 8}`} className="max-h-16 max-w-full object-contain transition-all group-hover:scale-105" />
               </div>
             ))}
           </div>
@@ -638,11 +618,7 @@ const Sponsors = ({ id }: { id: string }) => (
                 key={i}
                 className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
               >
-               <img
-  src={logo}
-  alt={`Sponsor ${i + 15}`}
-  className="max-h-16 max-w-full object-contain transition-all group-hover:scale-105"
-/>
+                <img src={logo} alt={`Sponsor ${i + 15}`} className="max-h-16 max-w-full object-contain transition-all group-hover:scale-105" />
               </div>
             ))}
           </div>
@@ -657,11 +633,7 @@ const Sponsors = ({ id }: { id: string }) => (
                 key={i}
                 className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
               >
-               <img
-  src={logo}
-  alt={`Sponsor ${i + 22}`}
-  className="max-h-18 max-w-full object-contain transition-all group-hover:scale-105"
-/>
+                <img src={logo} alt={`Sponsor ${i + 22}`} className="max-h-18 max-w-full object-contain transition-all group-hover:scale-105" />
               </div>
             ))}
           </div>
@@ -670,26 +642,21 @@ const Sponsors = ({ id }: { id: string }) => (
     </div>
   </section>
 );
+
 /* =====================================================
    CONTACT
    ===================================================== */
-
 const Contact = ({ id }: { id: string }) => (
   <section id={id} className="snap-section bg-foreground text-background flex flex-col justify-between overflow-hidden">
     <div className="flex-1 flex items-center px-8 md:px-16 pt-24">
       <div className="max-w-5xl w-full">
-      <Reveal from="left">
-  <div className="flex items-center gap-3 mb-4">
-    <span className="h-px w-10 bg-[#D4AF37]" />
-    <span className="font-heading font-bold text-[10px] tracking-[0.4em] uppercase text-[#D4AF37]">
-      Chapter 06 — Finish Line
-    </span>
-  </div>
-</Reveal>
+        <Reveal from="left">
+          <ChapterKicker>Chapter 07 — Finish Line</ChapterKicker>
+        </Reveal>
 
         <Reveal from="up" delay={150}>
           <h2 className="font-display text-6xl md:text-9xl leading-[0.85] tracking-tighter mb-10">
-            LET'S
+            LET&apos;S
             <br />
             TALK<span className="text-primary">.</span>
           </h2>
@@ -759,7 +726,6 @@ const Contact = ({ id }: { id: string }) => (
 /* =====================================================
    FLOATING SCROLL CAR — drives across screen as you scroll
    ===================================================== */
-
 const FloatingCar = ({ progress }: { progress: number }) => (
   <div
     className="fixed bottom-4 z-40 pointer-events-none transition-[left] duration-200 ease-out hidden md:block"
@@ -777,7 +743,6 @@ const FloatingCar = ({ progress }: { progress: number }) => (
 /* =====================================================
    PAGE
    ===================================================== */
-
 const Index = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
