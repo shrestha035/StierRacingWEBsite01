@@ -1,799 +1,482 @@
-import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { Reveal, useInView } from "@/hooks/useReveal";
+import { useEffect, useRef, useState } from "react";import { Link } from "react-router-dom";import { Reveal, useInView } from "@/hooks/useReveal";
 
-/* =====================================================
-   COMMON CHAPTER HEADING
-   ===================================================== */
-const ChapterKicker = ({
-  children,
-  center = false,
-}: {
-  children: React.ReactNode;
-  center?: boolean;
-}) => (
-  <div className={`flex items-center gap-5 mb-6 ${center ? "justify-center" : ""}`}>
-    <span className="h-[2px] w-16 bg-[#D4AF37]" />
-    <span className="font-heading text-[9px] md:text-[11px] font-black tracking-[0.42em] uppercase text-[#D4AF37] whitespace-nowrap">
-      {children}
-    </span>
-  </div>
-);
+/* =====================================================COMMON CHAPTER HEADING===================================================== */const ChapterKicker = ({children,center = false,}: {children: React.ReactNode;center?: boolean;}) => (
 
-/* =====================================================
-   CIRCUIT PROGRESS RAIL — fills as you scroll
-   ===================================================== */
-const CircuitRail = ({ progress, sections }: { progress: number; sections: { id: string; label: string }[] }) => {
-  const pathD =
-    "M 150 40 L 150 180 Q 150 220 110 220 L 70 220 Q 30 220 30 260 L 30 400 Q 30 440 70 440 L 110 440 Q 150 440 150 480 L 150 640 Q 150 680 110 680 L 70 680 Q 30 680 30 720 L 30 860 Q 30 900 70 900 L 110 900 Q 150 900 150 940 L 150 1080";
-  const totalLen = 1400;
-  const dashOffset = totalLen - progress * totalLen;
+/* =====================================================CIRCUIT PROGRESS RAIL — fills as you scroll===================================================== */const CircuitRail = ({ progress, sections }: { progress: number; sections: { id: string; label: string }[] }) => {const pathD ="M 150 40 L 150 180 Q 150 220 110 220 L 70 220 Q 30 220 30 260 L 30 400 Q 30 440 70 440 L 110 440 Q 150 440 150 480 L 150 640 Q 150 680 110 680 L 70 680 Q 30 680 30 720 L 30 860 Q 30 900 70 900 L 110 900 Q 150 900 150 940 L 150 1080";const totalLen = 1400;const dashOffset = totalLen - progress * totalLen;
 
-  return (
-    <div className="fixed right-4 top-0 h-screen z-40 pointer-events-none hidden lg:block">
-      <svg width="180" height="100%" viewBox="0 0 180 1100" preserveAspectRatio="xMidYMid meet" className="h-full">
-        <path d={pathD} fill="none" stroke="hsl(var(--border))" strokeWidth="10" strokeLinecap="round" />
-        <path d={pathD} fill="none" stroke="hsl(var(--foreground) / 0.3)" strokeWidth="2" strokeDasharray="6 10" />
-        <path
-          d={pathD}
-          fill="none"
-          stroke="hsl(var(--primary))"
-          strokeWidth="10"
-          strokeLinecap="round"
-          strokeDasharray={totalLen}
-          strokeDashoffset={dashOffset}
-          style={{
-            filter: "drop-shadow(0 0 6px hsl(var(--primary) / 0.6))",
-            transition: "stroke-dashoffset 0.2s linear",
-          }}
-        />
-        <circle r="9" fill="hsl(var(--primary))" stroke="hsl(var(--background))" strokeWidth="3">
-          <animateMotion dur="0s" fill="freeze" path={pathD} keyPoints={`${progress};${progress}`} keyTimes="0;1" />
-        </circle>
-        {sections.map((s, i) => {
-          const t = i / Math.max(sections.length - 1, 1);
-          const active = progress >= t - 0.05;
-          return (
-            <circle
-              key={s.id}
-              r="6"
-              fill={active ? "hsl(var(--primary))" : "hsl(var(--background))"}
-              stroke="hsl(var(--foreground))"
-              strokeWidth="2"
-            >
-              <animateMotion dur="0s" fill="freeze" path={pathD} keyPoints={`${t};${t}`} keyTimes="0;1" />
-            </circle>
-          );
-        })}
-      </svg>
-    </div>
-  );
-};
+return (<pathd={pathD}fill="none"stroke="hsl(var(--primary))"strokeWidth="10"strokeLinecap="round"strokeDasharray={totalLen}strokeDashoffset={dashOffset}style={{filter: "drop-shadow(0 0 6px hsl(var(--primary) / 0.6))",transition: "stroke-dashoffset 0.2s linear",}}/><animateMotion dur="0s" fill="freeze" path={pathD} keyPoints={${progress};${progress}} keyTimes="0;1" />{sections.map((s, i) => {const t = i / Math.max(sections.length - 1, 1);const active = progress >= t - 0.05;return (<circlekey={s.id}r="6"fill={active ? "hsl(var(--primary))" : "hsl(var(--background))"}stroke="hsl(var(--foreground))"strokeWidth="2"><animateMotion dur="0s" fill="freeze" path={pathD} keyPoints={${t};${t}} keyTimes="0;1" />);})});};
 
-/* =====================================================
-   SCROLL PROGRESS BAR (top)
-   ===================================================== */
-const ScrollBar = ({ progress }: { progress: number }) => (
-  <div className="fixed top-0 left-0 right-0 h-1 z-[60] bg-transparent">
-    <div className="h-full bg-primary transition-[width] duration-150" style={{ width: `${progress * 100}%` }} />
-  </div>
-);
+/* =====================================================SCROLL PROGRESS BAR (top)===================================================== */const ScrollBar = ({ progress }: { progress: number }) => (
 
-/* =====================================================
-   NAV
-   ===================================================== */
-const sections = [
-  { id: "hero", label: "START" },
-  { id: "about", label: "TEAM" },
-  { id: "achievements", label: "WINS" },
-  { id: "car", label: "E14" },
-  { id: "gallery", label: "GALLERY" },
-  { id: "sponsors", label: "SPONSORS" },
-  { id: "contact", label: "FINISH" },
-];
+/* =====================================================NAV===================================================== */const sections = [{ id: "hero", label: "START" },{ id: "about", label: "TEAM" },{ id: "achievements", label: "WINS" },{ id: "car", label: "E14" },{ id: "gallery", label: "GALLERY" },{ id: "sponsors", label: "SPONSORS" },{ id: "contact", label: "FINISH" },];
 
 const TopNav = ({ activeIndex }: { activeIndex: number }) => (
-  <nav className="fixed top-1 left-0 right-0 z-50 border-b-2 border-foreground bg-background/90 backdrop-blur">
-    <div className="max-w-[1600px] mx-auto px-6 py-3 flex items-center justify-between">
-      <div className="flex items-center gap-2">
-        {/* Website top-left logo - NO BG logo */}
-        <img
-          src={`${import.meta.env.BASE_URL}images/logofinal_nobg.png`}
-          alt="Stier Racing Logo"
-          className="h-10 md:h-12 w-auto object-contain"
-        />
 
-        <div className="flex flex-col leading-none gap-1">
-          <img
-            src={`${import.meta.env.BASE_URL}images/stier_racing_no_bg.png`}
-            alt="Stier Racing"
-            className="h-7 md:h-9 w-auto object-contain"
-          />
-
-          <span className="font-body text-[10px] tracking-[0.3em] text-muted-foreground uppercase">
-            Ramaiah Institute · EV Formula
-          </span>
-        </div>
-      </div>
-
-      <div className="hidden md:flex items-center gap-1">
-        {sections.map((s, i) => (
-          <a
-            key={s.id}
-            href={`#${s.id}`}
-            className={`font-heading text-[10px] tracking-[0.25em] uppercase px-3 py-2 transition-colors ${
-              i === activeIndex
-                ? "bg-primary text-primary-foreground"
-                : "text-foreground/70 hover:text-foreground"
-            }`}
-          >
-            {String(i).padStart(2, "0")} · {s.label}
-          </a>
-        ))}
-      </div>
-    </div>
-  </nav>
-);
-/* =====================================================
-   HERO
-   ===================================================== */
-const Hero = ({ id, scrollY }: { id: string; scrollY: number }) => {
-  useEffect(() => {
-    const i = setInterval(() => {}, 1000);
-    return () => clearInterval(i);
-  }, []);
-
-  const timeStr = new Date().toLocaleTimeString("en-GB", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
-
-  const py = Math.min(scrollY, 600) * 0.3;
-
-  return (
-    <section id={id} className="snap-section grid-bg flex items-center justify-center overflow-hidden">
-      <div className="absolute bottom-6 left-32 w-12 h-32 checker opacity-80" style={{ transform: `translateY(${-py * 0.4}px)` }} />
-
-      <div className="absolute top-24 left-10 hidden md:block font-heading text-[10px] tracking-[0.25em] text-foreground/60 space-y-1">
-        <div>
-          SYS · ONLINE <span className="blink text-primary">●</span>
-        </div>
-        <div>{timeStr} IST</div>
-        <div>BLR · 12.99°N 77.57°E</div>
-        <div>SEASON · {new Date().getFullYear()}</div>
-      </div>
-
-      <div className="absolute top-24 right-10 hidden md:block font-heading text-[10px] tracking-[0.25em] text-foreground/60 text-right space-y-1">
-        <div>EV CLASS</div>
-        <div>FORMULA STUDENT</div>
-        <div>TEAM ID · 014</div>
-      </div>
-
-      <div
-        className="relative z-10 px-6 text-center max-w-6xl"
-        style={{ transform: `translateY(${-py}px)`, opacity: 1 - scrollY / 800 }}
+  <div className="hidden md:flex items-center gap-1">
+    {sections.map((s, i) => (
+      <a
+        key={s.id}
+        href={`#${s.id}`}
+        className={`font-heading text-[10px] tracking-[0.25em] uppercase px-3 py-2 transition-colors ${
+          i === activeIndex ? "bg-primary text-primary-foreground" : "text-foreground/70 hover:text-foreground"
+        }`}
       >
-        <Reveal from="down">
-          <ChapterKicker center>Chapter 01 — Engineered to Perform</ChapterKicker>
-        </Reveal>
+        {String(i).padStart(2, "0")} · {s.label}
+      </a>
+    ))}
+  </div>
+</div>
 
-        <Reveal from="scale" delay={100}>
-          <div className="flex justify-center -translate-x-3">
-            <img
-              src={`${import.meta.env.BASE_URL}images/stierracing_red.png`}
-              alt="Stier Racing"
-              className="w-[70vw] md:w-[50vw] max-w-[900px] h-auto object-contain"
-            />
-          </div>
-        </Reveal>
+/* =====================================================HERO===================================================== */const Hero = ({ id, scrollY }: { id: string; scrollY: number }) => {useEffect(() => {const i = setInterval(() => {}, 1000);return () => clearInterval(i);}, []);
 
-        <div className="mt-4 flex items-center justify-center gap-4 flex-wrap font-display text-2xl md:text-4xl">
-          <Reveal from="left" delay={300}>
-            <span className="px-4 py-1 bg-foreground text-background">EV</span>
-          </Reveal>
-          <Reveal from="up" delay={400}>
-            <span>FORMULA STUDENT</span>
-          </Reveal>
-          <Reveal from="right" delay={500}>
-            <span className="px-4 py-1 border-2 border-foreground">EST · 2016</span>
-          </Reveal>
-        </div>
+const timeStr = new Date().toLocaleTimeString("en-GB", {hour: "2-digit",minute: "2-digit",second: "2-digit",});
 
-        <Reveal from="up" delay={700}>
-          <div className="mt-10 max-w-3xl mx-auto text-center">
-            <p className="font-display text-xl md:text-2xl tracking-wide">
-              Stier Racing<span className="text-primary"> | </span>MSRIT EV Formula Team
-            </p>
-            <p className="mt-4 font-body text-base md:text-lg text-muted-foreground leading-relaxed">
-              Based out of Ramaiah Institute of Technology, Stier Racing is a Formula Student Electric team built by a multidisciplinary student group focused on designing, developing, and racing high-performance electric formula cars.
-            </p>
-          </div>
-        </Reveal>
+const py = Math.min(scrollY, 600) * 0.3;
 
-        <Reveal from="up" delay={900}>
-          <div className="mt-10 flex items-center justify-center gap-4">
-            <a
-              href="#about"
-              className="px-8 py-4 bg-primary text-primary-foreground font-heading text-xs tracking-[0.3em] uppercase hover:bg-foreground transition-colors"
-            >
-              Start Lap →
-            </a>
-            <a
-              href="#car"
-              className="px-8 py-4 border-2 border-foreground font-heading text-xs tracking-[0.3em] uppercase hover:bg-foreground hover:text-background transition-colors"
-            >
-              See E14
-            </a>
-          </div>
-        </Reveal>
+return (<div className="absolute bottom-6 left-32 w-12 h-32 checker opacity-80" style={{ transform: translateY(${-py * 0.4}px) }} />
+
+  <div className="absolute top-24 left-10 hidden md:block font-heading text-[10px] tracking-[0.25em] text-foreground/60 space-y-1">
+    <div>
+      SYS · ONLINE <span className="blink text-primary">●</span>
+    </div>
+    <div>{timeStr} IST</div>
+    <div>BLR · 12.99°N 77.57°E</div>
+    <div>SEASON · {new Date().getFullYear()}</div>
+  </div>
+
+  <div className="absolute top-24 right-10 hidden md:block font-heading text-[10px] tracking-[0.25em] text-foreground/60 text-right space-y-1">
+    <div>EV CLASS</div>
+    <div>FORMULA STUDENT</div>
+    <div>TEAM ID · 014</div>
+  </div>
+
+  <div
+    className="relative z-10 px-6 text-center max-w-6xl"
+    style={{ transform: `translateY(${-py}px)`, opacity: 1 - scrollY / 800 }}
+  >
+    <Reveal from="down">
+      <ChapterKicker center>Chapter 01 — Engineered to Perform</ChapterKicker>
+    </Reveal>
+
+    <Reveal from="scale" delay={100}>
+      <div className="flex justify-center -translate-x-3">
+        <img
+          src={`${import.meta.env.BASE_URL}images/stierracing_red.png`}
+          alt="Stier Racing"
+          className="w-[70vw] md:w-[50vw] max-w-[900px] h-auto object-contain"
+        />
       </div>
+    </Reveal>
 
-      <div className="absolute bottom-0 left-0 right-0 bg-foreground text-background py-3 overflow-hidden border-t-2 border-foreground">
-        <div className="flex whitespace-nowrap marquee">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <span key={i} className="font-display text-2xl mx-6 flex items-center gap-6">
-              SCROLL TO START <span className="text-primary">●</span> STIER RACING <span className="text-primary">●</span>
+    <div className="mt-4 flex items-center justify-center gap-4 flex-wrap font-display text-2xl md:text-4xl">
+      <Reveal from="left" delay={300}>
+        <span className="px-4 py-1 bg-foreground text-background">EV</span>
+      </Reveal>
+      <Reveal from="up" delay={400}>
+        <span>FORMULA STUDENT</span>
+      </Reveal>
+      <Reveal from="right" delay={500}>
+        <span className="px-4 py-1 border-2 border-foreground">EST · 2016</span>
+      </Reveal>
+    </div>
+
+    <Reveal from="up" delay={700}>
+      <div className="mt-10 max-w-3xl mx-auto text-center">
+        <p className="font-display text-xl md:text-2xl tracking-wide">
+          Stier Racing<span className="text-primary"> | </span>MSRIT EV Formula Team
+        </p>
+        <p className="mt-4 font-body text-base md:text-lg text-muted-foreground leading-relaxed">
+          Based out of Ramaiah Institute of Technology, Stier Racing is a Formula Student Electric team built by a multidisciplinary student group focused on designing, developing, and racing high-performance electric formula cars.
+        </p>
+      </div>
+    </Reveal>
+
+    <Reveal from="up" delay={900}>
+      <div className="mt-10 flex items-center justify-center gap-4">
+        <a
+          href="#about"
+          className="px-8 py-4 bg-primary text-primary-foreground font-heading text-xs tracking-[0.3em] uppercase hover:bg-foreground transition-colors"
+        >
+          Start Lap →
+        </a>
+        <a
+          href="#car"
+          className="px-8 py-4 border-2 border-foreground font-heading text-xs tracking-[0.3em] uppercase hover:bg-foreground hover:text-background transition-colors"
+        >
+          See E14
+        </a>
+      </div>
+    </Reveal>
+  </div>
+
+  <div className="absolute bottom-0 left-0 right-0 bg-foreground text-background py-3 overflow-hidden border-t-2 border-foreground">
+    <div className="flex whitespace-nowrap marquee">
+      {Array.from({ length: 20 }).map((_, i) => (
+        <span key={i} className="font-display text-2xl mx-6 flex items-center gap-6">
+          SCROLL TO START <span className="text-primary">●</span> STIER RACING <span className="text-primary">●</span>
+        </span>
+      ))}
+    </div>
+  </div>
+</section>
+
+);};
+
+/* =====================================================ANIMATED SECTION NUMBER===================================================== */const SectionShell = ({id,number,title,kicker,children,dark = false,}: {id: string;number: string;title: React.ReactNode;kicker: string;children: React.ReactNode;dark?: boolean;}) => {const { ref, inView } = useInView({ threshold: 0.3 });
+
+return (<sectionid={id}ref={ref}className={snap-section flex items-center justify-center overflow-hidden ${dark ? "bg-foreground text-background" : "grid-bg"}}><divclassName={absolute top-1/2 -translate-y-1/2 right-0 section-number pr-8 transition-all duration-1000 ${
+          inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-32"
+        }}style={dark ? { color: "hsl(var(--background) / 0.08)" } : undefined}>{number}
+
+  <div className="relative z-10 max-w-6xl w-full px-8 md:px-16 pt-24 pb-16">
+    <Reveal from="left">
+      <ChapterKicker>{kicker}</ChapterKicker>
+    </Reveal>
+
+    <Reveal from="up" delay={150}>
+      <h2 className="font-display text-6xl md:text-8xl leading-[0.9] tracking-tighter mb-10">{title}</h2>
+    </Reveal>
+
+    {children}
+  </div>
+</section>
+
+);};
+
+/* =====================================================ABOUT===================================================== */const About = ({ id }: { id: string }) => (<SectionShellid={id}number="02"kicker="Chapter 02 — The Team"title={<>NO NOISEONLY PERFORMANCE.</>}
+
+
+
+<div className="grid md:grid-cols-2 gap-10">
+
+  <Reveal from="left" delay={300}>
+    <div>
+      <p className="font-body text-lg leading-relaxed text-foreground/80">
+        Stier Racing is the Formula Student Electric team of <strong>Ramaiah Institute of Technology, Bangalore</strong>.
+        We are a group of student engineers, designers and managers obsessed with one thing —
+        <span className="text-primary font-semibold"> building the fastest, smartest EV race car on the grid.</span>
+      </p>
+      <p className="font-body text-lg leading-relaxed text-foreground/80 mt-4">
+        Each year we design, manufacture and race a new prototype against the best engineering colleges in India.
+      </p>
+      <p className="font-body text-lg leading-relaxed text-foreground/80 mt-4">
+        As the official Formula Student EV team of Ramaiah Institute of Technology, Stier Racing represents innovation, engineering excellence, and competitive student motorsport in Bangalore and across India.
+      </p>
+    </div>
+  </Reveal>
+
+  <div className="grid grid-cols-2 gap-4">
+   {[
+
+{ k: "EST", v: "2016" },{ k: "MEMBERS", v: "60+" },{ k: "CARS BUILT", v: "5" },{ k: "PODIUMS", v: "8+" },].map((s, i) => (<Reveal key={s.k} from="scale" delay={400 + i * 120}>{s.k}{s.v}))});
+
+/* =====================================================ACHIEVEMENTS===================================================== */const achievements = [{ year: "2026", event: "Formula Bharat", items: ["Cleared Electrical TI", "Cleared Accumulator TI", "Cleared Mechanical TI", "AIR3-Acceleration"] },{ year: "2025", event: "Formula Bharat", items: ["Cleared Accumulator TI", "Cleared Mechanical TI"] },{ year: "2024", event: "Formula Bharat", items: ["AIR 2 — Business Plan", "AIR 2 — Engineering Design"] },{ year: "2023", event: "Formula Imperial", items: ["Overall AIR 3 — EV Category", "Best Acceleration Award", "ISIE Future Award", "AIR 3 — Business Plan", "AIR 2 — Rulebook Quiz"] },{ year: "2022", event: "Formula Green — CHAMPIONS", items: ["1st — Engineering Design", "1st — Business Plan"] },];
+
+const Achievements = ({ id }: { id: string }) => (<SectionShellid={id}number="03"kicker="Chapter 03 — Track Record"title={<>WINS &AWARDS.</>}dark
+
+
+
+<div className="space-y-3 max-h-[55vh] overflow-y-auto pr-2">
+
+  {achievements.map((a, i) => (
+    <Reveal key={i} from="right" delay={200 + i * 150}>
+      <div className="grid grid-cols-12 gap-4 border-b border-background/20 pb-3 group hover:bg-background/5 px-2 transition-colors">
+        <div className="col-span-2 font-display text-4xl md:text-5xl text-primary">{a.year}</div>
+        <div className="col-span-4 font-heading text-xs tracking-[0.2em] uppercase pt-3">{a.event}</div>
+        <div className="col-span-6 font-body text-sm md:text-base pt-3">
+          {a.items.map((it, j) => (
+            <span key={j} className="inline-block mr-3">
+              {it}
+              {j < a.items.length - 1 && <span className="text-primary mx-2">/</span>}
             </span>
           ))}
         </div>
       </div>
-    </section>
-  );
-};
+    </Reveal>
+  ))}
+</div>
 
-/* =====================================================
-   ANIMATED SECTION NUMBER
-   ===================================================== */
-const SectionShell = ({
-  id,
-  number,
-  title,
-  kicker,
-  children,
-  dark = false,
-}: {
-  id: string;
-  number: string;
-  title: React.ReactNode;
-  kicker: string;
-  children: React.ReactNode;
-  dark?: boolean;
-}) => {
-  const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.3 });
+/* =====================================================CAR===================================================== */const Car = ({ id }: { id: string }) => {const { ref, inView } = useInView({ threshold: 0.3 });
 
-  return (
-    <section
-      id={id}
-      ref={ref}
-      className={`snap-section flex items-center justify-center overflow-hidden ${dark ? "bg-foreground text-background" : "grid-bg"}`}
-    >
-      <div
-        className={`absolute top-1/2 -translate-y-1/2 right-0 section-number pr-8 transition-all duration-1000 ${
-          inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-32"
-        }`}
-        style={dark ? { color: "hsl(var(--background) / 0.08)" } : undefined}
-      >
-        {number}
-      </div>
+return (PROTOTYPE · 014
 
-      <div className="relative z-10 max-w-6xl w-full px-8 md:px-16 pt-24 pb-16">
-        <Reveal from="left">
-          <ChapterKicker>{kicker}</ChapterKicker>
-        </Reveal>
+    <img
+      src={`${import.meta.env.BASE_URL}images/e14car.png`}
+      alt="E14"
+      className={`w-full max-w-lg object-contain transition-all duration-1000 ease-out ${
+        inView ? "opacity-100 translate-x-0 scale-100" : "opacity-0 -translate-x-40 scale-90"
+      }`}
+    />
+  </div>
 
-        <Reveal from="up" delay={150}>
-          <h2 className="font-display text-6xl md:text-8xl leading-[0.9] tracking-tighter mb-10">{title}</h2>
-        </Reveal>
+  <div className="relative grid-bg flex flex-col justify-center px-8 md:px-16 pt-24 pb-16">
+    <Reveal from="right">
+      <ChapterKicker>Chapter 04 — The Machine</ChapterKicker>
+    </Reveal>
 
-        {children}
-      </div>
-    </section>
-  );
-};
+    <Reveal from="right" delay={150}>
+      <p className="font-display text-2xl text-muted-foreground">Meet</p>
+    </Reveal>
 
-/* =====================================================
-   ABOUT
-   ===================================================== */
-const About = ({ id }: { id: string }) => (
-  <SectionShell
-    id={id}
-    number="02"
-    kicker="Chapter 02 — The Team"
-    title={
-      <>
-        NO NOISE
-        <br />
-        ONLY PERFORMANCE<span className="text-primary">.</span>
-      </>
-    }
-  >
-    <div className="grid md:grid-cols-2 gap-10">
-      <Reveal from="left" delay={300}>
-        <div>
-          <p className="font-body text-lg leading-relaxed text-foreground/80">
-            Stier Racing is the Formula Student Electric team of <strong>Ramaiah Institute of Technology, Bangalore</strong>.
-            We are a group of student engineers, designers and managers obsessed with one thing —
-            <span className="text-primary font-semibold"> building the fastest, smartest EV race car on the grid.</span>
-          </p>
-          <p className="font-body text-lg leading-relaxed text-foreground/80 mt-4">
-            Each year we design, manufacture and race a new prototype against the best engineering colleges in India.
-          </p>
-          <p className="font-body text-lg leading-relaxed text-foreground/80 mt-4">
-            As the official Formula Student EV team of Ramaiah Institute of Technology, Stier Racing represents innovation, engineering excellence, and competitive student motorsport in Bangalore and across India.
-          </p>
-        </div>
-      </Reveal>
+    <Reveal from="right" delay={250}>
+      <h2 className="font-display text-[18vw] md:text-[10vw] leading-[0.85] tracking-tighter italic">
+        E14<span className="text-primary">.</span>
+      </h2>
+    </Reveal>
 
-      <div className="grid grid-cols-2 gap-4">
-       {[
-  { k: "EST", v: "2016" },
-  { k: "MEMBERS", v: "60+" },
-  { k: "CARS BUILT", v: "5" },
-  { k: "PODIUMS", v: "8+" },
-].map((s, i) => (
-  <Reveal key={s.k} from="scale" delay={400 + i * 120}>
-    <div className="border border-[#D4AF37] p-[4px]">
-      <div className="border-2 border-foreground bg-background p-5 hover:bg-foreground hover:text-background transition-colors cursor-default">
-        <p className="font-heading text-[10px] tracking-[0.3em] text-muted-foreground">
-          {s.k}
-        </p>
-        <p className="font-display text-5xl md:text-6xl leading-none mt-1">
-          {s.v}
-        </p>
-      </div>
-    </div>
-  </Reveal>
-))}
-      </div>
-    </div>
-  </SectionShell>
-);
+    <Reveal from="up" delay={400}>
+      <p className="font-body text-base text-muted-foreground mt-4 max-w-md">
+        Our latest electric formula prototype — designed, fabricated and tested entirely by students.
+      </p>
+    </Reveal>
 
-/* =====================================================
-   ACHIEVEMENTS
-   ===================================================== */
-const achievements = [
-  { year: "2026", event: "Formula Bharat", items: ["Cleared Electrical TI", "Cleared Accumulator TI", "Cleared Mechanical TI", "AIR3-Acceleration"] },
-  { year: "2025", event: "Formula Bharat", items: ["Cleared Accumulator TI", "Cleared Mechanical TI"] },
-  { year: "2024", event: "Formula Bharat", items: ["AIR 2 — Business Plan", "AIR 2 — Engineering Design"] },
-  { year: "2023", event: "Formula Imperial", items: ["Overall AIR 3 — EV Category", "Best Acceleration Award", "ISIE Future Award", "AIR 3 — Business Plan", "AIR 2 — Rulebook Quiz"] },
-  { year: "2022", event: "Formula Green — CHAMPIONS", items: ["1st — Engineering Design", "1st — Business Plan"] },
-];
-
-const Achievements = ({ id }: { id: string }) => (
-  <SectionShell
-    id={id}
-    number="03"
-    kicker="Chapter 03 — Track Record"
-    title={
-      <>
-        WINS &
-        <br />
-        AWARDS<span className="text-primary">.</span>
-      </>
-    }
-    dark
-  >
-    <div className="space-y-3 max-h-[55vh] overflow-y-auto pr-2">
-      {achievements.map((a, i) => (
-        <Reveal key={i} from="right" delay={200 + i * 150}>
-          <div className="grid grid-cols-12 gap-4 border-b border-background/20 pb-3 group hover:bg-background/5 px-2 transition-colors">
-            <div className="col-span-2 font-display text-4xl md:text-5xl text-primary">{a.year}</div>
-            <div className="col-span-4 font-heading text-xs tracking-[0.2em] uppercase pt-3">{a.event}</div>
-            <div className="col-span-6 font-body text-sm md:text-base pt-3">
-              {a.items.map((it, j) => (
-                <span key={j} className="inline-block mr-3">
-                  {it}
-                  {j < a.items.length - 1 && <span className="text-primary mx-2">/</span>}
-                </span>
-              ))}
-            </div>
+    <div className="grid grid-cols-2 gap-px bg-foreground mt-8 border-2 border-foreground">
+      {[
+        { k: "POWERTRAIN", v: "Electric" },
+        { k: "TOP SPEED", v: "92km/h" },
+        { k: "0–100", v: "< 4s" },
+        { k: "WEIGHT", v: "240kg" },
+      ].map((s, i) => (
+        <Reveal key={s.k} from="scale" delay={500 + i * 100}>
+          <div className="bg-background p-4 hover:bg-primary hover:text-primary-foreground transition-colors">
+            <p className="font-heading text-[9px] tracking-[0.3em] text-muted-foreground">{s.k}</p>
+            <p className="font-display text-3xl mt-1">{s.v}</p>
           </div>
         </Reveal>
       ))}
     </div>
-  </SectionShell>
-);
+  </div>
+</section>
 
-/* =====================================================
-   CAR
-   ===================================================== */
-const Car = ({ id }: { id: string }) => {
-  const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.3 });
+);};
 
-  return (
-    <section id={id} ref={ref} className="snap-section grid grid-cols-1 md:grid-cols-2 overflow-hidden">
-      <div className="relative bg-foreground flex items-center justify-center overflow-hidden p-12">
-        <div className="absolute top-6 left-6 font-heading text-[10px] tracking-[0.3em] text-background/60">PROTOTYPE · 014</div>
-        <div className="absolute bottom-6 right-6 w-20 h-20 spin-slow">
-          <svg viewBox="0 0 100 100" className="w-full h-full">
-            <circle cx="50" cy="50" r="45" fill="none" stroke="hsl(var(--background))" strokeWidth="2" />
-          </svg>
-        </div>
-
-        <img
-          src={`${import.meta.env.BASE_URL}images/e14car.png`}
-          alt="E14"
-          className={`w-full max-w-lg object-contain transition-all duration-1000 ease-out ${
-            inView ? "opacity-100 translate-x-0 scale-100" : "opacity-0 -translate-x-40 scale-90"
-          }`}
-        />
-      </div>
-
-      <div className="relative grid-bg flex flex-col justify-center px-8 md:px-16 pt-24 pb-16">
-        <Reveal from="right">
-          <ChapterKicker>Chapter 04 — The Machine</ChapterKicker>
-        </Reveal>
-
-        <Reveal from="right" delay={150}>
-          <p className="font-display text-2xl text-muted-foreground">Meet</p>
-        </Reveal>
-
-        <Reveal from="right" delay={250}>
-          <h2 className="font-display text-[18vw] md:text-[10vw] leading-[0.85] tracking-tighter italic">
-            E14<span className="text-primary">.</span>
-          </h2>
-        </Reveal>
-
-        <Reveal from="up" delay={400}>
-          <p className="font-body text-base text-muted-foreground mt-4 max-w-md">
-            Our latest electric formula prototype — designed, fabricated and tested entirely by students.
-          </p>
-        </Reveal>
-
-        <div className="grid grid-cols-2 gap-px bg-foreground mt-8 border-2 border-foreground">
-          {[
-            { k: "POWERTRAIN", v: "Electric" },
-            { k: "TOP SPEED", v: "92km/h" },
-            { k: "0–100", v: "< 4s" },
-            { k: "WEIGHT", v: "240kg" },
-          ].map((s, i) => (
-            <Reveal key={s.k} from="scale" delay={500 + i * 100}>
-              <div className="bg-background p-4 hover:bg-primary hover:text-primary-foreground transition-colors">
-                <p className="font-heading text-[9px] tracking-[0.3em] text-muted-foreground">{s.k}</p>
-                <p className="font-display text-3xl mt-1">{s.v}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-/* =====================================================
-   GALLERY
-   ===================================================== */
-const galleryImages = [
-  "https://i.imgur.com/KkCs3pP.jpeg",
-  "https://i.imgur.com/ZgYJ7vx.jpeg",
-  "https://i.imgur.com/BATdRdY.jpeg",
-  "https://i.imgur.com/tw2KhR2.jpeg",
-  "https://i.imgur.com/z2VZjGC.jpeg",
-  "https://i.imgur.com/tK3A6Up.jpeg",
-  "https://i.imgur.com/WBc4ys2.jpeg",
-  "https://i.imgur.com/n7x4uns.jpeg",
-];
+/* =====================================================GALLERY===================================================== */const galleryImages = ["https://i.imgur.com/KkCs3pP.jpeg","https://i.imgur.com/ZgYJ7vx.jpeg","https://i.imgur.com/BATdRdY.jpeg","https://i.imgur.com/tw2KhR2.jpeg","https://i.imgur.com/z2VZjGC.jpeg","https://i.imgur.com/tK3A6Up.jpeg","https://i.imgur.com/WBc4ys2.jpeg","https://i.imgur.com/n7x4uns.jpeg",];
 
 const Gallery = ({ id }: { id: string }) => (
-  <section id={id} className="snap-section flex flex-col justify-center bg-background overflow-hidden">
-    <div className="px-8 md:px-16 pt-24">
-      <Reveal from="left">
-        <ChapterKicker>Chapter 05 — In Frame</ChapterKicker>
-      </Reveal>
 
-      <Reveal from="up" delay={150}>
-        <h2 className="font-display text-6xl md:text-8xl leading-[0.9] tracking-tighter">
-          GALLERY<span className="text-primary">.</span>
-        </h2>
-      </Reveal>
+  <Reveal from="up" delay={150}>
+    <h2 className="font-display text-6xl md:text-8xl leading-[0.9] tracking-tighter">
+      GALLERY<span className="text-primary">.</span>
+    </h2>
+  </Reveal>
+</div>
+
+<Reveal from="up" delay={300}>
+  <div className="mt-12 overflow-hidden">
+    <div className="flex gap-4 marquee">
+      {[...galleryImages, ...galleryImages].map((img, i) => (
+        <div
+          key={i}
+          className="flex-shrink-0 w-[420px] h-[280px] overflow-hidden border-2 border-foreground bg-foreground group relative"
+        >
+          <img src={img} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+          <div className="absolute top-2 left-2 font-heading text-[9px] tracking-[0.3em] text-background bg-foreground px-2 py-1">
+            0{(i % 8) + 1} / 08
+          </div>
+        </div>
+      ))}
     </div>
+  </div>
+</Reveal>
 
-    <Reveal from="up" delay={300}>
-      <div className="mt-12 overflow-hidden">
-        <div className="flex gap-4 marquee">
-          {[...galleryImages, ...galleryImages].map((img, i) => (
-            <div
-              key={i}
-              className="flex-shrink-0 w-[420px] h-[280px] overflow-hidden border-2 border-foreground bg-foreground group relative"
-            >
-              <img src={img} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-              <div className="absolute top-2 left-2 font-heading text-[9px] tracking-[0.3em] text-background bg-foreground px-2 py-1">
-                0{(i % 8) + 1} / 08
-              </div>
-            </div>
-          ))}
+<Reveal from="up" delay={500}>
+  <div className="mt-6 overflow-hidden">
+    <div className="flex gap-4 marquee-reverse">
+      {[...galleryImages, ...galleryImages].reverse().map((img, i) => (
+        <div key={i} className="flex-shrink-0 w-[320px] h-[200px] overflow-hidden border-2 border-foreground bg-foreground">
+          <img src={img} alt="" className="w-full h-full object-cover" />
         </div>
-      </div>
-    </Reveal>
+      ))}
+    </div>
+  </div>
+</Reveal>
 
-    <Reveal from="up" delay={500}>
-      <div className="mt-6 overflow-hidden">
-        <div className="flex gap-4 marquee-reverse">
-          {[...galleryImages, ...galleryImages].reverse().map((img, i) => (
-            <div key={i} className="flex-shrink-0 w-[320px] h-[200px] overflow-hidden border-2 border-foreground bg-foreground">
-              <img src={img} alt="" className="w-full h-full object-cover" />
-            </div>
-          ))}
-        </div>
-      </div>
-    </Reveal>
-  </section>
-);
-
-/* =====================================================
-   SPONSORS
-   ===================================================== */
-const sponsorLogoRows = [
-  [
-    `${import.meta.env.BASE_URL}Amasl.png`,
-    `${import.meta.env.BASE_URL}Aryan Circuits.png`,
-    `${import.meta.env.BASE_URL}Banna (1).png`,
-    `${import.meta.env.BASE_URL}Bender .png`,
-    `${import.meta.env.BASE_URL}Hastin Energy.png`,
-    `${import.meta.env.BASE_URL}ICP India (1).png`,
-    `${import.meta.env.BASE_URL}Mathworks.png`,
-  ],
-  [
-    `${import.meta.env.BASE_URL}Pitstop (1).jpg`,
-    `${import.meta.env.BASE_URL}SimScale_Logo_PNG.png`,
-    `${import.meta.env.BASE_URL}TE Connectivity.jpeg`,
-    `${import.meta.env.BASE_URL}Transway Cargo Lifters (2).png`,
-    `${import.meta.env.BASE_URL}Universal Circuits (1).png`,
-    `${import.meta.env.BASE_URL}Voila (1).png`,
-    `${import.meta.env.BASE_URL}acemicro.png`,
-  ],
-  [
-    `${import.meta.env.BASE_URL}acetechno.jpeg`,
-    `${import.meta.env.BASE_URL}altium.png`,
-    `${import.meta.env.BASE_URL}ansys.png`,
-    `${import.meta.env.BASE_URL}enventure.png`,
-    `${import.meta.env.BASE_URL}hiraa.png`,
-    `${import.meta.env.BASE_URL}ipg.png`,
-    `${import.meta.env.BASE_URL}ivp.png`,
-  ],
-  [
-    `${import.meta.env.BASE_URL}nimble.png`,
-    `${import.meta.env.BASE_URL}racespeq.png`,
-    `${import.meta.env.BASE_URL}river.png`,
-    `${import.meta.env.BASE_URL}solidworks.png`,
-    `${import.meta.env.BASE_URL}sowparnika.png`,
-    `${import.meta.env.BASE_URL}triumph.png`,
-    `${import.meta.env.BASE_URL}ultrabio.png`,
-  ],
-];
+/* =====================================================SPONSORS===================================================== */const sponsorLogoRows = [[${import.meta.env.BASE_URL}Amasl.png,${import.meta.env.BASE_URL}Aryan Circuits.png,${import.meta.env.BASE_URL}Banna (1).png,${import.meta.env.BASE_URL}Bender .png,${import.meta.env.BASE_URL}Hastin Energy.png,${import.meta.env.BASE_URL}ICP India (1).png,${import.meta.env.BASE_URL}Mathworks.png,],[${import.meta.env.BASE_URL}Pitstop (1).jpg,${import.meta.env.BASE_URL}SimScale_Logo_PNG.png,${import.meta.env.BASE_URL}TE Connectivity.jpeg,${import.meta.env.BASE_URL}Transway Cargo Lifters (2).png,${import.meta.env.BASE_URL}Universal Circuits (1).png,${import.meta.env.BASE_URL}Voila (1).png,${import.meta.env.BASE_URL}acemicro.png,],[${import.meta.env.BASE_URL}acetechno.jpeg,${import.meta.env.BASE_URL}altium.png,${import.meta.env.BASE_URL}ansys.png,${import.meta.env.BASE_URL}enventure.png,${import.meta.env.BASE_URL}hiraa.png,${import.meta.env.BASE_URL}ipg.png,${import.meta.env.BASE_URL}ivp.png,],[${import.meta.env.BASE_URL}nimble.png,${import.meta.env.BASE_URL}racespeq.png,${import.meta.env.BASE_URL}river.png,${import.meta.env.BASE_URL}solidworks.png,${import.meta.env.BASE_URL}sowparnika.png,${import.meta.env.BASE_URL}triumph.png,${import.meta.env.BASE_URL}ultrabio.png,],];
 
 const Sponsors = ({ id }: { id: string }) => (
-  <section id={id} className="snap-section flex flex-col justify-center bg-background overflow-hidden">
-    <div className="px-8 md:px-16 pt-24">
-      <Reveal from="left">
-        <ChapterKicker>Chapter 06 — Powered By</ChapterKicker>
-      </Reveal>
 
-      <Reveal from="up" delay={150}>
-        <h2 className="font-display text-6xl md:text-8xl leading-[0.9] tracking-tighter">
-          OUR
-          <br />
-          PARTNERS<span className="text-primary">.</span>
-        </h2>
-      </Reveal>
+  <Reveal from="up" delay={150}>
+    <h2 className="font-display text-6xl md:text-8xl leading-[0.9] tracking-tighter">
+      OUR
+      <br />
+      PARTNERS<span className="text-primary">.</span>
+    </h2>
+  </Reveal>
 
-      <Reveal from="up" delay={250}>
-        <Link
-          to="/sponsor"
-          className="inline-flex items-center justify-center px-10 md:px-14 h-14 md:h-16 bg-primary text-primary-foreground border-2 border-primary font-heading text-sm md:text-base tracking-[0.35em] uppercase transition-all mt-6 hover:bg-black hover:text-white hover:border-black"
-        >
-          Be a Sponsor →
-        </Link>
-      </Reveal>
-    </div>
+  <Reveal from="up" delay={250}>
+    <Link
+      to="/sponsor"
+      className="inline-flex items-center justify-center px-10 md:px-14 h-14 md:h-16 bg-primary text-primary-foreground border-2 border-primary font-heading text-sm md:text-base tracking-[0.35em] uppercase transition-all mt-6 hover:bg-black hover:text-white hover:border-black"
+    >
+      Be a Sponsor →
+    </Link>
+  </Reveal>
+</div>
 
-    <div className="mt-12 space-y-5">
-      <Reveal from="up" delay={350}>
-        <div className="overflow-hidden">
-          <div className="flex gap-4 marquee items-center">
-            {[...sponsorLogoRows[0], ...sponsorLogoRows[0]].map((logo, i) => (
-              <div
-                key={i}
-                className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
-              >
-                <img src={logo} alt={`Sponsor ${i + 1}`} className="max-h-14 max-w-full object-contain transition-all group-hover:scale-105" />
-              </div>
-            ))}
+<div className="mt-12 space-y-5">
+  <Reveal from="up" delay={350}>
+    <div className="overflow-hidden">
+      <div className="flex gap-4 marquee items-center">
+        {[...sponsorLogoRows[0], ...sponsorLogoRows[0]].map((logo, i) => (
+          <div
+            key={i}
+            className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
+          >
+            <img src={logo} alt={`Sponsor ${i + 1}`} className="max-h-14 max-w-full object-contain transition-all group-hover:scale-105" />
           </div>
+        ))}
+      </div>
+    </div>
+  </Reveal>
+
+  <Reveal from="up" delay={450}>
+    <div className="overflow-hidden">
+      <div className="flex gap-4 marquee-reverse items-center">
+        {[...sponsorLogoRows[1], ...sponsorLogoRows[1]].map((logo, i) => (
+          <div
+            key={i}
+            className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
+          >
+            <img src={logo} alt={`Sponsor ${i + 8}`} className="max-h-16 max-w-full object-contain transition-all group-hover:scale-105" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </Reveal>
+
+  <Reveal from="up" delay={550}>
+    <div className="overflow-hidden">
+      <div className="flex gap-4 marquee items-center">
+        {[...sponsorLogoRows[2], ...sponsorLogoRows[2]].map((logo, i) => (
+          <div
+            key={i}
+            className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
+          >
+            <img src={logo} alt={`Sponsor ${i + 15}`} className="max-h-16 max-w-full object-contain transition-all group-hover:scale-105" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </Reveal>
+
+  <Reveal from="up" delay={650}>
+    <div className="overflow-hidden">
+      <div className="flex gap-4 marquee-reverse items-center">
+        {[...sponsorLogoRows[3], ...sponsorLogoRows[3]].map((logo, i) => (
+          <div
+            key={i}
+            className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
+          >
+            <img src={logo} alt={`Sponsor ${i + 22}`} className="max-h-18 max-w-full object-contain transition-all group-hover:scale-105" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </Reveal>
+</div>
+
+/* =====================================================CONTACT===================================================== */const Contact = ({ id }: { id: string }) => (
+
+    <Reveal from="up" delay={150}>
+      <h2 className="font-display text-6xl md:text-9xl leading-[0.85] tracking-tighter mb-10">
+        LET&apos;S
+        <br />
+        TALK<span className="text-primary">.</span>
+      </h2>
+    </Reveal>
+
+    <div className="grid md:grid-cols-3 gap-10">
+      <Reveal from="up" delay={300}>
+        <div>
+          <p className="font-heading text-[10px] tracking-[0.3em] text-background/50 mb-2">EMAIL</p>
+          <a
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=Team@stierracing.in&su=Stier%20Racing%20Inquiry"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-display text-2xl md:text-3xl hover:text-primary transition-colors break-all"
+          >
+            Team@stierracing.in
+          </a>
         </div>
       </Reveal>
 
       <Reveal from="up" delay={450}>
-        <div className="overflow-hidden">
-          <div className="flex gap-4 marquee-reverse items-center">
-            {[...sponsorLogoRows[1], ...sponsorLogoRows[1]].map((logo, i) => (
-              <div
-                key={i}
-                className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
-              >
-                <img src={logo} alt={`Sponsor ${i + 8}`} className="max-h-16 max-w-full object-contain transition-all group-hover:scale-105" />
-              </div>
-            ))}
-          </div>
+        <div>
+          <p className="font-heading text-[10px] tracking-[0.3em] text-background/50 mb-2">ADDRESS</p>
+          <p className="font-body text-lg">
+            ESB 119, Ramaiah Institute of Technology, MSR Nagar, Bangalore — 560054
+          </p>
         </div>
       </Reveal>
 
-      <Reveal from="up" delay={550}>
-        <div className="overflow-hidden">
-          <div className="flex gap-4 marquee items-center">
-            {[...sponsorLogoRows[2], ...sponsorLogoRows[2]].map((logo, i) => (
-              <div
-                key={i}
-                className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
-              >
-                <img src={logo} alt={`Sponsor ${i + 15}`} className="max-h-16 max-w-full object-contain transition-all group-hover:scale-105" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </Reveal>
-
-      <Reveal from="up" delay={650}>
-        <div className="overflow-hidden">
-          <div className="flex gap-4 marquee-reverse items-center">
-            {[...sponsorLogoRows[3], ...sponsorLogoRows[3]].map((logo, i) => (
-              <div
-                key={i}
-                className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
-              >
-                <img src={logo} alt={`Sponsor ${i + 22}`} className="max-h-18 max-w-full object-contain transition-all group-hover:scale-105" />
-              </div>
-            ))}
+      <Reveal from="up" delay={600}>
+        <div>
+          <p className="font-heading text-[10px] tracking-[0.3em] text-background/50 mb-2">FOLLOW</p>
+          <div className="space-y-1 font-display text-2xl">
+            <a
+              href="https://www.instagram.com/stierracingmsrit/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block hover:text-primary transition-colors"
+            >
+              → INSTAGRAM
+            </a>
+            <a
+              href="https://www.linkedin.com/company/stier-racing/posts/?feedView=all"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block hover:text-primary transition-colors"
+            >
+              → LINKEDIN
+            </a>
           </div>
         </div>
       </Reveal>
     </div>
-  </section>
-);
-
-/* =====================================================
-   CONTACT
-   ===================================================== */
-const Contact = ({ id }: { id: string }) => (
-  <section id={id} className="snap-section bg-foreground text-background flex flex-col justify-between overflow-hidden">
-    <div className="flex-1 flex items-center px-8 md:px-16 pt-24">
-      <div className="max-w-5xl w-full">
-        <Reveal from="left">
-          <ChapterKicker>Chapter 07 — Finish Line</ChapterKicker>
-        </Reveal>
-
-        <Reveal from="up" delay={150}>
-          <h2 className="font-display text-6xl md:text-9xl leading-[0.85] tracking-tighter mb-10">
-            LET&apos;S
-            <br />
-            TALK<span className="text-primary">.</span>
-          </h2>
-        </Reveal>
-
-        <div className="grid md:grid-cols-3 gap-10">
-          <Reveal from="up" delay={300}>
-            <div>
-              <p className="font-heading text-[10px] tracking-[0.3em] text-background/50 mb-2">EMAIL</p>
-              <a
-                href="https://mail.google.com/mail/?view=cm&fs=1&to=Team@stierracing.in&su=Stier%20Racing%20Inquiry"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-display text-2xl md:text-3xl hover:text-primary transition-colors break-all"
-              >
-                Team@stierracing.in
-              </a>
-            </div>
-          </Reveal>
-
-          <Reveal from="up" delay={450}>
-            <div>
-              <p className="font-heading text-[10px] tracking-[0.3em] text-background/50 mb-2">ADDRESS</p>
-              <p className="font-body text-lg">
-                ESB 119, Ramaiah Institute of Technology, MSR Nagar, Bangalore — 560054
-              </p>
-            </div>
-          </Reveal>
-
-          <Reveal from="up" delay={600}>
-            <div>
-              <p className="font-heading text-[10px] tracking-[0.3em] text-background/50 mb-2">FOLLOW</p>
-              <div className="space-y-1 font-display text-2xl">
-                <a
-                  href="https://www.instagram.com/stierracingmsrit/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block hover:text-primary transition-colors"
-                >
-                  → INSTAGRAM
-                </a>
-                <a
-                  href="https://www.linkedin.com/company/stier-racing/posts/?feedView=all"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block hover:text-primary transition-colors"
-                >
-                  → LINKEDIN
-                </a>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </div>
-    </div>
-
-    <div className="h-12 checker" style={{ filter: "invert(1)" }} />
-    <div className="bg-background text-foreground py-4 px-8 flex items-center justify-between border-t-2 border-foreground">
-      <span className="font-display text-xl tracking-wide">STIER RACING</span>
-      <span className="font-body text-xs text-muted-foreground">
-        © {new Date().getFullYear()} · Ramaiah Institute of Technology
-      </span>
-    </div>
-  </section>
-);
-
-/* =====================================================
-   FLOATING SCROLL CAR — drives across screen as you scroll
-   ===================================================== */
-const FloatingCar = ({ progress }: { progress: number }) => (
-  <div
-    className="fixed bottom-4 z-40 pointer-events-none transition-[left] duration-200 ease-out hidden md:block"
-    style={{ left: `${Math.max(0, Math.min(82, 2 + progress * 86))}%` }}
-  >
-    <img
-      src={`${import.meta.env.BASE_URL}images/stier-car.png`}
-      alt="Stier Racing car"
-      className="w-[220px] h-auto object-contain drop-shadow-lg"
-      draggable={false}
-    />
   </div>
-);
+</div>
 
-/* =====================================================
-   PAGE
-   ===================================================== */
-const Index = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0);
-  const [scrollY, setScrollY] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(0);
+<div className="h-12 checker" style={{ filter: "invert(1)" }} />
+<div className="bg-background text-foreground py-4 px-8 flex items-center justify-between border-t-2 border-foreground">
+  <span className="font-display text-xl tracking-wide">STIER RACING</span>
+  <span className="font-body text-xs text-muted-foreground">
+    © {new Date().getFullYear()} · Ramaiah Institute of Technology
+  </span>
+</div>
 
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
+/* =====================================================FLOATING SCROLL CAR — drives across screen as you scroll===================================================== */const FloatingCar = ({ progress }: { progress: number }) => (
 
-    const onScroll = () => {
-      const max = el.scrollHeight - el.clientHeight;
-      const p = max > 0 ? el.scrollTop / max : 0;
-      setProgress(p);
-      setScrollY(el.scrollTop);
-      const idx = Math.round(el.scrollTop / el.clientHeight);
-      setActiveIndex(Math.min(Math.max(idx, 0), sections.length - 1));
-    };
+/* =====================================================PAGE===================================================== */const Index = () => {const containerRef = useRef(null);const [progress, setProgress] = useState(0);const [scrollY, setScrollY] = useState(0);const [activeIndex, setActiveIndex] = useState(0);
 
-    el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
-  }, []);
+useEffect(() => {const el = containerRef.current;if (!el) return;
 
-  return (
-    <>
-      <ScrollBar progress={progress} />
-      <TopNav activeIndex={activeIndex} />
-      <CircuitRail progress={progress} sections={sections} />
-      <FloatingCar progress={progress} />
-
-      <div ref={containerRef} className="snap-container">
-        <Hero id="hero" scrollY={scrollY} />
-        <About id="about" />
-        <Achievements id="achievements" />
-        <Car id="car" />
-        <Gallery id="gallery" />
-        <Sponsors id="sponsors" />
-        <Contact id="contact" />
-      </div>
-    </>
-  );
+const onScroll = () => {
+  const max = el.scrollHeight - el.clientHeight;
+  const p = max > 0 ? el.scrollTop / max : 0;
+  setProgress(p);
+  setScrollY(el.scrollTop);
+  const idx = Math.round(el.scrollTop / el.clientHeight);
+  setActiveIndex(Math.min(Math.max(idx, 0), sections.length - 1));
 };
+
+el.addEventListener("scroll", onScroll, { passive: true });
+return () => el.removeEventListener("scroll", onScroll);
+
+}, []);
+
+return (<>
+
+  <div ref={containerRef} className="snap-container">
+    <Hero id="hero" scrollY={scrollY} />
+    <About id="about" />
+    <Achievements id="achievements" />
+    <Car id="car" />
+    <Gallery id="gallery" />
+    <Sponsors id="sponsors" />
+    <Contact id="contact" />
+  </div>
+</>
+
+);};
 
 export default Index;
