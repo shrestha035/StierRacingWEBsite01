@@ -638,7 +638,7 @@ const sponsorLogoRows = [
     },
     {
       logo: `${import.meta.env.BASE_URL}triumph.png`,
-      url: "https://www.triumphmotorcycles.in/",
+      url: "#",
     },
     {
       logo: `${import.meta.env.BASE_URL}ultrabio.png`,
