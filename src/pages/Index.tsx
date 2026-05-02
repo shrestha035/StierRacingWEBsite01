@@ -845,7 +845,7 @@ const Contact = ({ id }: { id: string }) => (
 
 /* =====================================================
    FLOATING SCROLL CAR — drives across screen as you scroll
-   ===================================================== */
+   ===================================================== 
 const FloatingCar = ({ progress }: { progress: number }) => (
   <div
     className="fixed bottom-4 z-40 pointer-events-none transition-[left] duration-200 ease-out hidden md:block"
@@ -858,7 +858,7 @@ const FloatingCar = ({ progress }: { progress: number }) => (
       draggable={false}
     />
   </div>
-);
+);*/
 
 /* =====================================================
    PAGE
