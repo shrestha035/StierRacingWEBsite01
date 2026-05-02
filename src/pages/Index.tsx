@@ -540,7 +540,7 @@ const sponsorLogoRows = [
     `${import.meta.env.BASE_URL}TE Connectivity.jpeg`,
     `${import.meta.env.BASE_URL}Transway Cargo Lifters (2).png`,
     `${import.meta.env.BASE_URL}Universal Circuits (1).png`,
-    `${import.meta.env.BASE_URL}Voila (1).png`,
+    
     `${import.meta.env.BASE_URL}acemicro.png`,
   ],
   [
