@@ -91,30 +91,25 @@ const sections = [
   { id: "sponsors", label: "SPONSORS" },
   { id: "contact", label: "FINISH" },
 ];
-const TopNav = ({ activeIndex }: { activeIndex: number }) => (
-  <nav className="fixed top-1 left-0 right-0 z-50 border-b-2 border-foreground bg-background/90 backdrop-blur">
-    <div className="max-w-[1600px] mx-auto px-6 py-3 flex items-center justify-between">
-      <div className="flex items-center gap-2">
-        {/* Left bull logo */}
-        <img
-          src={`${import.meta.env.BASE_URL}images/logofinal_nobg.png`}
-          alt="Stier Racing Logo"
-          className="h-10 md:h-12 w-auto object-contain"
-        />
+<div className="flex items-center gap-2">
+  <img
+    src={`${import.meta.env.BASE_URL}images/logofinal_nobg.png`}
+    alt="Stier Racing Logo"
+    className="h-10 md:h-12 w-auto object-contain"
+  />
 
-        <div className="flex flex-col leading-none gap-1">
-          {/* Stier Racing text logo */}
-          <img
-            src={`${import.meta.env.BASE_URL}images/stier_racing_no_bg.png`}
-            alt="Stier Racing"
-            className="h-7 md:h-9 w-auto object-contain"
-          />
+  <div className="flex flex-col leading-none gap-1">
+    <img
+      src={`${import.meta.env.BASE_URL}images/stier_racing_no_bg.png`}
+      alt="Stier Racing"
+      className="h-7 md:h-9 w-auto object-contain"
+    />
 
-          <span className="font-body text-[10px] tracking-[0.3em] text-muted-foreground uppercase">
-            Ramaiah Institute · EV Formula
-          </span>
-        </div>
-      </div>
+    <span className="font-body text-[10px] tracking-[0.3em] text-muted-foreground uppercase">
+      Ramaiah Institute · EV Formula
+    </span>
+  </div>
+</div>
 
       <div className="hidden md:flex items-center gap-1">
         {sections.map((s, i) => (
