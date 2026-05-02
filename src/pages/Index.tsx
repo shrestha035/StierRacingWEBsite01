@@ -95,6 +95,7 @@ const TopNav = ({ activeIndex }: { activeIndex: number }) => (
   <nav className="fixed top-1 left-0 right-0 z-50 border-b-2 border-foreground bg-background/90 backdrop-blur">
     <div className="max-w-[1600px] mx-auto px-6 py-3 flex items-center justify-between">
       <div className="flex items-center gap-2">
+        {/* Left bull logo */}
         <img
           src={`${import.meta.env.BASE_URL}images/logofinal_nobg.png`}
           alt="Stier Racing Logo"
@@ -102,8 +103,9 @@ const TopNav = ({ activeIndex }: { activeIndex: number }) => (
         />
 
         <div className="flex flex-col leading-none gap-1">
+          {/* Stier Racing text logo */}
           <img
-            src={`${import.meta.env.BASE_URL}images/logofinal_nobg.png`}
+            src={`${import.meta.env.BASE_URL}images/stier_racing_no_bg.png`}
             alt="Stier Racing"
             className="h-7 md:h-9 w-auto object-contain"
           />
