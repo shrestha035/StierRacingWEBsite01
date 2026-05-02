@@ -329,7 +329,7 @@ const About = ({ id }: { id: string }) => (
   { k: "PODIUMS", v: "8+" },
 ].map((s, i) => (
   <Reveal key={s.k} from="scale" delay={400 + i * 120}>
-    <div className="border border-[#D4AF37] p-[2px]">
+    <div className="border border-[#D4AF37] p-[4px]">
       <div className="border-2 border-foreground bg-background p-5 hover:bg-foreground hover:text-background transition-colors cursor-default">
         <p className="font-heading text-[10px] tracking-[0.3em] text-muted-foreground">
           {s.k}
