@@ -3,12 +3,12 @@
   "short_name": "Stier Racing",
   "icons": [
     {
-      "src": "/images/stier-favicon.png",
+      "src": "/stier-favicon.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/images/stier-favicon.png",
+      "src": "/stier-favicon.png",
       "sizes": "512x512",
       "type": "image/png"
     }
