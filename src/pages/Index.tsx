@@ -322,19 +322,25 @@ const About = ({ id }: { id: string }) => (
       </Reveal>
 
       <div className="grid grid-cols-2 gap-4">
-        {[
-          { k: "EST", v: "2016" },
-          { k: "MEMBERS", v: "60+" },
-          { k: "CARS BUILT", v: "5" },
-          { k: "PODIUMS", v: "8+" },
-        ].map((s, i) => (
-          <Reveal key={s.k} from="scale" delay={400 + i * 120}>
-            <div className="border-2 border-foreground p-5 hover:bg-foreground hover:text-background transition-colors cursor-default">
-              <p className="font-heading text-[10px] tracking-[0.3em] text-muted-foreground">{s.k}</p>
-              <p className="font-display text-5xl md:text-6xl leading-none mt-1">{s.v}</p>
-            </div>
-          </Reveal>
-        ))}
+       {[
+  { k: "EST", v: "2016" },
+  { k: "MEMBERS", v: "60+" },
+  { k: "CARS BUILT", v: "5" },
+  { k: "PODIUMS", v: "8+" },
+].map((s, i) => (
+  <Reveal key={s.k} from="scale" delay={400 + i * 120}>
+    <div className="border border-[#D4AF37] p-[2px]">
+      <div className="border-2 border-foreground bg-background p-5 hover:bg-foreground hover:text-background transition-colors cursor-default">
+        <p className="font-heading text-[10px] tracking-[0.3em] text-muted-foreground">
+          {s.k}
+        </p>
+        <p className="font-display text-5xl md:text-6xl leading-none mt-1">
+          {s.v}
+        </p>
+      </div>
+    </div>
+  </Reveal>
+))}
       </div>
     </div>
   </SectionShell>
