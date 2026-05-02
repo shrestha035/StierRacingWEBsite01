@@ -526,43 +526,126 @@ const Gallery = ({ id }: { id: string }) => (
    ===================================================== */
 const sponsorLogoRows = [
   [
-    `${import.meta.env.BASE_URL}Amasl.png`,
-    `${import.meta.env.BASE_URL}Aryan Circuits.png`,
-    `${import.meta.env.BASE_URL}Banna (1).png`,
-    `${import.meta.env.BASE_URL}Bender .png`,
-    `${import.meta.env.BASE_URL}Hastin Energy.png`,
-    `${import.meta.env.BASE_URL}ICP India (1).png`,
-    `${import.meta.env.BASE_URL}Mathworks.png`,
+    {
+      logo: `${import.meta.env.BASE_URL}Amasl.png`,
+      url: "https://www.acemicromatic.net/",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}Aryan Circuits.png`,
+      url: "#",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}Banna (1).png`,
+      url: "#",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}Bender .png`,
+      url: "https://www.bender-in.com/",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}Hastin Energy.png`,
+      url: "https://hastinenergy.com/",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}ICP India (1).png`,
+      url: "http://www.icp-india.com/",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}Mathworks.png`,
+      url: "https://in.mathworks.com/",
+    },
   ],
   [
-    `${import.meta.env.BASE_URL}Pitstop (1).jpg`,
-    `${import.meta.env.BASE_URL}SimScale_Logo_PNG.png`,
-    `${import.meta.env.BASE_URL}TE Connectivity.jpeg`,
-    `${import.meta.env.BASE_URL}Transway Cargo Lifters (2).png`,
-    `${import.meta.env.BASE_URL}Universal Circuits (1).png`,
-    `${import.meta.env.BASE_URL}Voila.png`,
-    `${import.meta.env.BASE_URL}acemicro.png`,
+    {
+      logo: `${import.meta.env.BASE_URL}Pitstop (1).jpg`,
+      url: "#",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}SimScale_Logo_PNG.png`,
+      url: "https://www.simscale.com/",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}TE Connectivity.jpeg`,
+      url: "https://www.te.com/en/home.html",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}Transway Cargo Lifters (2).png`,
+      url: "https://www.transwaycargolifters.com/",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}Universal Circuits (1).png`,
+      url: "https://www.universalcircuits.in/",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}Voila.png`,
+      url: "#",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}acemicro.png`,
+      url: "https://www.acemicromatic.net/",
+    },
   ],
   [
-    `${import.meta.env.BASE_URL}acetechno.jpeg`,
-    `${import.meta.env.BASE_URL}altium.png`,
-    `${import.meta.env.BASE_URL}ansys.png`,
-    `${import.meta.env.BASE_URL}enventure.png`,
-    `${import.meta.env.BASE_URL}hiraa.png`,
-    `${import.meta.env.BASE_URL}ipg.png`,
-    `${import.meta.env.BASE_URL}ivp.png`,
+    {
+      logo: `${import.meta.env.BASE_URL}acetechno.jpeg`,
+      url: "https://acetechnologiesgroup.com/",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}altium.png`,
+      url: "https://www.altium.com/",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}ansys.png`,
+      url: "https://www.ansys.com/en-in",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}enventure.png`,
+      url: "https://www.enventure.com/",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}hiraa.png`,
+      url: "https://rhira.com/",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}ipg.png`,
+      url: "https://www.ipg-automotive.com/",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}ivp.png`,
+      url: "#",
+    },
   ],
   [
-    `${import.meta.env.BASE_URL}nimble.png`,
-    `${import.meta.env.BASE_URL}racespeq.png`,
-    `${import.meta.env.BASE_URL}river.png`,
-    `${import.meta.env.BASE_URL}solidworks.png`,
-    `${import.meta.env.BASE_URL}sowparnika.png`,
-    `${import.meta.env.BASE_URL}triumph.png`,
-    `${import.meta.env.BASE_URL}ultrabio.png`,
+    {
+      logo: `${import.meta.env.BASE_URL}nimble.png`,
+      url: "#",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}racespeq.png`,
+      url: "https://racespeconline.com/",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}river.png`,
+      url: "https://www.rideriver.com/",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}solidworks.png`,
+      url: "https://www.solidworks.com/",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}sowparnika.png`,
+      url: "https://www.sowparnika.com/",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}triumph.png`,
+      url: "https://www.triumphmotorcycles.in/",
+    },
+    {
+      logo: `${import.meta.env.BASE_URL}ultrabio.png`,
+      url: "https://ultrabio.org/",
+    },
   ],
 ];
-
 const Sponsors = ({ id }: { id: string }) => (
   <section id={id} className="snap-section flex flex-col justify-center bg-background overflow-hidden">
     <div className="px-8 md:px-16 pt-24">
@@ -592,14 +675,21 @@ const Sponsors = ({ id }: { id: string }) => (
       <Reveal from="up" delay={350}>
         <div className="overflow-hidden">
           <div className="flex gap-4 marquee items-center">
-            {[...sponsorLogoRows[0], ...sponsorLogoRows[0]].map((logo, i) => (
-              <div
-                key={i}
-                className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
-              >
-                <img src={logo} alt={`Sponsor ${i + 1}`} className="max-h-14 max-w-full object-contain transition-all group-hover:scale-105" />
-              </div>
-            ))}
+           {[...sponsorLogoRows[0], ...sponsorLogoRows[0]].map((sponsor, i) => (
+  <a
+    key={i}
+    href={sponsor.url}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
+  >
+    <img
+      src={sponsor.logo}
+      alt={`Sponsor ${i + 1}`}
+      className="max-h-14 max-w-full object-contain transition-all group-hover:scale-105"
+    />
+  </a>
+))}
           </div>
         </div>
       </Reveal>
@@ -607,14 +697,21 @@ const Sponsors = ({ id }: { id: string }) => (
       <Reveal from="up" delay={450}>
         <div className="overflow-hidden">
           <div className="flex gap-4 marquee-reverse items-center">
-            {[...sponsorLogoRows[1], ...sponsorLogoRows[1]].map((logo, i) => (
-              <div
-                key={i}
-                className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
-              >
-                <img src={logo} alt={`Sponsor ${i + 8}`} className="max-h-16 max-w-full object-contain transition-all group-hover:scale-105" />
-              </div>
-            ))}
+           {[...sponsorLogoRows[1], ...sponsorLogoRows[1]].map((sponsor, i) => (
+  <a
+    key={i}
+    href={sponsor.url}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
+  >
+    <img
+      src={sponsor.logo}
+      alt={`Sponsor ${i + 8}`}
+      className="max-h-16 max-w-full object-contain transition-all group-hover:scale-105"
+    />
+  </a>
+))}
           </div>
         </div>
       </Reveal>
@@ -622,14 +719,21 @@ const Sponsors = ({ id }: { id: string }) => (
       <Reveal from="up" delay={550}>
         <div className="overflow-hidden">
           <div className="flex gap-4 marquee items-center">
-            {[...sponsorLogoRows[2], ...sponsorLogoRows[2]].map((logo, i) => (
-              <div
-                key={i}
-                className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
-              >
-                <img src={logo} alt={`Sponsor ${i + 15}`} className="max-h-16 max-w-full object-contain transition-all group-hover:scale-105" />
-              </div>
-            ))}
+            {[...sponsorLogoRows[2], ...sponsorLogoRows[2]].map((sponsor, i) => (
+  <a
+    key={i}
+    href={sponsor.url}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
+  >
+    <img
+      src={sponsor.logo}
+      alt={`Sponsor ${i + 15}`}
+      className="max-h-16 max-w-full object-contain transition-all group-hover:scale-105"
+    />
+  </a>
+))}
           </div>
         </div>
       </Reveal>
@@ -637,14 +741,21 @@ const Sponsors = ({ id }: { id: string }) => (
       <Reveal from="up" delay={650}>
         <div className="overflow-hidden">
           <div className="flex gap-4 marquee-reverse items-center">
-            {[...sponsorLogoRows[3], ...sponsorLogoRows[3]].map((logo, i) => (
-              <div
-                key={i}
-                className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
-              >
-                <img src={logo} alt={`Sponsor ${i + 22}`} className="max-h-18 max-w-full object-contain transition-all group-hover:scale-105" />
-              </div>
-            ))}
+           {[...sponsorLogoRows[3], ...sponsorLogoRows[3]].map((sponsor, i) => (
+  <a
+    key={i}
+    href={sponsor.url}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
+  >
+    <img
+      src={sponsor.logo}
+      alt={`Sponsor ${i + 22}`}
+      className="max-h-18 max-w-full object-contain transition-all group-hover:scale-105"
+    />
+  </a>
+))}
           </div>
         </div>
       </Reveal>
