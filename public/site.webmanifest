@@ -3,12 +3,12 @@
   "short_name": "Stier Racing",
   "icons": [
     {
-      "src": "/images/logofinal_nobg.png",
+      "src": "/images/stier-favicon.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/images/logofinal_nobg.png",
+      "src": "/images/stier-favicon.png",
       "sizes": "512x512",
       "type": "image/png"
     }
