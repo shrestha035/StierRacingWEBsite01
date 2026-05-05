@@ -175,9 +175,10 @@ const Crowdfund = () => {
 
           <Reveal from="up" delay={250}>
             <p className="font-body text-lg md:text-xl text-background/70 leading-relaxed max-w-3xl mb-12">
-              Pick a part, support the build, and help us get closer to the grid.
-              Images can be added later — for now, these boxes show the part, amount and purpose.
-            </p>
+  Pick a part, support the build, and help us get closer to the grid. Your contribution
+  helps student engineers turn late nights, calculations, prototypes, and workshop effort
+  into a real electric Formula car ready to compete.
+</p>
           </Reveal>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -270,10 +271,10 @@ const Crowdfund = () => {
                     UPI: aniket.rbelgaonkar@okhdfcbank
                   </p>
 
-                  <p className="font-body text-sm md:text-base text-muted-foreground leading-relaxed mt-4 max-w-md">
-                    Scan the QR code using any UPI app. After a few seconds, a thank-you message
-                    will appear and you will be redirected to the finish page.
-                  </p>
+                 <p className="font-body text-sm md:text-base text-muted-foreground leading-relaxed mt-4 max-w-md">
+  Scan the QR code using any UPI app and become a part of our journey. Your support
+  helps power the next chapter of Stier Racing.
+</p>
 
                   <button
                     onClick={() => setShowQR(false)}
