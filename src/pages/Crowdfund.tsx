@@ -49,11 +49,8 @@ const Crowdfund = () => {
   const [contributed, setContributed] = useState(false);
   const navigate = useNavigate();
 
-  const upiLink =
-    "upi://pay?pa=aniket.rbelgaonkar@okhdfcbank&pn=Stier%20Racing&cu=INR";
-
-  const handlePaymentClick = () => {
-    window.open(upiLink, "_blank");
+  const handleShowQR = () => {
+    setShowQR(true);
 
     setTimeout(() => {
       setContributed(true);
@@ -61,7 +58,7 @@ const Crowdfund = () => {
       setTimeout(() => {
         navigate("/#contact");
       }, 3500);
-    }, 5000);
+    }, 8000);
   };
 
   return (
@@ -241,10 +238,10 @@ const Crowdfund = () => {
 
               <Reveal from="up" delay={350}>
                 <button
-                  onClick={() => setShowQR(true)}
+                  onClick={handleShowQR}
                   className="mt-10 px-10 md:px-14 h-14 md:h-16 bg-primary text-primary-foreground border-2 border-primary font-heading text-sm md:text-base tracking-[0.35em] uppercase transition-all hover:bg-black hover:text-white hover:border-black"
                 >
-                  Open Payment QR →
+                  Contribute Now →
                 </button>
               </Reveal>
             </>
@@ -255,34 +252,24 @@ const Crowdfund = () => {
               <div className="max-w-xl mx-auto border-[4px] border-[#D4AF37] p-[5px] bg-background">
                 <div className="border-2 border-foreground p-8 md:p-10 flex flex-col items-center justify-center text-center">
                   <p className="font-heading text-[10px] tracking-[0.35em] uppercase text-[#D4AF37] mb-6">
-                    Scan or tap to support the build
+                    Scan to support the build
                   </p>
 
-                  <button
-                    onClick={handlePaymentClick}
-                    className="bg-white p-4 border-2 border-foreground hover:scale-105 transition-transform"
-                  >
+                  <div className="bg-white p-4 border-2 border-foreground">
                     <img
                       src={`${import.meta.env.BASE_URL}images/aniQR.png`}
                       alt="Scan QR to support Stier Racing"
                       className="w-56 h-56 md:w-64 md:h-64 object-contain"
                     />
-                  </button>
+                  </div>
 
                   <p className="font-heading text-[10px] tracking-[0.25em] uppercase text-muted-foreground mt-6">
                     UPI: aniket.rbelgaonkar@okhdfcbank
                   </p>
 
-                  <button
-                    onClick={handlePaymentClick}
-                    className="mt-8 px-8 py-4 bg-primary text-primary-foreground font-heading text-xs tracking-[0.3em] uppercase hover:bg-foreground transition-colors"
-                  >
-                    Pay Now →
-                  </button>
-
                   <p className="font-body text-sm md:text-base text-muted-foreground leading-relaxed mt-4 max-w-md">
-                    Tap Pay Now or scan the QR code. After a few seconds, a thank-you message will
-                    appear and you will be redirected to the finish page.
+                    Scan the QR code using any UPI app. After a few seconds, a thank-you message
+                    will appear and you will be redirected to the finish page.
                   </p>
 
                   <button
