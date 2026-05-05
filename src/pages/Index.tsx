@@ -92,6 +92,17 @@ const sections = [
   { id: "contact", label: "FINISH" },
 ];
 
+const navItems = [
+  { id: "hero", label: "START", href: "#hero" },
+  { id: "about", label: "TEAM", href: "#about" },
+  { id: "achievements", label: "WINS", href: "#achievements" },
+  { id: "car", label: "E14", href: "#car" },
+  { id: "gallery", label: "GALLERY", href: "#gallery" },
+  { id: "sponsors", label: "SPONSORS", href: "#sponsors" },
+  { id: "crowdfund", label: "CROWD FUND", path: "/crowdfund" },
+  { id: "contact", label: "FINISH", href: "#contact" },
+];
+
 const TopNav = ({ activeIndex }: { activeIndex: number }) => (
   <nav className="fixed top-1 left-0 right-0 z-50 border-b-2 border-foreground bg-background/90 backdrop-blur">
     <div className="max-w-[1600px] mx-auto px-6 py-3 flex items-center justify-between">
@@ -116,19 +127,35 @@ const TopNav = ({ activeIndex }: { activeIndex: number }) => (
       </div>
 
       <div className="hidden md:flex items-center gap-1">
-        {sections.map((s, i) => (
-          <a
-            key={s.id}
-            href={`#${s.id}`}
-            className={`font-heading text-[10px] tracking-[0.25em] uppercase px-3 py-2 transition-colors ${
-              i === activeIndex
-                ? "bg-primary text-primary-foreground"
-                : "text-foreground/70 hover:text-foreground"
-            }`}
-          >
-            {String(i).padStart(2, "0")} · {s.label}
-          </a>
-        ))}
+        {navItems.map((item, i) => {
+          const isActive = sections[activeIndex]?.id === item.id;
+
+          if ("path" in item) {
+            return (
+              <Link
+                key={item.id}
+                to={item.path}
+                className="font-heading text-[10px] tracking-[0.25em] uppercase px-3 py-2 transition-colors text-foreground/70 hover:text-foreground"
+              >
+                {String(i).padStart(2, "0")} · {item.label}
+              </Link>
+            );
+          }
+
+          return (
+            <a
+              key={item.id}
+              href={item.href}
+              className={`font-heading text-[10px] tracking-[0.25em] uppercase px-3 py-2 transition-colors ${
+                isActive
+                  ? "bg-primary text-primary-foreground"
+                  : "text-foreground/70 hover:text-foreground"
+              }`}
+            >
+              {String(i).padStart(2, "0")} · {item.label}
+            </a>
+          );
+        })}
       </div>
     </div>
   </nav>
