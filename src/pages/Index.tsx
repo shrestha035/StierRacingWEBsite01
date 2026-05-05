@@ -95,7 +95,7 @@ const sections = [
 
 const navItems = [
   { id: "hero", label: "START", href: "#hero" },
-  { id: "about", label: "TEAM", href: "#about" },
+  { id: "about", label: "THE TEAM", href: "#about" },
   { id: "achievements", label: "WINS", href: "#achievements" },
   { id: "car", label: "E14", href: "#car" },
   { id: "gallery", label: "GALLERY", href: "#gallery" },
@@ -141,7 +141,7 @@ const TopNav = ({ activeIndex }: { activeIndex: number }) => (
                   : "text-foreground/70 hover:text-foreground"
               }`}
             >
-              {String(i).padStart(2, "0")} · {item.label}
+{String(i).padStart(2, "0")}.{item.label}
             </a>
           );
         })}
