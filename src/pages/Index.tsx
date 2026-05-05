@@ -893,8 +893,8 @@ const Index = () => {
       const p = max > 0 ? el.scrollTop / max : 0;
       setProgress(p);
       setScrollY(el.scrollTop);
-      const idx = Math.round(el.scrollTop / el.clientHeight);
-      setActiveIndex(Math.min(Math.max(idx, 0), sections.length - 1));
+const idx = Math.floor((el.scrollTop + el.clientHeight * 0.35) / el.clientHeight);
+setActiveIndex(Math.min(Math.max(idx, 0), sections.length - 1));
     };
 
     el.addEventListener("scroll", onScroll, { passive: true });
