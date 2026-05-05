@@ -13,6 +13,7 @@ const ChapterKicker = ({ children }: { children: React.ReactNode }) => (
 const Crowdfund = () => {
   return (
     <main className="min-h-screen grid-bg bg-background text-foreground overflow-hidden">
+      {/* TOP NAV */}
       <nav className="fixed top-1 left-0 right-0 z-50 border-b-2 border-foreground bg-background/90 backdrop-blur">
         <div className="max-w-[1600px] mx-auto px-6 py-3 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
@@ -44,13 +45,15 @@ const Crowdfund = () => {
         </div>
       </nav>
 
+      {/* MAIN CROWDFUND PAGE */}
       <section className="min-h-screen flex items-center justify-center px-8 md:px-16 pt-32 pb-16">
         <div className="max-w-7xl w-full">
           <Reveal from="left">
-            <ChapterKicker>Chapter 06 — Crowd Fund</ChapterKicker>
+            <ChapterKicker>Chapter 07 — Crowd Fund</ChapterKicker>
           </Reveal>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* LEFT CONTENT */}
             <div>
               <Reveal from="up" delay={150}>
                 <h1 className="font-display text-6xl md:text-9xl leading-[0.85] tracking-tighter mb-8">
@@ -96,8 +99,18 @@ const Crowdfund = () => {
                   Ramaiah Institute of Technology on the Formula Student stage.
                 </p>
               </Reveal>
+
+              <Reveal from="up" delay={550}>
+                <a
+                  href="mailto:Team@stierracing.in?subject=Stier%20Racing%20Crowdfunding%20Support"
+                  className="inline-flex mt-8 px-8 py-4 bg-primary text-primary-foreground font-heading text-xs tracking-[0.3em] uppercase hover:bg-foreground transition-colors"
+                >
+                  Contact Team
+                </a>
+              </Reveal>
             </div>
 
+            {/* RIGHT QR BOX */}
             <Reveal from="right" delay={300}>
               <div className="border-[4px] border-[#D4AF37] p-[5px] bg-background">
                 <div className="border-2 border-foreground p-8 md:p-10 flex flex-col items-center justify-center text-center min-h-[480px]">
@@ -106,14 +119,14 @@ const Crowdfund = () => {
                   </p>
 
                   <a
-                    href="upi://pay?pa=YOUR-UPI-ID@bank&pn=Stier%20Racing&cu=INR"
+                    href="upi://pay?pa=aniket.rbelgaonkar@okhdfcbank&pn=Stier%20Racing&cu=INR"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-white p-4 border-2 border-foreground hover:scale-105 transition-transform"
                   >
                     <img
-                      src={`${import.meta.env.BASE_URL}images/donation-qr.png`}
-                      alt="Stier Racing Crowdfunding QR"
+                      src={`${import.meta.env.BASE_URL}images/aniQR.png`}
+                      alt="Scan QR to support Stier Racing"
                       className="w-56 h-56 md:w-64 md:h-64 object-contain"
                     />
                   </a>
@@ -127,6 +140,10 @@ const Crowdfund = () => {
                   <p className="font-body text-sm md:text-base text-muted-foreground leading-relaxed mt-4 max-w-md">
                     Scan the QR code or tap it to contribute. Every contribution moves us one step
                     closer to building a better, faster and safer electric race car.
+                  </p>
+
+                  <p className="font-heading text-[10px] tracking-[0.25em] uppercase text-muted-foreground mt-6">
+                    UPI: aniket.rbelgaonkar@okhdfcbank
                   </p>
                 </div>
               </div>
