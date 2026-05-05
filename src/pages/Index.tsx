@@ -127,7 +127,7 @@ const TopNav = ({ activeIndex }: { activeIndex: number }) => (
         </div>
       </div>
 
-      <div className="hidden md:flex items-center gap-1">
+      <div className="hidden md:flex items-center gap-0">
         {navItems.map((item, i) => {
           const isActive = sections[activeIndex]?.id === item.id;
 
@@ -191,7 +191,7 @@ const Hero = ({ id, scrollY }: { id: string; scrollY: number }) => {
         style={{ transform: `translateY(${-py}px)`, opacity: 1 - scrollY / 800 }}
       >
         <Reveal from="down">
-          <ChapterKicker center>Chapter 01 — Engineered to Perform</ChapterKicker>
+          <ChapterKicker center>Chapter 00 — Engineered to Perform</ChapterKicker>
         </Reveal>
 
         <Reveal from="scale" delay={100}>
@@ -315,7 +315,7 @@ const About = ({ id }: { id: string }) => (
   <SectionShell
     id={id}
     number="02"
-    kicker="Chapter 02 — The Team"
+    kicker="Chapter 01 — The Team"
     title={
       <>
         NO NOISE
@@ -381,7 +381,7 @@ const Achievements = ({ id }: { id: string }) => (
   <SectionShell
     id={id}
     number="03"
-    kicker="Chapter 03 — Track Record"
+    kicker="Chapter 02 — Track Record"
     title={
       <>
         WINS &
@@ -439,7 +439,7 @@ const Car = ({ id }: { id: string }) => {
 
       <div className="relative grid-bg flex flex-col justify-center px-8 md:px-16 pt-24 pb-16">
         <Reveal from="right">
-          <ChapterKicker>Chapter 04 — The Machine</ChapterKicker>
+          <ChapterKicker>Chapter 03 — The Machine</ChapterKicker>
         </Reveal>
 
         <Reveal from="right" delay={150}>
@@ -496,7 +496,7 @@ const Gallery = ({ id }: { id: string }) => (
   <section id={id} className="snap-section flex flex-col justify-center bg-background overflow-hidden">
     <div className="px-8 md:px-16 pt-24">
       <Reveal from="left">
-        <ChapterKicker>Chapter 05 — In Frame</ChapterKicker>
+        <ChapterKicker>Chapter 04 — In Frame</ChapterKicker>
       </Reveal>
 
       <Reveal from="up" delay={150}>
@@ -584,7 +584,7 @@ const Sponsors = ({ id }: { id: string }) => (
   <section id={id} className="snap-section flex flex-col justify-center bg-background overflow-hidden">
     <div className="px-8 md:px-16 pt-24">
       <Reveal from="left">
-        <ChapterKicker>Chapter 06 — Powered By</ChapterKicker>
+        <ChapterKicker>Chapter 05 — Powered By</ChapterKicker>
       </Reveal>
 
       <Reveal from="up" delay={150}>
