@@ -846,19 +846,7 @@ const Contact = ({ id }: { id: string }) => (
 /* =====================================================
    FLOATING SCROLL CAR — drives across screen as you scroll
    ===================================================== */
-const FloatingCar = ({ progress }: { progress: number }) => (
-  <div
-    className="fixed bottom-4 z-40 pointer-events-none transition-[left] duration-200 ease-out hidden md:block"
-    style={{ left: `${Math.max(0, Math.min(82, 2 + progress * 86))}%` }}
-  >
-    <img
-      src={`${import.meta.env.BASE_URL}images/stier-car.png`}
-      alt="Stier Racing car"
-      className="w-[220px] h-auto object-contain drop-shadow-lg"
-      draggable={false}
-    />
-  </div>
-);
+
 
 /* =====================================================
    PAGE
@@ -891,7 +879,7 @@ const Index = () => {
       <ScrollBar progress={progress} />
       <TopNav activeIndex={activeIndex} />
       <CircuitRail progress={progress} sections={sections} />
-      <FloatingCar progress={progress} />
+    
 
       <div ref={containerRef} className="snap-container">
         <Hero id="hero" scrollY={scrollY} />
