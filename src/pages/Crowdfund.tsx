@@ -49,16 +49,18 @@ const Crowdfund = () => {
   const [contributed, setContributed] = useState(false);
   const navigate = useNavigate();
 
+  const upiLink =
+    "upi://pay?pa=aniket.rbelgaonkar@okhdfcbank&pn=Stier%20Racing&cu=INR";
+
   const handlePaymentClick = () => {
-    window.location.href =
-      "upi://pay?pa=aniket.rbelgaonkar@okhdfcbank&pn=Stier%20Racing&cu=INR";
+    window.open(upiLink, "_blank");
 
     setTimeout(() => {
       setContributed(true);
 
       setTimeout(() => {
         navigate("/#contact");
-      }, 3000);
+      }, 3500);
     }, 5000);
   };
 
@@ -126,7 +128,7 @@ const Crowdfund = () => {
                   href="#parts"
                   className="inline-flex mt-8 px-10 md:px-14 h-14 md:h-16 bg-primary text-primary-foreground border-2 border-primary font-heading text-sm md:text-base tracking-[0.35em] uppercase transition-all hover:bg-black hover:text-white hover:border-black items-center"
                 >
-                  See Parts ↓
+                  View Build Needs ↓
                 </a>
               </Reveal>
             </div>
@@ -210,15 +212,6 @@ const Crowdfund = () => {
               </Reveal>
             ))}
           </div>
-
-          <div className="flex justify-center mt-14">
-            <a
-              href="#contribute"
-              className="inline-flex items-center justify-center px-10 md:px-14 h-14 md:h-16 border-2 border-[#D4AF37] text-[#D4AF37] font-heading text-sm md:text-base tracking-[0.35em] uppercase transition-all hover:bg-[#D4AF37] hover:text-black"
-            >
-              Contribute Now ↓
-            </a>
-          </div>
         </div>
       </section>
 
@@ -251,7 +244,7 @@ const Crowdfund = () => {
                   onClick={() => setShowQR(true)}
                   className="mt-10 px-10 md:px-14 h-14 md:h-16 bg-primary text-primary-foreground border-2 border-primary font-heading text-sm md:text-base tracking-[0.35em] uppercase transition-all hover:bg-black hover:text-white hover:border-black"
                 >
-                  Contribute Now →
+                  Open Payment QR →
                 </button>
               </Reveal>
             </>
@@ -262,7 +255,7 @@ const Crowdfund = () => {
               <div className="max-w-xl mx-auto border-[4px] border-[#D4AF37] p-[5px] bg-background">
                 <div className="border-2 border-foreground p-8 md:p-10 flex flex-col items-center justify-center text-center">
                   <p className="font-heading text-[10px] tracking-[0.35em] uppercase text-[#D4AF37] mb-6">
-                    Scan to support the build
+                    Scan or tap to support the build
                   </p>
 
                   <button
@@ -280,9 +273,16 @@ const Crowdfund = () => {
                     UPI: aniket.rbelgaonkar@okhdfcbank
                   </p>
 
+                  <button
+                    onClick={handlePaymentClick}
+                    className="mt-8 px-8 py-4 bg-primary text-primary-foreground font-heading text-xs tracking-[0.3em] uppercase hover:bg-foreground transition-colors"
+                  >
+                    Pay Now →
+                  </button>
+
                   <p className="font-body text-sm md:text-base text-muted-foreground leading-relaxed mt-4 max-w-md">
-                    Tap or scan the QR code to open your UPI app. After payment, a thank-you
-                    message will appear and you will be redirected to the finish page.
+                    Tap Pay Now or scan the QR code. After a few seconds, a thank-you message will
+                    appear and you will be redirected to the finish page.
                   </p>
 
                   <button
