@@ -881,9 +881,25 @@ const Index = () => {
       setProgress(p);
       setScrollY(el.scrollTop);
 
-      const idx = Math.floor((el.scrollTop + el.clientHeight * 0.35) / el.clientHeight);
-      setActiveIndex(Math.min(Math.max(idx, 0), sections.length - 1));
+      const sectionElements = sections
+        .map((section) => document.getElementById(section.id))
+        .filter(Boolean) as HTMLElement[];
+
+      let currentIndex = 0;
+
+      sectionElements.forEach((section, index) => {
+        const sectionTop = section.offsetTop;
+        const triggerPoint = el.scrollTop + el.clientHeight * 0.45;
+
+        if (triggerPoint >= sectionTop) {
+          currentIndex = index;
+        }
+      });
+
+      setActiveIndex(currentIndex);
     };
+
+    onScroll();
 
     el.addEventListener("scroll", onScroll, { passive: true });
     return () => el.removeEventListener("scroll", onScroll);
