@@ -89,6 +89,7 @@ const sections = [
   { id: "car", label: "E14" },
   { id: "gallery", label: "GALLERY" },
   { id: "sponsors", label: "SPONSORS" },
+  { id: "crowdfund-preview", label: "CROWD FUND" },
   { id: "contact", label: "FINISH" },
 ];
 
@@ -99,7 +100,7 @@ const navItems = [
   { id: "car", label: "E14", href: "#car" },
   { id: "gallery", label: "GALLERY", href: "#gallery" },
   { id: "sponsors", label: "SPONSORS", href: "#sponsors" },
-  { id: "crowdfund", label: "CROWD FUND", path: "/crowdfund" },
+  { id: "crowdfund-preview", label: "CROWD FUND", href: "#crowdfund-preview" },
   { id: "contact", label: "FINISH", href: "#contact" },
 ];
 
@@ -130,18 +131,6 @@ const TopNav = ({ activeIndex }: { activeIndex: number }) => (
         {navItems.map((item, i) => {
           const isActive = sections[activeIndex]?.id === item.id;
 
-          if ("path" in item) {
-            return (
-              <Link
-                key={item.id}
-                to={item.path}
-                className="font-heading text-[10px] tracking-[0.25em] uppercase px-3 py-2 transition-colors text-foreground/70 hover:text-foreground"
-              >
-                {String(i).padStart(2, "0")} · {item.label}
-              </Link>
-            );
-          }
-
           return (
             <a
               key={item.id}
@@ -160,6 +149,7 @@ const TopNav = ({ activeIndex }: { activeIndex: number }) => (
     </div>
   </nav>
 );
+
 /* =====================================================
    HERO
    ===================================================== */
@@ -351,27 +341,27 @@ const About = ({ id }: { id: string }) => (
         </div>
       </Reveal>
 
-     <div className="grid grid-cols-2 gap-4">
-  {[
-    { k: "EST", v: "2016" },
-    { k: "MEMBERS", v: "60+" },
-    { k: "CARS BUILT", v: "5" },
-    { k: "PODIUMS", v: "8+" },
-  ].map((s, i) => (
-    <Reveal key={s.k} from="scale" delay={400 + i * 120}>
-      <div className="border-[3px] border-[#D4AF37] p-[4px]">
-        <div className="border-2 border-foreground bg-background p-5 hover:bg-foreground hover:text-background transition-colors cursor-default">
-          <p className="font-heading text-[10px] tracking-[0.3em] text-muted-foreground">
-            {s.k}
-          </p>
-          <p className="font-display text-5xl md:text-6xl leading-none mt-1">
-            {s.v}
-          </p>
-        </div>
+      <div className="grid grid-cols-2 gap-4">
+        {[
+          { k: "EST", v: "2016" },
+          { k: "MEMBERS", v: "60+" },
+          { k: "CARS BUILT", v: "5" },
+          { k: "PODIUMS", v: "8+" },
+        ].map((s, i) => (
+          <Reveal key={s.k} from="scale" delay={400 + i * 120}>
+            <div className="border-[3px] border-[#D4AF37] p-[4px]">
+              <div className="border-2 border-foreground bg-background p-5 hover:bg-foreground hover:text-background transition-colors cursor-default">
+                <p className="font-heading text-[10px] tracking-[0.3em] text-muted-foreground">
+                  {s.k}
+                </p>
+                <p className="font-display text-5xl md:text-6xl leading-none mt-1">
+                  {s.v}
+                </p>
+              </div>
+            </div>
+          </Reveal>
+        ))}
       </div>
-    </Reveal>
-  ))}
-</div>
     </div>
   </SectionShell>
 );
@@ -553,126 +543,43 @@ const Gallery = ({ id }: { id: string }) => (
    ===================================================== */
 const sponsorLogoRows = [
   [
-    {
-      logo: `${import.meta.env.BASE_URL}Amasl.png`,
-      url: "https://www.acemicromatic.net/",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}Aryan Circuits.png`,
-      url: "#",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}Banna (1).png`,
-      url: "#",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}Bender .png`,
-      url: "https://www.bender-in.com/",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}Hastin Energy.png`,
-      url: "https://hastinenergy.com/",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}ICP India (1).png`,
-      url: "http://www.icp-india.com/",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}Mathworks.png`,
-      url: "https://in.mathworks.com/",
-    },
+    { logo: `${import.meta.env.BASE_URL}Amasl.png`, url: "https://www.acemicromatic.net/" },
+    { logo: `${import.meta.env.BASE_URL}Aryan Circuits.png`, url: "#" },
+    { logo: `${import.meta.env.BASE_URL}Banna (1).png`, url: "#" },
+    { logo: `${import.meta.env.BASE_URL}Bender .png`, url: "https://www.bender-in.com/" },
+    { logo: `${import.meta.env.BASE_URL}Hastin Energy.png`, url: "https://hastinenergy.com/" },
+    { logo: `${import.meta.env.BASE_URL}ICP India (1).png`, url: "http://www.icp-india.com/" },
+    { logo: `${import.meta.env.BASE_URL}Mathworks.png`, url: "https://in.mathworks.com/" },
   ],
   [
-    {
-      logo: `${import.meta.env.BASE_URL}Pitstop (1).jpg`,
-      url: "#",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}SimScale_Logo_PNG.png`,
-      url: "https://www.simscale.com/",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}TE Connectivity.jpeg`,
-      url: "https://www.te.com/en/home.html",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}Transway Cargo Lifters (2).png`,
-      url: "https://www.transwaycargolifters.com/",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}Universal Circuits (1).png`,
-      url: "https://www.universalcircuits.in/",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}Voila.png`,
-      url: "#",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}acemicro.png`,
-      url: "https://www.acemicromatic.net/",
-    },
+    { logo: `${import.meta.env.BASE_URL}Pitstop (1).jpg`, url: "#" },
+    { logo: `${import.meta.env.BASE_URL}SimScale_Logo_PNG.png`, url: "https://www.simscale.com/" },
+    { logo: `${import.meta.env.BASE_URL}TE Connectivity.jpeg`, url: "https://www.te.com/en/home.html" },
+    { logo: `${import.meta.env.BASE_URL}Transway Cargo Lifters (2).png`, url: "https://www.transwaycargolifters.com/" },
+    { logo: `${import.meta.env.BASE_URL}Universal Circuits (1).png`, url: "https://www.universalcircuits.in/" },
+    { logo: `${import.meta.env.BASE_URL}Voila.png`, url: "#" },
+    { logo: `${import.meta.env.BASE_URL}acemicro.png`, url: "https://www.acemicromatic.net/" },
   ],
   [
-    {
-      logo: `${import.meta.env.BASE_URL}acetechno.jpeg`,
-      url: "https://acetechnologiesgroup.com/",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}altium.png`,
-      url: "https://www.altium.com/",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}ansys.png`,
-      url: "https://www.ansys.com/en-in",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}enventure.png`,
-      url: "https://www.enventure.com/",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}hiraa.png`,
-      url: "https://rhira.com/",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}ipg.png`,
-      url: "https://www.ipg-automotive.com/",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}ivp.png`,
-      url: "#",
-    },
+    { logo: `${import.meta.env.BASE_URL}acetechno.jpeg`, url: "https://acetechnologiesgroup.com/" },
+    { logo: `${import.meta.env.BASE_URL}altium.png`, url: "https://www.altium.com/" },
+    { logo: `${import.meta.env.BASE_URL}ansys.png`, url: "https://www.ansys.com/en-in" },
+    { logo: `${import.meta.env.BASE_URL}enventure.png`, url: "https://www.enventure.com/" },
+    { logo: `${import.meta.env.BASE_URL}hiraa.png`, url: "https://rhira.com/" },
+    { logo: `${import.meta.env.BASE_URL}ipg.png`, url: "https://www.ipg-automotive.com/" },
+    { logo: `${import.meta.env.BASE_URL}ivp.png`, url: "#" },
   ],
   [
-    {
-      logo: `${import.meta.env.BASE_URL}nimble.png`,
-      url: "#",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}racespeq.png`,
-      url: "https://racespeconline.com/",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}river.png`,
-      url: "https://www.rideriver.com/",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}solidworks.png`,
-      url: "https://www.solidworks.com/",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}sowparnika.png`,
-      url: "https://www.sowparnika.com/",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}triumph.png`,
-      url: "#",
-    },
-    {
-      logo: `${import.meta.env.BASE_URL}ultrabio.png`,
-      url: "https://ultrabio.org/",
-    },
+    { logo: `${import.meta.env.BASE_URL}nimble.png`, url: "#" },
+    { logo: `${import.meta.env.BASE_URL}racespeq.png`, url: "https://racespeconline.com/" },
+    { logo: `${import.meta.env.BASE_URL}river.png`, url: "https://www.rideriver.com/" },
+    { logo: `${import.meta.env.BASE_URL}solidworks.png`, url: "https://www.solidworks.com/" },
+    { logo: `${import.meta.env.BASE_URL}sowparnika.png`, url: "https://www.sowparnika.com/" },
+    { logo: `${import.meta.env.BASE_URL}triumph.png`, url: "#" },
+    { logo: `${import.meta.env.BASE_URL}ultrabio.png`, url: "https://ultrabio.org/" },
   ],
 ];
+
 const Sponsors = ({ id }: { id: string }) => (
   <section id={id} className="snap-section flex flex-col justify-center bg-background overflow-hidden">
     <div className="px-8 md:px-16 pt-24">
@@ -702,21 +609,21 @@ const Sponsors = ({ id }: { id: string }) => (
       <Reveal from="up" delay={350}>
         <div className="overflow-hidden">
           <div className="flex gap-4 marquee items-center">
-           {[...sponsorLogoRows[0], ...sponsorLogoRows[0]].map((sponsor, i) => (
-  <a
-    key={i}
-    href={sponsor.url}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
-  >
-    <img
-      src={sponsor.logo}
-      alt={`Sponsor ${i + 1}`}
-      className="max-h-14 max-w-full object-contain transition-all group-hover:scale-105"
-    />
-  </a>
-))}
+            {[...sponsorLogoRows[0], ...sponsorLogoRows[0]].map((sponsor, i) => (
+              <a
+                key={i}
+                href={sponsor.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
+              >
+                <img
+                  src={sponsor.logo}
+                  alt={`Sponsor ${i + 1}`}
+                  className="max-h-14 max-w-full object-contain transition-all group-hover:scale-105"
+                />
+              </a>
+            ))}
           </div>
         </div>
       </Reveal>
@@ -724,21 +631,21 @@ const Sponsors = ({ id }: { id: string }) => (
       <Reveal from="up" delay={450}>
         <div className="overflow-hidden">
           <div className="flex gap-4 marquee-reverse items-center">
-           {[...sponsorLogoRows[1], ...sponsorLogoRows[1]].map((sponsor, i) => (
-  <a
-    key={i}
-    href={sponsor.url}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
-  >
-    <img
-      src={sponsor.logo}
-      alt={`Sponsor ${i + 8}`}
-      className="max-h-16 max-w-full object-contain transition-all group-hover:scale-105"
-    />
-  </a>
-))}
+            {[...sponsorLogoRows[1], ...sponsorLogoRows[1]].map((sponsor, i) => (
+              <a
+                key={i}
+                href={sponsor.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
+              >
+                <img
+                  src={sponsor.logo}
+                  alt={`Sponsor ${i + 8}`}
+                  className="max-h-16 max-w-full object-contain transition-all group-hover:scale-105"
+                />
+              </a>
+            ))}
           </div>
         </div>
       </Reveal>
@@ -747,20 +654,20 @@ const Sponsors = ({ id }: { id: string }) => (
         <div className="overflow-hidden">
           <div className="flex gap-4 marquee items-center">
             {[...sponsorLogoRows[2], ...sponsorLogoRows[2]].map((sponsor, i) => (
-  <a
-    key={i}
-    href={sponsor.url}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
-  >
-    <img
-      src={sponsor.logo}
-      alt={`Sponsor ${i + 15}`}
-      className="max-h-16 max-w-full object-contain transition-all group-hover:scale-105"
-    />
-  </a>
-))}
+              <a
+                key={i}
+                href={sponsor.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
+              >
+                <img
+                  src={sponsor.logo}
+                  alt={`Sponsor ${i + 15}`}
+                  className="max-h-16 max-w-full object-contain transition-all group-hover:scale-105"
+                />
+              </a>
+            ))}
           </div>
         </div>
       </Reveal>
@@ -768,27 +675,111 @@ const Sponsors = ({ id }: { id: string }) => (
       <Reveal from="up" delay={650}>
         <div className="overflow-hidden">
           <div className="flex gap-4 marquee-reverse items-center">
-           {[...sponsorLogoRows[3], ...sponsorLogoRows[3]].map((sponsor, i) => (
-  <a
-    key={i}
-    href={sponsor.url}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
-  >
-    <img
-      src={sponsor.logo}
-      alt={`Sponsor ${i + 22}`}
-      className="max-h-18 max-w-full object-contain transition-all group-hover:scale-105"
-    />
-  </a>
-))}
+            {[...sponsorLogoRows[3], ...sponsorLogoRows[3]].map((sponsor, i) => (
+              <a
+                key={i}
+                href={sponsor.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-shrink-0 w-[220px] h-[130px] border-2 border-foreground bg-background flex items-center justify-center p-5 group hover:bg-primary transition-colors"
+              >
+                <img
+                  src={sponsor.logo}
+                  alt={`Sponsor ${i + 22}`}
+                  className="max-h-18 max-w-full object-contain transition-all group-hover:scale-105"
+                />
+              </a>
+            ))}
           </div>
         </div>
       </Reveal>
     </div>
   </section>
 );
+
+/* =====================================================
+   CROWDFUND PREVIEW
+   ===================================================== */
+const CrowdfundPreview = () => {
+  const supportItems = [
+    {
+      title: "Tyres",
+      image: `${import.meta.env.BASE_URL}images/tyres.png`,
+    },
+    {
+      title: "Battery Safety",
+      image: `${import.meta.env.BASE_URL}images/battery.png`,
+    },
+    {
+      title: "Tools & Testing",
+      image: `${import.meta.env.BASE_URL}images/tools.png`,
+    },
+  ];
+
+  return (
+    <section
+      id="crowdfund-preview"
+      className="snap-section bg-foreground text-background flex items-center justify-center px-8 md:px-16 py-20 overflow-hidden border-y-2 border-foreground"
+    >
+      <div className="max-w-7xl mx-auto w-full">
+        <Reveal from="left">
+          <ChapterKicker>Chapter 07 — Crowd Fund</ChapterKicker>
+        </Reveal>
+
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <Reveal from="up" delay={150}>
+              <h2 className="font-display text-5xl md:text-7xl leading-[0.9] tracking-tighter mb-6">
+                FUEL OUR
+                <br />
+                EV JOURNEY<span className="text-primary">.</span>
+              </h2>
+            </Reveal>
+
+            <Reveal from="up" delay={250}>
+              <p className="font-body text-lg md:text-xl text-background/70 leading-relaxed max-w-2xl">
+                Fuel our journey from the workshop to the race track. Every contribution helps
+                Stier Racing turn student engineering into a real electric Formula car.
+              </p>
+            </Reveal>
+
+            <Reveal from="up" delay={350}>
+              <Link
+                to="/crowdfund"
+                className="inline-flex items-center justify-center mt-8 px-10 md:px-14 h-14 md:h-16 border-2 border-[#D4AF37] text-[#D4AF37] font-heading text-sm md:text-base tracking-[0.35em] uppercase transition-all hover:bg-[#D4AF37] hover:text-black"
+              >
+                See More →
+              </Link>
+            </Reveal>
+          </div>
+
+          <div className="grid grid-cols-3 gap-4">
+            {supportItems.map((item, i) => (
+              <Reveal key={item.title} from="scale" delay={250 + i * 120}>
+                <Link
+                  to="/crowdfund"
+                  className="group border-[3px] border-[#D4AF37] p-[4px] bg-background block"
+                >
+                  <div className="border-2 border-background/40 bg-foreground p-4 h-[220px] md:h-[260px] flex flex-col items-center justify-center text-center hover:bg-background hover:text-foreground transition-colors">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-32 md:h-40 object-contain mb-4 group-hover:scale-105 transition-transform"
+                    />
+
+                    <p className="font-heading text-[10px] tracking-[0.3em] uppercase text-[#D4AF37]">
+                      {item.title}
+                    </p>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 /* =====================================================
    CONTACT
@@ -798,7 +789,7 @@ const Contact = ({ id }: { id: string }) => (
     <div className="flex-1 flex items-center px-8 md:px-16 pt-24">
       <div className="max-w-5xl w-full">
         <Reveal from="left">
-          <ChapterKicker>Chapter 07 — Finish Line</ChapterKicker>
+          <ChapterKicker>Chapter 08 — Finish Line</ChapterKicker>
         </Reveal>
 
         <Reveal from="up" delay={150}>
@@ -871,11 +862,6 @@ const Contact = ({ id }: { id: string }) => (
 );
 
 /* =====================================================
-   FLOATING SCROLL CAR — drives across screen as you scroll
-   ===================================================== */
-
-
-/* =====================================================
    PAGE
    ===================================================== */
 const Index = () => {
@@ -891,10 +877,12 @@ const Index = () => {
     const onScroll = () => {
       const max = el.scrollHeight - el.clientHeight;
       const p = max > 0 ? el.scrollTop / max : 0;
+
       setProgress(p);
       setScrollY(el.scrollTop);
-const idx = Math.floor((el.scrollTop + el.clientHeight * 0.35) / el.clientHeight);
-setActiveIndex(Math.min(Math.max(idx, 0), sections.length - 1));
+
+      const idx = Math.floor((el.scrollTop + el.clientHeight * 0.35) / el.clientHeight);
+      setActiveIndex(Math.min(Math.max(idx, 0), sections.length - 1));
     };
 
     el.addEventListener("scroll", onScroll, { passive: true });
@@ -906,7 +894,6 @@ setActiveIndex(Math.min(Math.max(idx, 0), sections.length - 1));
       <ScrollBar progress={progress} />
       <TopNav activeIndex={activeIndex} />
       <CircuitRail progress={progress} sections={sections} />
-    
 
       <div ref={containerRef} className="snap-container">
         <Hero id="hero" scrollY={scrollY} />
@@ -915,6 +902,7 @@ setActiveIndex(Math.min(Math.max(idx, 0), sections.length - 1));
         <Car id="car" />
         <Gallery id="gallery" />
         <Sponsors id="sponsors" />
+        <CrowdfundPreview />
         <Contact id="contact" />
       </div>
     </>
