@@ -55,9 +55,12 @@ const Crowdfund = () => {
     setTimeout(() => {
       setContributed(true);
 
-      setTimeout(() => {
-        navigate("/#contact");
-      }, 3500);
+     setTimeout(() => {
+  navigate("/");
+  setTimeout(() => {
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+  }, 300);
+}, 3500);
     }, 8000);
   };
 
