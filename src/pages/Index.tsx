@@ -154,16 +154,27 @@ const TopNav = ({ activeIndex }: { activeIndex: number }) => (
    HERO
    ===================================================== */
 const Hero = ({ id, scrollY }: { id: string; scrollY: number }) => {
-  useEffect(() => {
-    const i = setInterval(() => {}, 1000);
-    return () => clearInterval(i);
-  }, []);
+  const [timeStr, setTimeStr] = useState(
+    new Date().toLocaleTimeString("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    })
+  );
 
-  const timeStr = new Date().toLocaleTimeString("en-GB", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeStr(
+        new Date().toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+      );
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   const py = Math.min(scrollY, 600) * 0.3;
 
