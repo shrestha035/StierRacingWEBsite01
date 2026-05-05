@@ -135,7 +135,7 @@ const TopNav = ({ activeIndex }: { activeIndex: number }) => (
             <a
               key={item.id}
               href={item.href}
-              className={`font-heading text-[10px] tracking-[0.25em] uppercase px-3 py-2 transition-colors ${
+              className={`font-heading text-[10px] tracking-[0.25em] uppercase px-2 py-2 transition-colors ${
                 isActive
                   ? "bg-primary text-primary-foreground"
                   : "text-foreground/70 hover:text-foreground"
