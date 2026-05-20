@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Reveal } from "@/hooks/useReveal";
 
-const ChapterKicker = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex items-center gap-5 mb-6">
+const ChapterKicker = ({ children, center = false }: { children: React.ReactNode; center?: boolean }) => (
+  <div className={`flex items-center gap-5 mb-6 ${center ? "justify-center" : ""}`}>
     <span className="h-[2px] w-16 bg-[#D4AF37]" />
     <span className="font-heading text-[9px] md:text-[11px] font-black tracking-[0.42em] uppercase text-[#D4AF37] whitespace-nowrap">
       {children}
@@ -16,31 +16,37 @@ const carParts = [
     name: "Racing Tyres",
     amount: "₹25,000",
     desc: "Help us improve grip, acceleration, braking and overall track performance.",
+    image: `${import.meta.env.BASE_URL}images/tyreIMG.jpeg`,
   },
   {
     name: "Battery Safety",
     amount: "₹15,000",
     desc: "Support safety components for our accumulator, electrical protection and inspection readiness.",
+    image: null,
   },
   {
     name: "Brake System",
     amount: "₹12,000",
     desc: "Help us build a reliable braking system for safer testing and racing.",
+    image: `${import.meta.env.BASE_URL}images/brakeIMG.webp`,
   },
   {
     name: "Suspension Parts",
     amount: "₹18,000",
     desc: "Support better handling, cornering stability and vehicle control.",
+    image: `${import.meta.env.BASE_URL}images/suspensionIMG.avif`,
   },
   {
     name: "Sensors & Wiring",
     amount: "₹8,000",
     desc: "Help us monitor data, tune the vehicle and improve electrical reliability.",
+    image: `${import.meta.env.BASE_URL}images/sensorsIMG.jpg`,
   },
   {
     name: "Tools & Testing",
     amount: "₹5,000",
     desc: "Support workshop tools, test equipment and track preparation.",
+    image: `${import.meta.env.BASE_URL}images/toolsIMG.webp`,
   },
 ];
 
@@ -55,12 +61,12 @@ const Crowdfund = () => {
     setTimeout(() => {
       setContributed(true);
 
-     setTimeout(() => {
-  navigate("/");
-  setTimeout(() => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-  }, 300);
-}, 3500);
+      setTimeout(() => {
+        navigate("/");
+        setTimeout(() => {
+          document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+        }, 300);
+      }, 3500);
     }, 8000);
   };
 
@@ -175,10 +181,10 @@ const Crowdfund = () => {
 
           <Reveal from="up" delay={250}>
             <p className="font-body text-lg md:text-xl text-background/70 leading-relaxed max-w-3xl mb-12">
-  Pick a part, support the build, and help us get closer to the grid. Your contribution
-  helps student engineers turn late nights, calculations, prototypes, and workshop effort
-  into a real electric Formula car ready to compete.
-</p>
+              Pick a part, support the build, and help us get closer to the grid. Your contribution
+              helps student engineers turn late nights, calculations, prototypes, and workshop effort
+              into a real electric Formula car ready to compete.
+            </p>
           </Reveal>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -186,13 +192,21 @@ const Crowdfund = () => {
               <Reveal key={part.name} from="scale" delay={200 + i * 80}>
                 <div className="border-[3px] border-[#D4AF37] p-[4px] bg-background text-foreground h-full">
                   <div className="border-2 border-foreground h-full bg-background group hover:bg-foreground hover:text-background transition-colors">
-                    {/* EMPTY IMAGE BOX */}
-                    <div className="h-52 border-b-2 border-foreground bg-background flex items-center justify-center">
-                      <div className="w-[85%] h-[70%] border-2 border-dashed border-[#D4AF37] flex items-center justify-center">
-                        <p className="font-heading text-[10px] tracking-[0.3em] uppercase text-[#D4AF37]">
-                          Image Coming Soon
-                        </p>
-                      </div>
+                    {/* IMAGE BOX */}
+                    <div className="h-52 border-b-2 border-foreground bg-background flex items-center justify-center overflow-hidden">
+                      {part.image ? (
+                        <img
+                          src={part.image}
+                          alt={part.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-[85%] h-[70%] border-2 border-dashed border-[#D4AF37] flex items-center justify-center">
+                          <p className="font-heading text-[10px] tracking-[0.3em] uppercase text-[#D4AF37]">
+                            Image Coming Soon
+                          </p>
+                        </div>
+                      )}
                     </div>
 
                     <div className="p-5">
@@ -271,10 +285,10 @@ const Crowdfund = () => {
                     UPI: aniket.rbelgaonkar@okhdfcbank
                   </p>
 
-                 <p className="font-body text-sm md:text-base text-muted-foreground leading-relaxed mt-4 max-w-md">
-  Scan the QR code using any UPI app and become a part of our journey. Your support
-  helps power the next chapter of Stier Racing.
-</p>
+                  <p className="font-body text-sm md:text-base text-muted-foreground leading-relaxed mt-4 max-w-md">
+                    Scan the QR code using any UPI app and become a part of our journey. Your support
+                    helps power the next chapter of Stier Racing.
+                  </p>
 
                   <button
                     onClick={() => setShowQR(false)}
