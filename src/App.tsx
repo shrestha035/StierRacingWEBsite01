@@ -3,10 +3,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { BuildYourStierCTA } from "@/components/BuildYourStierCTA";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import SponsorPage from "./pages/SponsorPage.tsx";
 import Crowdfund from "./pages/Crowdfund.tsx";
+import BuildYourStier from "./pages/BuildYourStier.tsx";
 
 const queryClient = new QueryClient();
 
@@ -16,10 +18,18 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <BuildYourStierCTA />
+
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/sponsor" element={<SponsorPage />} />
           <Route path="/crowdfund" element={<Crowdfund />} />
+
+          <Route
+            path="/build-your-stier"
+            element={<BuildYourStier />}
+          />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
